@@ -1,9 +1,9 @@
 import { useState, FormEvent } from "react";
-import { Input } from "../../components/Input";
+import { InputText } from "../../components/InputText";
 import { FaKey, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-export function LoginR() {
+export function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,23 +16,23 @@ export function LoginR() {
   return (
     <>
       <main className="w-full h-screen flex justify-center items-center flex-col">
-        <div className="bg-white w-full max-w-xl p-10 flex flex-col rounded-lg shadow-lg">
+        <div className="bg-white w-full max-w-lg p-10 flex flex-col rounded-lg shadow-lg">
           <div className="w-full flex justify-center">
-            <h1 className="font-bold text-4xl mb-4">Área Representante</h1>
+            <h1 className="font-bold text-4xl mb-4">Login</h1>
           </div>
           <div className="w-full">
             <form>
-              <span className="font-bold">Usuario</span>
-              <Input
+              <span className="font-bold">CNPJ</span>
+              <InputText
                 type="text"
                 className="grow"
-                placeholder="Digite seu usuario"
+                placeholder="Digite seu CNPJ"
                 icon={<FaUser />}
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
               />
               <span className="font-bold">Senha</span>
-              <Input
+              <InputText
                 type="password"
                 className="grow"
                 placeholder="Digite sua senha"
@@ -46,11 +46,6 @@ export function LoginR() {
                 </a>
                 <a className="link link-hover opacity-90">
                   <Link to="/cadastro">Criar conta</Link>
-                </a>
-              </div>
-              <div className="flex">
-                <a className="link link-hover opacity-90">
-                  <Link to="/logincliente">Não é um Representante?</Link>
                 </a>
               </div>
               <div className="flex justify-center items-center mt-5">

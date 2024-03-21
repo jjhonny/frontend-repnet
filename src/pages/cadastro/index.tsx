@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import { Input } from "../../components/Input";
+import { InputText } from "../../components/InputText";
 import { FaAddressCard, FaEnvelope, FaKey, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -16,21 +16,26 @@ export function Cadastro() {
   return (
     <>
       <main className="w-full h-screen flex justify-center items-center flex-col">
-        <div className="bg-white w-full max-w-xl p-10 flex flex-col rounded-lg shadow-lg">
+        <div className="bg-white w-full max-w-lg px-10 py-5 flex flex-col rounded-lg shadow-lg">
           <div className="w-full flex justify-center">
             <h1 className="font-bold text-4xl mb-4">Criar Conta</h1>
           </div>
           <div className="w-full">
-            <form>
-              <span className="font-bold">Nome da Loja</span>
-              <Input
+            <form className="flex flex-col">
+              <span className="font-bold">Você é um</span>
+              <select className="select select-bordered w-full mt-2 mb-2">
+                <option value="R">Representante</option>
+                <option value="C">Cliente</option>
+              </select>
+              <span className="font-bold">Nome da loja</span>
+              <InputText
                 type="text"
                 className="grow"
                 placeholder="Digite o nome da sua loja"
                 icon={<FaAddressCard />}
               />
               <span className="font-bold">CNPJ</span>
-              <Input
+              <InputText
                 type="text"
                 className="grow"
                 placeholder="Digite seu CNPJ"
@@ -39,14 +44,14 @@ export function Cadastro() {
                 onChange={(e) => setUser(e.target.value)}
               />
               <span className="font-bold">Email</span>
-              <Input
+              <InputText
                 type="text"
                 className="grow"
-                placeholder="Digite o seu Email"
+                placeholder="Digite o seu email"
                 icon={<FaEnvelope />}
               />
               <span className="font-bold">Senha</span>
-              <Input
+              <InputText
                 type="password"
                 className="grow"
                 placeholder="Digite sua senha"
@@ -55,7 +60,7 @@ export function Cadastro() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <span className="font-bold">Confirmar senha</span>
-              <Input
+              <InputText
                 type="text"
                 className="grow"
                 placeholder="Confirme a sua senha"

@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Cadastro } from "./pages/cadastro";
 import { Home } from "./pages/home";
-import { LoginC } from "./pages/loginC";
-import { LoginR } from "./pages/loginR";
+import { Login } from "./pages/login";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/logincliente",
-        element: <LoginC />,
-      },
-      {
-        path: "/loginrepresentante",
-        element: <LoginR />,
+        element: <Login />,
       },
     ],
   },
