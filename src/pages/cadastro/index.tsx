@@ -67,9 +67,9 @@ export function Cadastro() {
                 icon={<FaKey />}
               />
               <div className="flex flex-row justify-between pt-3">
-                <a className="link link-hover opacity-90">
-                  <Link to="/logincliente">Já possui uma conta?</Link>
-                </a>
+                <Link className="link link-hover opacity-90" to="/login">
+                  Já possui uma conta?
+                </Link>
               </div>
               <div className="flex justify-center items-center mt-5">
                 <button

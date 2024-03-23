@@ -5,7 +5,7 @@ export function Home() {
     <div>
       <h1 className="flex justify-center text-5xl">Pagina Home</h1>
       <span>
-        <Link to="/logincliente">Pagina Login</Link>
+        <Link to="/login">Pagina Login</Link>
       </span>
     </div>
   );
