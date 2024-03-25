@@ -1,41 +1,25 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useContext } from "react";
 import { InputText } from "../../components/InputText";
 import { FaKey, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
+import { AuthContext } from "../../contexts/AuthContex";
 
 export function Login() {
   const [cnpj, setCnpj] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signIn } = useContext(AuthContext);
 
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
-    console.log(cnpj, password);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/login",
-        JSON.stringify({ cnpj, password }),
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      );
-      console.log(response.data);
-      document.location.href = "/";
-    } catch (error) {
-      const axiosError = error as AxiosError;
+    let data = {
+      cnpj,
+      password,
+    };
 
-      if (!axiosError?.response) {
-        setError("Erro ao acessar o servidor");
-      } else if (axiosError.response.status == 401) {
-        setError("Usuario ou senha inválidos");
-      }
-
-      setTimeout(() => {
-        setError("");
-      }, 1500);
-    }
+    await signIn(data);
   }
 
   return (
@@ -46,7 +30,7 @@ export function Login() {
             <h1 className="font-bold text-4xl mb-4">Login</h1>
           </div>
           <div className="w-full">
-            <form>
+            <form onSubmit={handleLogin}>
               <span className="font-bold">CNPJ</span>
               <InputText
                 type="text"
@@ -76,20 +60,11 @@ export function Login() {
                 </Link>
               </div>
               <div className="flex justify-center items-center mt-5">
-                <button
-                  className="btn btn-neutral w-full"
-                  type="submit"
-                  onClick={handleLogin}
-                >
+                <button className="btn btn-neutral w-full" type="submit">
                   Entrar
                 </button>
               </div>
             </form>
-            <p
-              className={`flex justify-center items-center mt-5 font-bold text-lg text-red-500 transition-opacity duration-500 ${error ? "opacity-100" : "opacity-0"}`}
-            >
-              {error}
-            </p>
           </div>
         </div>
       </main>
