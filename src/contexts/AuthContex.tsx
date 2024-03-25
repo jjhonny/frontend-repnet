@@ -19,6 +19,7 @@ type UserProps = {
 type SignInProps = {
   cnpj: string;
   password: string;
+  categoria: string;
 };
 
 type AuthProviderProps = {
@@ -69,7 +70,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
       // Redirecionar para a página inicial após o login
-      navigate("/");
+      if (response.data.categoria === "C") {
+        navigate("/home/cliente");
+      } else {
+        navigate("/home/representante");
+      }
     } catch (error) {
       console.log("Erro ao acessar", error);
     }
