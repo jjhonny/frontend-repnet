@@ -1,16 +1,31 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useContext } from "react";
 import { InputText } from "../../components/InputText";
+import { AuthContext } from "../../contexts/AuthContex";
 import { FaAddressCard, FaEnvelope, FaKey, FaUser } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 
 export function Cadastro() {
-  const [user, setUser] = useState("");
+  const { signUp } = useContext(AuthContext);
+  const [categoria, SetCategoria] = useState("");
+  const [cnpj, setCnpj] = useState("");
   const [password, setPassword] = useState("");
+  const [shopname, SetShopname] = useState("");
+  const [email, setEmail] = useState("");
 
-  function handleLogin(event: FormEvent) {
+  async function handleSignUp(event: FormEvent) {
     event.preventDefault();
-    console.log(user);
-    console.log(password);
+    console.log(categoria, cnpj, password, shopname, email);
+
+    let data = {
+      categoria,
+      cnpj,
+      password,
+      shopname,
+      email,
+    };
+
+    await signUp(data);
   }
 
   return (
@@ -21,9 +36,14 @@ export function Cadastro() {
             <h1 className="font-bold text-4xl mb-4">Criar Conta</h1>
           </div>
           <div className="w-full">
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSignUp}>
               <span className="font-bold">Você é um</span>
-              <select className="select select-bordered w-full mt-2 mb-2">
+              <select
+                className="select select-bordered w-full mt-2 mb-2"
+                value={categoria}
+                onChange={(e) => SetCategoria(e.target.value)}
+              >
+                <option> </option>
                 <option value="R">Representante</option>
                 <option value="C">Cliente</option>
               </select>
@@ -31,6 +51,8 @@ export function Cadastro() {
               <InputText
                 type="text"
                 className="grow"
+                value={shopname}
+                onChange={(e) => SetShopname(e.target.value)}
                 placeholder="Digite o nome da sua loja"
                 icon={<FaAddressCard />}
               />
@@ -40,13 +62,15 @@ export function Cadastro() {
                 className="grow"
                 placeholder="Digite seu CNPJ"
                 icon={<FaUser />}
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
+                value={cnpj}
+                onChange={(e) => setCnpj(e.target.value)}
               />
               <span className="font-bold">Email</span>
               <InputText
                 type="text"
                 className="grow"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Digite o seu email"
                 icon={<FaEnvelope />}
               />
@@ -72,10 +96,7 @@ export function Cadastro() {
                 </Link>
               </div>
               <div className="flex justify-center items-center mt-5">
-                <button
-                  className="btn btn-neutral w-full"
-                  onClick={handleLogin}
-                >
+                <button className="btn btn-neutral w-full" type="submit">
                   Criar Conta
                 </button>
               </div>
