@@ -14,6 +14,16 @@ export function Login() {
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
 
+    if (cnpj === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (password === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
     let data = {
       cnpj,
       password,

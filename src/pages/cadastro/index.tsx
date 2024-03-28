@@ -17,6 +17,31 @@ export function Cadastro() {
     event.preventDefault();
     console.log(categoria, cnpj, password, shopname, email);
 
+    if (categoria === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (cnpj === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (password === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (shopname === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (email === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
     let data = {
       categoria,
       cnpj,
