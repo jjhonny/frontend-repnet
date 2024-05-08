@@ -1,9 +1,9 @@
-"use client";
 import { useState, FormEvent, useContext } from "react";
 import { InputText } from "@/components/input-text";
 import { AuthContext } from "@/contexts/AuthContex";
 import { FaAddressCard, FaEnvelope, FaKey, FaUser } from "react-icons/fa";
 import Link from "next/link";
+import { cnpjMask } from "@/utils/cnpjMask";
 
 export default function Cadastro() {
   const { signUp } = useContext(AuthContext);
@@ -87,7 +87,7 @@ export default function Cadastro() {
                 className="grow"
                 placeholder="Digite seu CNPJ"
                 icon={<FaUser />}
-                value={cnpj}
+                value={cnpjMask(cnpj)}
                 onChange={(e) => setCnpj(e.target.value)}
               />
               <span className="font-bold">Email</span>

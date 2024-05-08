@@ -4,6 +4,7 @@ import { FaKey, FaUser } from "react-icons/fa";
 import { AuthContext } from "@/contexts/AuthContex";
 import Link from "next/link";
 import { canSSRGuest } from "@/utils/canSSRGuest";
+import { cnpjMask } from "@/utils/cnpjMask";
 
 export default function Login() {
   const [cnpj, setCnpj] = useState("");
@@ -49,7 +50,7 @@ export default function Login() {
                 className="grow"
                 placeholder="Digite seu CNPJ"
                 icon={<FaUser />}
-                value={cnpj}
+                value={cnpjMask(cnpj)}
                 onChange={(e) => setCnpj(e.target.value)}
               />
               <span className="font-bold">Senha</span>
