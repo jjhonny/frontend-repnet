@@ -15,7 +15,7 @@ const schema = z.object({
   cnpj: z.string().min(1, "O cnpj é obrigatório."),
   email: z.string().min(1, "O email é obrigatório."),
   password: z.string().min(1, "A senha é obrigatória."),
-  passwordC: z.string().min(1, "Confirmar a senha é obrigatório.."),
+  passwordC: z.string().min(1, "Confirmar a senha é obrigatório."),
 });
 
 export default function Cadastro() {

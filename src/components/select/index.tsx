@@ -29,7 +29,9 @@ export function Select({
           </option>
         ))}
       </select>
-      {error && <p className="text-red-500 my-1">{error}</p>}
+      {error && (
+        <p className="text-red-400 font-bold font-mono mb-1">{error}</p>
+      )}
     </>
   );
 }

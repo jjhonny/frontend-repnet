@@ -11,8 +11,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
-  cnpj: z.string().min(1, "O campo cnpj é obrigatório."),
-  password: z.string().min(1, "O campo de senha é obrigatório."),
+  cnpj: z.string().min(1, "O cnpj é obrigatório."),
+  password: z.string().min(1, "A senha é obrigatória."),
 });
 
 export default function Login() {
