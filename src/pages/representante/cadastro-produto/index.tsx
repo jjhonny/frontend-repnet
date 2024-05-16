@@ -31,6 +31,7 @@ export default function NovoProduto() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ProductsProps>({
     resolver: zodResolver(schema),
@@ -62,6 +63,7 @@ export default function NovoProduto() {
         dataProductFormated
       );
       toast.success("Produto cadastrado com sucesso!");
+      reset();
     } catch (error) {
       console.log(error);
       toast.error("Erro ao cadastrar produto.");
