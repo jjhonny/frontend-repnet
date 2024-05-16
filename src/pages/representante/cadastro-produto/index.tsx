@@ -5,42 +5,63 @@ import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
 import { FormEvent, useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type ProductsProps = {
+  descricao: string;
+  validade: string;
+  peso: number;
+  preco: number;
+  categoria: string;
+  marca: string;
+};
+
+const schema = z.object({
+  descricao: z.string().min(1, "O campo é obrigatório."),
+  validade: z.string().min(1, "O campo é obrigatório."),
+  peso: z.string().min(1, "O campo é obrigatório."),
+  preco: z.string().min(1, "O campo é obrigatório."),
+  categoria: z.string().min(1, "O campo é obrigatório."),
+  marca: z.string().min(1, "O campo é obrigatório."),
+});
 
 export default function NovoProduto() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProductsProps>({
+    resolver: zodResolver(schema),
+  });
   const { signOut, user } = useContext(AuthContext);
-  const [descricao, setDescricao] = useState("");
-  const [validade, setValidade] = useState("");
-  const [peso, setPeso] = useState(0);
-  const [preco, setPreco] = useState(0);
-  const [categoria, setCategoria] = useState("");
-  const [marca, setMarca] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleRegisterProduct(event: FormEvent) {
-    event.preventDefault();
+  async function handleRegisterProduct(dataProduct: ProductsProps) {
+    console.log(dataProduct);
 
-    const dataProduct = {
-      descricao,
-      validade,
-      peso,
-      preco,
-      categoria,
-      marca,
+    const { categoria, marca, descricao, validade } = dataProduct;
+    let { peso, preco } = dataProduct;
+    peso = Number(peso);
+    preco = Number(preco);
+
+    const dataProductFormated = {
+      categoria: categoria,
+      marca: marca,
+      descricao: descricao,
+      peso: peso,
+      preco: preco,
+      validade: validade,
     };
 
     try {
       setLoading(true);
       const response = await api.post(
         "/representante/cadastro-produto",
-        dataProduct
+        dataProductFormated
       );
       toast.success("Produto cadastrado com sucesso!");
-      setDescricao("");
-      setValidade("");
-      setPeso(0);
-      setPreco(0);
-      setCategoria("");
-      setMarca("");
     } catch (error) {
       console.log(error);
       toast.error("Erro ao cadastrar produto.");
@@ -71,53 +92,63 @@ export default function NovoProduto() {
             <h1 className="font-bold text-4xl mb-4">Cadastrar novo produto</h1>
           </div>
           <div className="w-full">
-            <form className="flex flex-col" onSubmit={handleRegisterProduct}>
+            <form
+              className="flex flex-col"
+              onSubmit={handleSubmit(handleRegisterProduct)}
+            >
               <span className="font-bold">Nome do produto</span>
               <InputText
                 type="text"
-                value={descricao}
-                onChange={(e) => setDescricao(e.target.value)}
+                name="descricao"
                 className="grow"
                 placeholder="Digite o nome do produto"
+                register={register}
+                error={errors.descricao?.message}
               />
               <span className="font-bold">Validade do produto</span>
               <InputText
                 type="date"
-                value={validade}
-                onChange={(e) => setValidade(e.target.value)}
+                name="validade"
                 className="grow"
+                placeholder="Digite a data de validade"
+                register={register}
+                error={errors.validade?.message}
               />
               <span className="font-bold">Peso do Produto</span>
               <InputText
                 type="number"
-                value={peso}
-                onChange={(e) => setPeso(parseFloat(e.target.value))}
+                name="peso"
                 className="grow"
                 placeholder="Digite o peso do produto"
+                register={register}
+                error={errors.peso?.message}
               />
               <span className="font-bold">Preço do produto</span>
               <InputText
                 type="number"
-                value={preco}
-                onChange={(e) => setPreco(parseFloat(e.target.value))}
+                name="preco"
                 className="grow"
                 placeholder="Digite o preço do produto"
+                register={register}
+                error={errors.preco?.message}
               />
               <span className="font-bold">Categoria do produto</span>
               <InputText
                 type="text"
-                value={categoria}
-                onChange={(e) => setCategoria(e.target.value)}
+                name="categoria"
                 className="grow"
                 placeholder="Digite o preço do produto"
+                register={register}
+                error={errors.categoria?.message}
               />
               <span className="font-bold">Marca do produto</span>
               <InputText
                 type="text"
-                value={marca}
-                onChange={(e) => setMarca(e.target.value)}
+                name="marca"
                 className="grow"
                 placeholder="Digite a marca do produto"
+                register={register}
+                error={errors.marca?.message}
               />
               <div className="flex justify-center items-center mt-5">
                 {loading ? (
