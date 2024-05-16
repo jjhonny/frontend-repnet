@@ -20,17 +20,18 @@ type UserProps = {
   categoria: string;
 };
 
-type SignInProps = {
+export type SignInProps = {
   cnpj: string;
   password: string;
 };
 
-type SignUpProps = {
+export type SignUpProps = {
   categoria: string;
   razao_social: string;
   cnpj: string;
   email: string;
   password: string;
+  passwordC: string;
 };
 
 type AuthProviderProps = {

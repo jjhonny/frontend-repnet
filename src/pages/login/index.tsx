@@ -5,30 +5,28 @@ import { AuthContext } from "@/contexts/AuthContex";
 import Link from "next/link";
 import { canSSRGuest } from "@/utils/canSSRGuest";
 import { cnpjMask } from "@/utils/cnpjMask";
+import { SignInProps } from "@/contexts/AuthContex";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  cnpj: z.string().min(1, "O campo cnpj é obrigatório."),
+  password: z.string().min(1, "O campo de senha é obrigatório."),
+});
 
 export default function Login() {
-  const [cnpj, setCnpj] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInProps>({
+    resolver: zodResolver(schema),
+  });
   const [loading, setLoading] = useState(false);
   const { signIn } = useContext(AuthContext);
 
-  async function handleLogin(event: FormEvent) {
-    event.preventDefault();
-
-    if (cnpj === "") {
-      alert("Preencha todos os campos");
-      return;
-    }
-
-    if (password === "") {
-      alert("Preencha todos os campos");
-      return;
-    }
-
-    let data = {
-      cnpj,
-      password,
-    };
+  async function handleLogin(data: SignInProps) {
     setLoading(true);
     await signIn(data);
     setLoading(false);
@@ -42,7 +40,7 @@ export default function Login() {
             <h1 className="font-bold text-4xl mb-4">Login</h1>
           </div>
           <div className="w-full">
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <span className="font-bold">CNPJ</span>
               <InputText
                 type="text"
@@ -50,8 +48,8 @@ export default function Login() {
                 className="grow"
                 placeholder="Digite seu CNPJ"
                 icon={<FaUser />}
-                value={cnpjMask(cnpj)}
-                onChange={(e) => setCnpj(e.target.value)}
+                register={register}
+                error={errors.cnpj?.message}
               />
               <span className="font-bold">Senha</span>
               <InputText
@@ -60,8 +58,8 @@ export default function Login() {
                 className="grow"
                 placeholder="Digite sua senha"
                 icon={<FaKey />}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                register={register}
+                error={errors.password?.message}
               />
               <div className="flex flex-row justify-between pt-3">
                 <a className="link link-hover opacity-90">
