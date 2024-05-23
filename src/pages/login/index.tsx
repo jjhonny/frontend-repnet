@@ -9,6 +9,8 @@ import { SignInProps } from "@/contexts/AuthContex";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import loginImg from "@/assets/logo.png";
+import Image from "next/image";
 
 const schema = z.object({
   cnpj: z.string().min(1, "O cnpj é obrigatório."),
@@ -34,8 +36,8 @@ export default function Login() {
 
   return (
     <>
-      <main className="w-full h-screen flex justify-center items-center flex-col">
-        <div className="bg-white w-full max-w-lg p-10 flex flex-col rounded-lg shadow-lg">
+      <main className="bg-purple-300 w-full min-h-screen flex justify-center items-center flex-col">
+        <div className="bg-white w-full max-w-lg p-8 flex flex-col rounded-lg shadow-xl m-5">
           <div className="w-full flex justify-center">
             <h1 className="font-bold text-4xl mb-4">Login</h1>
           </div>
@@ -79,7 +81,10 @@ export default function Login() {
                     <span className="loading loading-spinner loading-md"></span>
                   </button>
                 ) : (
-                  <button className="btn btn-neutral w-full" type="submit">
+                  <button
+                    className="btn btn-neutral text-white w-full"
+                    type="submit"
+                  >
                     Entrar
                   </button>
                 )}

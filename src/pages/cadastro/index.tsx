@@ -38,8 +38,8 @@ export default function Cadastro() {
 
   return (
     <>
-      <main className="w-full min-h-screen flex justify-center items-center flex-col p-10">
-        <div className="bg-white w-full max-w-lg px-10 py-5 flex flex-col rounded-lg shadow-lg">
+      <main className="bg-purple-300 w-full min-h-screen flex justify-center items-center flex-col p-10">
+        <div className="bg-white w-full max-w-lg p-8 py-5 flex flex-col rounded-lg shadow-lg">
           <div className="w-full flex justify-center">
             <h1 className="font-bold text-4xl mb-4">Criar Conta</h1>
           </div>
@@ -100,7 +100,7 @@ export default function Cadastro() {
               />
               <span className="font-bold">Confirmar senha</span>
               <InputText
-                type="text"
+                type="password"
                 className="grow"
                 name="passwordC"
                 placeholder="Confirme a sua senha"

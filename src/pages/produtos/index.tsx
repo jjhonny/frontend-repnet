@@ -34,8 +34,7 @@ export default function Produtos() {
           }
         })
         .catch((error) => {
-          if (error.response.status >= 500 && error.response.status < 600)
-            alert(error.response.data.error);
+          console.log(error);
         })
         .finally(() => {
           SetLoading(false);
