@@ -73,7 +73,13 @@ export function Header() {
               </div>
               <div>
                 <li>
-                  <Link href="/perfil">
+                  <Link
+                    href={
+                      user.categoria === "C"
+                        ? "/cliente/perfil"
+                        : "/representante/perfil"
+                    }
+                  >
                     <span className="flex items-center">
                       <IoPerson size={22} className="mr-4" />
                       Perfil
@@ -134,7 +140,16 @@ export function Header() {
             className="menu menu-sm dropdown-content mt-4 z-[1] p-2 shadow bg-base-100 rounded-box w-56"
           >
             <li>
-              <a className="text-base flex justify-between">Perfil</a>
+              <Link
+                href={
+                  user.categoria === "C"
+                    ? "/cliente/perfil"
+                    : "/representante/perfil"
+                }
+                className="text-base flex justify-between"
+              >
+                Perfil
+              </Link>
             </li>
             <li>
               <button
