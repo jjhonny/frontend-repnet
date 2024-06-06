@@ -118,9 +118,9 @@ export function Header() {
               <span className="font-bold text-lg">8 Items</span>
               <span className="mb-1">Subtotal: $999</span>
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">
+                <Link href="/carrinho" className="btn btn-primary btn-block">
                   Ver carrinho
-                </button>
+                </Link>
               </div>
             </div>
           </div>

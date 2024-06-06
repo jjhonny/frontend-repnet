@@ -116,18 +116,6 @@ export default function Cadastro() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold">Senha</span>
-                  <InputText
-                    type="password"
-                    className="grow"
-                    name="password"
-                    placeholder="Digite sua senha"
-                    icon={<FaKey />}
-                    register={register}
-                    error={errors.password?.message}
-                  />
-                </div>
-                <div className="flex flex-col">
                   <span className="font-bold">Email</span>
                   <InputText
                     type="email"
@@ -139,7 +127,18 @@ export default function Cadastro() {
                     error={errors.email?.message}
                   />
                 </div>
-
+                <div className="flex flex-col">
+                  <span className="font-bold">Senha</span>
+                  <InputText
+                    type="password"
+                    className="grow"
+                    name="password"
+                    placeholder="Digite sua senha"
+                    icon={<FaKey />}
+                    register={register}
+                    error={errors.password?.message}
+                  />
+                </div>
                 <div className="flex flex-col">
                   <span className="font-bold">Confirmar senha</span>
                   <InputText

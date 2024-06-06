@@ -59,10 +59,7 @@ export default function NovoProduto() {
 
     try {
       setLoading(true);
-      const response = await api.post(
-        "/representante/cadastro-produto",
-        dataProductFormated
-      );
+      const response = await api.post("/cadastro-produto", dataProductFormated);
       toast.success("Produto cadastrado com sucesso!");
       reset();
     } catch (error) {
@@ -76,89 +73,103 @@ export default function NovoProduto() {
   return (
     <>
       <Header />
-      <main className="flex justify-center min-h-screen items-center p-4">
-        <div className="bg-white w-full max-w-3xl px-10 py-5 flex flex-col rounded-lg shadow-lg mt-2">
-          <div className="w-full flex justify-center">
-            <h1 className="font-bold text-4xl mb-4">Cadastrar novo produto</h1>
-          </div>
-          <div className="w-full">
-            <form
-              className="flex flex-col"
-              onSubmit={handleSubmit(handleRegisterProduct)}
-            >
-              <span className="font-bold">Nome do produto</span>
-              <InputText
-                type="text"
-                name="descricao"
-                className="grow"
-                placeholder="Digite o nome do produto"
-                register={register}
-                error={errors.descricao?.message}
-              />
-              <span className="font-bold">Validade do produto</span>
-              <InputText
-                type="date"
-                name="validade"
-                className="grow"
-                placeholder="Digite a data de validade"
-                register={register}
-                error={errors.validade?.message}
-              />
-              <span className="font-bold">Peso do Produto</span>
-              <InputText
-                type="number"
-                name="peso"
-                className="grow"
-                placeholder="Digite o peso do produto"
-                register={register}
-                error={errors.peso?.message}
-              />
-              <span className="font-bold">Preço do produto</span>
-              <InputText
-                type="number"
-                name="preco"
-                className="grow"
-                placeholder="Digite o preço do produto"
-                register={register}
-                error={errors.preco?.message}
-              />
-              <span className="font-bold">Categoria do produto</span>
-              <InputText
-                type="text"
-                name="categoria"
-                className="grow"
-                placeholder="Digite o preço do produto"
-                register={register}
-                error={errors.categoria?.message}
-              />
-              <span className="font-bold">Marca do produto</span>
-              <InputText
-                type="text"
-                name="marca"
-                className="grow"
-                placeholder="Digite a marca do produto"
-                register={register}
-                error={errors.marca?.message}
-              />
-              <div className="flex justify-center items-center mt-5">
-                {loading ? (
-                  <button
-                    className="btn btn-neutral w-full"
-                    type="submit"
-                    disabled
-                  >
-                    <span className="loading loading-spinner loading-md"></span>
-                  </button>
-                ) : (
-                  <button className="btn btn-neutral w-full" type="submit">
-                    Cadastrar Produto
-                  </button>
-                )}
+
+      <div className="max-w-6xl mx-auto py-8">
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Cadastrar novo produto
+        </h1>
+        <div className="bg-white rounded-lg shadow-lg px-8 py-6 space-y-4">
+          <form onSubmit={handleSubmit(handleRegisterProduct)}>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="font-bold">Nome do produto</span>
+                <InputText
+                  type="text"
+                  name="descricao"
+                  className="grow"
+                  placeholder="Digite o nome do produto"
+                  register={register}
+                  error={errors.descricao?.message}
+                />
               </div>
-            </form>
-          </div>
+              <div className="mb-4">
+                <span className="font-bold">Validade do produto</span>
+                <InputText
+                  type="date"
+                  name="validade"
+                  className="grow"
+                  placeholder="Digite a data de validade"
+                  register={register}
+                  error={errors.validade?.message}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="font-bold">Peso do Produto</span>
+                <InputText
+                  type="number"
+                  name="peso"
+                  className="grow"
+                  placeholder="Digite o peso do produto"
+                  register={register}
+                  error={errors.peso?.message}
+                />
+              </div>
+              <div className="mb-4">
+                <span className="font-bold">Preço do produto</span>
+                <InputText
+                  type="number"
+                  name="preco"
+                  className="grow"
+                  placeholder="Digite o preço do produto"
+                  register={register}
+                  error={errors.preco?.message}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="font-bold">Categoria do produto</span>
+                <InputText
+                  type="text"
+                  name="categoria"
+                  className="grow"
+                  placeholder="Digite a categoria do produto"
+                  register={register}
+                  error={errors.categoria?.message}
+                />
+              </div>
+              <div className="mb-4">
+                <span className="font-bold">Marca do produto</span>
+                <InputText
+                  type="text"
+                  name="marca"
+                  className="grow"
+                  placeholder="Digite a marca do produto"
+                  register={register}
+                  error={errors.marca?.message}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end">
+              {loading ? (
+                <button
+                  className="btn btn-neutral w-full"
+                  type="submit"
+                  disabled
+                >
+                  <span className="loading loading-spinner loading-md"></span>
+                </button>
+              ) : (
+                <button className="btn btn-neutral w-full" type="submit">
+                  Cadastrar Produto
+                </button>
+              )}
+            </div>
+          </form>
         </div>
-      </main>
+      </div>
     </>
   );
 }
