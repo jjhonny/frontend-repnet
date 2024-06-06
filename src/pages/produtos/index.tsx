@@ -5,7 +5,7 @@ import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
-interface ProductsProps {
+export interface ProductsProps {
   id: number;
   descricao: string;
   validade: string;

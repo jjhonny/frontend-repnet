@@ -40,13 +40,13 @@ export default function Cadastro() {
     receita_bruta = Number(receita_bruta);
 
     const dataSignUp = {
-      categoria,
-      cnpj,
+      categoria: categoria,
+      cnpj: cnpj,
       receita_bruta: receita_bruta,
-      email,
-      password,
-      passwordC,
-      razao_social,
+      email: email,
+      password: password,
+      passwordC: passwordC,
+      razao_social: razao_social,
     };
 
     await signUp(dataSignUp);

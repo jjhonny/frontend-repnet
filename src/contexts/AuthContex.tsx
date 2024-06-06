@@ -77,7 +77,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
     }
 
-    /* async function InfoUsers() {
+    async function InfoUsers() {
       const { "@nextauth.token": token } = parseCookies();
       if (token) {
         try {
@@ -92,7 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     }
 
-    InfoUsers(); */
+    InfoUsers();
   }, []);
 
   async function signIn({ cnpj, password }: SignInProps) {
