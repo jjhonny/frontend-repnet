@@ -1,4 +1,5 @@
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
+import InputMask from "react-input-mask";
 
 interface InputProps {
   icon?: React.ReactNode;
@@ -9,6 +10,7 @@ interface InputProps {
   register: UseFormRegister<any>;
   error?: string;
   rules?: RegisterOptions;
+  mask?: string;
 }
 
 export function InputText({
@@ -20,18 +22,31 @@ export function InputText({
   rules,
   error,
   className,
+  mask,
 }: InputProps) {
   return (
     <>
       <label className="input input-bordered flex items-center mt-2 mb-2">
         {icon && <span className="icon w-6 opacity-70">{icon}</span>}{" "}
-        <input
-          className={className}
-          placeholder={placeholder}
-          type={type}
-          {...register(name, rules)}
-          id={name}
-        />
+        {mask ? (
+          <InputMask
+            mask={mask}
+            maskChar={null}
+            type={type}
+            className={className}
+            placeholder={placeholder}
+            {...register(name, rules)}
+            id={name}
+          />
+        ) : (
+          <input
+            type={type}
+            className={className}
+            placeholder={placeholder}
+            {...register(name, rules)}
+            id={name}
+          />
+        )}
       </label>
       {error && (
         <p className="text-red-400 font-bold font-mono mb-1">{error}</p>

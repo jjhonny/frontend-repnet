@@ -11,6 +11,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginImg from "@/assets/logo.png";
 import Image from "next/image";
+import InputMask from "react-input-mask";
 
 const schema = z.object({
   cnpj: z.string().min(1, "O cnpj é obrigatório."),
@@ -45,6 +46,7 @@ export default function Login() {
             <form onSubmit={handleSubmit(handleLogin)}>
               <span className="font-bold">CNPJ</span>
               <InputText
+                mask="99.999.999/9999-99"
                 type="text"
                 name="cnpj"
                 className="grow"

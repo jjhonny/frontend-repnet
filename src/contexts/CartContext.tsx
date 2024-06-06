@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+/* import { createContext, ReactNode, useState } from "react";
 import { ProductsProps } from "@/pages/produtos";
 
 interface CartContextData {
@@ -102,3 +102,4 @@ function CartProvider({ children }: CartProviderProps) {
 }
 
 export default CartProvider;
+ */

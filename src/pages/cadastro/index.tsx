@@ -81,6 +81,7 @@ export default function Cadastro() {
                 <div className="flex flex-col">
                   <span className="font-bold">CNPJ</span>
                   <InputText
+                    mask="99.999.999/9999-99"
                     type="text"
                     className="grow"
                     name="cnpj"
