@@ -4,14 +4,14 @@ import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useContext } from "react";
 
 export default function PerfilCliente() {
-  const { user } = useContext(AuthContext);
+  const { Infouser } = useContext(AuthContext);
 
   return (
     <>
       <Header />
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
-          Perfil do {user.categoria === "C" ? "Cliente" : "Representante"}
+          Perfil do {Infouser.categoria === "C" ? "Cliente" : "Representante"}
         </h1>
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Informações do Usuário</h2>
@@ -23,7 +23,7 @@ export default function PerfilCliente() {
               <input
                 type="text"
                 className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                value={user.razao_social}
+                value={Infouser.razao_social}
                 readOnly
               />
             </div>
@@ -32,7 +32,7 @@ export default function PerfilCliente() {
               <input
                 type="text"
                 className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                value={user.cnpj}
+                value={Infouser.cnpj}
                 readOnly
               />
             </div>
@@ -41,7 +41,7 @@ export default function PerfilCliente() {
               <input
                 type="email"
                 className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                value={user.email}
+                value={Infouser.email}
                 readOnly
               />
             </div>
@@ -52,7 +52,7 @@ export default function PerfilCliente() {
               <input
                 type="text"
                 className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                value={user.categoria === "C" ? "Cliente" : "Representante"}
+                value={Infouser.categoria === "C" ? "Cliente" : "Representante"}
                 readOnly
               />
             </div>

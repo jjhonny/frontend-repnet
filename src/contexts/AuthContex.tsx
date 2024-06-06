@@ -3,6 +3,7 @@ import { api } from "@/services/apiCliente";
 import { destroyCookie, setCookie, parseCookies } from "nookies";
 import Router, { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import router from "next/router";
 
 type AuthContextData = {
   user: UserProps;
@@ -10,6 +11,7 @@ type AuthContextData = {
   signIn: (credentials: SignInProps) => Promise<void>;
   signOut: () => void;
   signUp: (credentials: SignUpProps) => Promise<void>;
+  Infouser: UserProps;
 };
 
 type UserProps = {
@@ -55,45 +57,42 @@ export function signOut() {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>();
+  const [Infouser, SetInfouser] = useState<UserProps>();
   const isAuthenticated = !!user;
+  const router = useRouter();
 
   useEffect(() => {
-    // tentar pegar algo no cookie
     const { "@nextauth.token": token } = parseCookies();
-    if (token) {
-      api
-        .get("/me")
-        .then((response) => {
-          const infoUser = response.data;
-          /* const { cnpj, categoria, razao_social, email } = response.data;
-          localStorage.setItem("CategoriaUser", JSON.stringify(categoria));
-          console.log(infoUser); */
-          setUser(infoUser);
-          console.log(user);
-        })
-        .catch((e) => {
-          console.log(e);
-          signOut();
-        });
-    }
 
-    async function InfoUsers() {
-      const { "@nextauth.token": token } = parseCookies();
+    async function fetchUser() {
       if (token) {
         try {
           const response = await api.get("/me");
-          const { cnpj, categoria, razao_social, email } = response.data;
-
-          setUser({ cnpj, categoria, razao_social, email });
-          console.log(user);
+          const infoUser = response.data;
+          setUser(infoUser);
+          SetInfouser(infoUser);
+          console.log(Infouser);
         } catch (error) {
           console.log(error);
+          signOut();
         }
       }
     }
 
-    InfoUsers();
-  }, []);
+    fetchUser();
+
+    // Listener para mudanças de rota
+    const handleRouteChange = () => {
+      fetchUser();
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // Cleanup listener ao desmontar o componente
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   async function signIn({ cnpj, password }: SignInProps) {
     try {
@@ -169,6 +168,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signIn,
         signOut,
         signUp,
+        Infouser,
       }}
     >
       {children}
