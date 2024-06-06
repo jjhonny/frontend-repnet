@@ -13,6 +13,7 @@ const schema = z.object({
   categoria: z.string().min(1, "A categoria do usuário é obrigatória."),
   razao_social: z.string().min(1, "A Razão social é obrigatória."),
   cnpj: z.string().min(1, "O cnpj é obrigatório."),
+  receita_bruta: z.string(),
   email: z.string().min(1, "O email é obrigatório."),
   password: z.string().min(1, "A senha é obrigatória."),
   passwordC: z.string().min(1, "Confirmar a senha é obrigatório."),
@@ -33,7 +34,22 @@ export default function Cadastro() {
   ];
 
   async function handleSignUp(data: SignUpProps) {
-    await signUp(data);
+    const { categoria, cnpj, email, password, passwordC, razao_social } = data;
+    let { receita_bruta } = data;
+
+    receita_bruta = Number(receita_bruta);
+
+    const dataSignUp = {
+      categoria,
+      cnpj,
+      receita_bruta: receita_bruta,
+      email,
+      password,
+      passwordC,
+      razao_social,
+    };
+
+    await signUp(dataSignUp);
   }
 
   return (
@@ -77,6 +93,15 @@ export default function Cadastro() {
                 icon={<FaUser />}
                 register={register}
                 error={errors.cnpj?.message}
+              />
+              <span className="font-bold">Receita bruta</span>
+              <InputText
+                type="text"
+                className="grow"
+                name="receita_bruta"
+                placeholder="Digite sua receita bruta caso seja cliente"
+                icon={<FaUser />}
+                register={register}
               />
               <span className="font-bold">Email</span>
               <InputText

@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Header } from "@/components/header";
 
 type ProductsProps = {
   descricao: string;
@@ -74,20 +75,7 @@ export default function NovoProduto() {
 
   return (
     <>
-      <header className="w-full h-16 bg-white flex justify-between items-center px-3 shadow-md">
-        <div>Logo</div>
-        <div className="flex gap-4">
-          <Link
-            className="btn btn-sm btn-neutral"
-            href={user.categoria === "C" ? "/cliente" : "/representante"}
-          >
-            Home
-          </Link>
-          <button className="btn btn-sm btn-neutral" onClick={() => signOut()}>
-            Deslogar
-          </button>
-        </div>
-      </header>
+      <Header />
       <main className="flex justify-center min-h-screen items-center p-4">
         <div className="bg-white w-full max-w-3xl px-10 py-5 flex flex-col rounded-lg shadow-lg mt-2">
           <div className="w-full flex justify-center">

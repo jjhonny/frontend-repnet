@@ -29,6 +29,7 @@ export type SignUpProps = {
   categoria: string;
   razao_social: string;
   cnpj: string;
+  receita_bruta: number;
   email: string;
   password: string;
   passwordC: string;
@@ -140,6 +141,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     cnpj,
     email,
     password,
+    receita_bruta,
   }: SignUpProps) {
     try {
       const response = await api.post("/cadastro", {
@@ -148,6 +150,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         cnpj,
         email,
         password,
+        receita_bruta,
       });
 
       Router.push("/login");

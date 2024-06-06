@@ -1,3 +1,4 @@
+import { Header } from "@/components/header";
 import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
@@ -46,22 +47,7 @@ export default function Produtos() {
 
   return (
     <>
-      <header className="w-full h-16 bg-white flex justify-between items-center px-3 shadow-md">
-        <Link href={user.categoria === "C" ? "/cliente" : "/representante"}>
-          <div>Logo</div>
-        </Link>
-        <div className="flex gap-4">
-          <Link
-            className="btn btn-sm btn-neutral"
-            href={user.categoria === "C" ? "/cliente" : "/representante"}
-          >
-            Home
-          </Link>
-          <button className="btn btn-sm btn-neutral" onClick={() => signOut()}>
-            Deslogar
-          </button>
-        </div>
-      </header>
+      <Header />
       <h1 className="flex justify-center mt-6 text-4xl font-bold">
         Produtos {/* - {user.categoria} */}
       </h1>
