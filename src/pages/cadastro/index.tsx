@@ -54,86 +54,102 @@ export default function Cadastro() {
 
   return (
     <>
-      <main className="bg-purple-300 w-full min-h-screen flex justify-center items-center flex-col p-10">
-        <div className="bg-white w-full max-w-lg p-8 py-5 flex flex-col rounded-lg shadow-lg">
+      <main className="bg-purple-300 w-full min-h-screen flex justify-center items-center p-4 md:p-10">
+        <div className="bg-white w-full max-w-4xl p-6 md:p-8 py-5 flex flex-col rounded-lg shadow-lg">
           <div className="w-full flex justify-center">
-            <h1 className="font-bold text-4xl mb-4">Criar Conta</h1>
+            <h1 className="font-bold text-2xl md:text-4xl mb-4">Criar Conta</h1>
           </div>
           <div className="w-full">
             <form
-              className="flex flex-col"
+              className="flex flex-col space-y-4"
               onSubmit={handleSubmit(handleSignUp)}
             >
-              <span className="font-bold">Você é um</span>
-              <Select
-                name="categoria"
-                className="select select-bordered w-full mt-2 mb-2"
-                register={register}
-                options={categoryOptions}
-                placeholder="Selecione uma categoria"
-                rules={{ required: "Por favor, selecione uma categoria" }}
-                error={errors.categoria?.message}
-              />
-              <span className="font-bold">Razão Social</span>
-              <InputText
-                type="text"
-                className="grow"
-                name="razao_social"
-                placeholder="Digite o nome da sua loja"
-                icon={<FaAddressCard />}
-                register={register}
-                error={errors.razao_social?.message}
-              />
-              <span className="font-bold">CNPJ</span>
-              <InputText
-                type="text"
-                className="grow"
-                name="cnpj"
-                placeholder="Digite seu CNPJ"
-                icon={<FaUser />}
-                register={register}
-                error={errors.cnpj?.message}
-              />
-              <span className="font-bold">Receita bruta</span>
-              <InputText
-                type="text"
-                className="grow"
-                name="receita_bruta"
-                placeholder="Digite sua receita bruta caso seja cliente"
-                icon={<FaUser />}
-                register={register}
-              />
-              <span className="font-bold">Email</span>
-              <InputText
-                type="email"
-                className="grow"
-                name="email"
-                placeholder="Digite o seu email"
-                icon={<FaEnvelope />}
-                register={register}
-                error={errors.email?.message}
-              />
-              <span className="font-bold">Senha</span>
-              <InputText
-                type="password"
-                className="grow"
-                name="password"
-                placeholder="Digite sua senha"
-                icon={<FaKey />}
-                register={register}
-                error={errors.password?.message}
-              />
-              <span className="font-bold">Confirmar senha</span>
-              <InputText
-                type="password"
-                className="grow"
-                name="passwordC"
-                placeholder="Confirme a sua senha"
-                icon={<FaKey />}
-                register={register}
-                error={errors.passwordC?.message}
-              />
-              <div className="flex flex-row justify-between pt-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col">
+                  <span className="font-bold">Você é um</span>
+                  <Select
+                    name="categoria"
+                    className="select select-bordered w-full mt-2"
+                    register={register}
+                    options={categoryOptions}
+                    placeholder="Selecione uma categoria"
+                    rules={{ required: "Por favor, selecione uma categoria" }}
+                    error={errors.categoria?.message}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">Razão Social</span>
+                  <InputText
+                    type="text"
+                    className="grow"
+                    name="razao_social"
+                    placeholder="Digite o nome da sua loja"
+                    icon={<FaAddressCard />}
+                    register={register}
+                    error={errors.razao_social?.message}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">CNPJ</span>
+                  <InputText
+                    type="text"
+                    className="grow"
+                    name="cnpj"
+                    placeholder="Digite seu CNPJ"
+                    icon={<FaUser />}
+                    register={register}
+                    error={errors.cnpj?.message}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">Receita bruta</span>
+                  <InputText
+                    type="text"
+                    className="grow"
+                    name="receita_bruta"
+                    placeholder="Digite sua receita bruta caso seja cliente"
+                    icon={<FaUser />}
+                    register={register}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">Email</span>
+                  <InputText
+                    type="email"
+                    className="grow"
+                    name="email"
+                    placeholder="Digite o seu email"
+                    icon={<FaEnvelope />}
+                    register={register}
+                    error={errors.email?.message}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">Senha</span>
+                  <InputText
+                    type="password"
+                    className="grow"
+                    name="password"
+                    placeholder="Digite sua senha"
+                    icon={<FaKey />}
+                    register={register}
+                    error={errors.password?.message}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">Confirmar senha</span>
+                  <InputText
+                    type="password"
+                    className="grow"
+                    name="passwordC"
+                    placeholder="Confirme a sua senha"
+                    icon={<FaKey />}
+                    register={register}
+                    error={errors.passwordC?.message}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between items-center pt-3">
                 <Link className="link link-hover opacity-90" href="/login">
                   Já possui uma conta?
                 </Link>

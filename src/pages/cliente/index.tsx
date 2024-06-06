@@ -1,12 +1,7 @@
 import { Header } from "@/components/header";
-import { AuthContext } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import Link from "next/link";
-import { useContext } from "react";
 
 export default function Cliente() {
-  const { signOut } = useContext(AuthContext);
-
   return (
     <>
       <Header />
