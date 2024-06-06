@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select } from "@/components/select";
+import { MdAttachMoney } from "react-icons/md";
 
 const schema = z.object({
   categoria: z.string().min(1, "A categoria do usuário é obrigatória."),
@@ -78,18 +79,6 @@ export default function Cadastro() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold">Razão Social</span>
-                  <InputText
-                    type="text"
-                    className="grow"
-                    name="razao_social"
-                    placeholder="Digite o nome da sua loja"
-                    icon={<FaAddressCard />}
-                    register={register}
-                    error={errors.razao_social?.message}
-                  />
-                </div>
-                <div className="flex flex-col">
                   <span className="font-bold">CNPJ</span>
                   <InputText
                     type="text"
@@ -102,26 +91,27 @@ export default function Cadastro() {
                   />
                 </div>
                 <div className="flex flex-col">
+                  <span className="font-bold">Razão Social</span>
+                  <InputText
+                    type="text"
+                    className="grow"
+                    name="razao_social"
+                    placeholder="Digite o nome da sua loja"
+                    icon={<FaAddressCard />}
+                    register={register}
+                    error={errors.razao_social?.message}
+                  />
+                </div>
+
+                <div className="flex flex-col">
                   <span className="font-bold">Receita bruta</span>
                   <InputText
                     type="text"
                     className="grow"
                     name="receita_bruta"
                     placeholder="Digite sua receita bruta caso seja cliente"
-                    icon={<FaUser />}
+                    icon={<MdAttachMoney size={18} />}
                     register={register}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">Email</span>
-                  <InputText
-                    type="email"
-                    className="grow"
-                    name="email"
-                    placeholder="Digite o seu email"
-                    icon={<FaEnvelope />}
-                    register={register}
-                    error={errors.email?.message}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -136,6 +126,19 @@ export default function Cadastro() {
                     error={errors.password?.message}
                   />
                 </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">Email</span>
+                  <InputText
+                    type="email"
+                    className="grow"
+                    name="email"
+                    placeholder="Digite o seu email"
+                    icon={<FaEnvelope />}
+                    register={register}
+                    error={errors.email?.message}
+                  />
+                </div>
+
                 <div className="flex flex-col">
                   <span className="font-bold">Confirmar senha</span>
                   <InputText
