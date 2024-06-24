@@ -62,6 +62,26 @@ export function Header() {
                     </Link>
                   </li>
                 )}
+                {user.categoria === "R" && (
+                  <li>
+                    <Link href="/representante/cadastro-categoria">
+                      <span className="flex items-center">
+                        <MdAddCircleOutline size={22} className="mr-2" />
+                        Cadastrar Categoria
+                      </span>
+                    </Link>
+                  </li>
+                )}
+                {user.categoria === "R" && (
+                  <li>
+                    <Link href="/representante/cadastro-marca">
+                      <span className="flex items-center">
+                        <MdAddCircleOutline size={22} className="mr-2" />
+                        Cadastrar Marca
+                      </span>
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <Link href="/carrinho">
                     <span className="flex items-center">

@@ -68,10 +68,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (token) {
         try {
           const response = await api.get("/me");
-          const infoUser = response.data;
+          const infoUser = await response.data;
           setUser(infoUser);
           SetInfouser(infoUser);
-          console.log(Infouser);
+          console.log(user);
         } catch (error) {
           console.log(error);
           signOut();
