@@ -1,20 +1,15 @@
-/* import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { ProductsProps } from "@/pages/produtos";
 
 interface CartContextData {
   cart: CartProps[];
   cartAmount: number;
   addItemCart: (newItem: ProductsProps) => void;
-  removeItemCart: (product: CartProps) => void;
+  removeItemCart: (productId: number) => void;
   total: string;
 }
 
-interface CartProps {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  cover: string;
+interface CartProps extends ProductsProps {
   amount: number;
   total: number;
 }
@@ -25,7 +20,15 @@ interface CartProviderProps {
 
 export const CartContext = createContext({} as CartContextData);
 
-function CartProvider({ children }: CartProviderProps) {
+export function useCart() {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+}
+
+export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<CartProps[]>([]);
   const [total, setTotal] = useState("");
 
@@ -33,64 +36,61 @@ function CartProvider({ children }: CartProviderProps) {
     const indexItem = cart.findIndex((item) => item.id === newItem.id);
 
     if (indexItem !== -1) {
-      let cartList = cart;
+      let cartList = [...cart];
 
-      cartList[indexItem].amount = cartList[indexItem].amount + 1;
+      cartList[indexItem].amount++;
       cartList[indexItem].total =
-        cartList[indexItem].amount * cartList[indexItem].price;
+        cartList[indexItem].amount * cartList[indexItem].preco;
 
       setCart(cartList);
-      totalResultCart(cartList);
+      calculateTotal(cartList);
       return;
     }
 
-    let data = {
+    let data: CartProps = {
       ...newItem,
       amount: 1,
-      total: newItem.price,
+      total: newItem.preco,
     };
 
-    setCart((products) => [...products, data]);
-    totalResultCart([...cart, data]);
+    setCart([...cart, data]);
+    calculateTotal([...cart, data]);
   }
 
-  function removeItemCart(product: CartProps) {
-    const indexItem = cart.findIndex((item) => item.id === product.id);
+  function removeItemCart(productId: number) {
+    const updatedCart = cart
+      .map((item) => {
+        if (item.id === productId) {
+          return {
+            ...item,
+            amount: item.amount - 1,
+            total: item.total - item.preco,
+          };
+        }
+        return item;
+      })
+      .filter((item) => item.amount > 0);
 
-    if (cart[indexItem]?.amount > 1) {
-      let cartList = cart;
-
-      cartList[indexItem].amount = cartList[indexItem].amount - 1;
-      cartList[indexItem].total =
-        cartList[indexItem].total - cartList[indexItem].price;
-
-      setCart(cartList);
-      totalResultCart(cartList);
-      return;
-    }
-
-    const removeItem = cart.filter((item) => item.id !== product.id);
-    setCart(removeItem);
-    totalResultCart(removeItem);
+    setCart(updatedCart);
+    calculateTotal(updatedCart);
   }
 
-  function totalResultCart(items: CartProps[]) {
-    let myCart = items;
-    let result = myCart.reduce((acc, obj) => {
+  function calculateTotal(items: CartProps[]) {
+    let result = items.reduce((acc, obj) => {
       return acc + obj.total;
     }, 0);
-    const resultFormated = result.toLocaleString("pt-BR", {
+    const resultFormatted = result.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
-    setTotal(resultFormated);
+    setTotal(resultFormatted);
   }
 
   return (
     <CartContext.Provider
       value={{
         cart,
-        cartAmount: cart.length,
+        cartAmount: cart.reduce((acc, item) => acc + item.amount, 0),
         addItemCart,
         removeItemCart,
         total,
@@ -100,6 +100,3 @@ function CartProvider({ children }: CartProviderProps) {
     </CartContext.Provider>
   );
 }
-
-export default CartProvider;
- */

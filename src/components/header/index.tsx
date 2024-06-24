@@ -6,9 +6,16 @@ import { FiShoppingCart } from "react-icons/fi";
 import { IoPerson } from "react-icons/io5";
 import { MdAddCircleOutline, MdHome, MdLogout } from "react-icons/md";
 import { FaBoxes } from "react-icons/fa";
+import { useCart } from "@/contexts/CartContext";
 
 export function Header() {
   const { signOut, user } = useContext(AuthContext);
+  const { cart, total } = useCart();
+
+  // Função para calcular o número total de itens no carrinho
+  const getTotalItems = () => {
+    return cart.reduce((total, item) => total + item.amount, 0);
+  };
 
   return (
     <header className="w-full h-20 bg-white flex justify-between items-center px-3 shadow-md">
@@ -16,7 +23,7 @@ export function Header() {
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
-            {/* Page content here */}
+            {/* Conteúdo da página aqui */}
             <label
               htmlFor="my-drawer"
               className="btn btn-primary drawer-button"
@@ -87,6 +94,11 @@ export function Header() {
                     <span className="flex items-center">
                       <FiShoppingCart size={22} className="mr-2" />
                       Carrinho
+                      {cart.length > 0 && (
+                        <span className="badge badge-primary ml-2">
+                          {getTotalItems()}
+                        </span>
+                      )}
                     </span>
                   </Link>
                 </li>
@@ -125,9 +137,11 @@ export function Header() {
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <FiShoppingCart size={24} />
-              <span className="badge badge-primary badge-sm indicator-item">
-                8
-              </span>
+              {cart.length > 0 && (
+                <span className="badge badge-primary badge-sm indicator-item">
+                  {getTotalItems()}
+                </span>
+              )}
             </div>
           </div>
           <div
@@ -135,8 +149,8 @@ export function Header() {
             className="mt-4 z-[1] card card-compact dropdown-content w-56 bg-base-100 shadow"
           >
             <div className="card-body">
-              <span className="font-bold text-lg">8 Items</span>
-              <span className="mb-1">Subtotal: $999</span>
+              <span className="font-bold text-lg">{getTotalItems()} Itens</span>
+              <span className="mb-1">Total: {total}</span>
               <div className="card-actions">
                 <Link href="/carrinho" className="btn btn-primary btn-block">
                   Ver carrinho
@@ -181,7 +195,6 @@ export function Header() {
               </button>
             </li>
           </ul>
-
         </div>
         <span className="ml-2 font-bold">{user.razao_social}</span>
       </div>

@@ -4,6 +4,8 @@ import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import { useCart } from "@/contexts/CartContext";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface ProductsProps {
   id: number;
@@ -17,6 +19,7 @@ export interface ProductsProps {
 
 export default function Produtos() {
   const { user, signOut } = useContext(AuthContext);
+  const { addItemCart, cart } = useCart();
   const [products, setProducts] = useState<ProductsProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -25,7 +28,7 @@ export default function Produtos() {
       setLoading(true);
       try {
         const response = await api.get("/produtos");
-        const produtosBack = response.data;
+        const produtosBack: ProductsProps[] = response.data;
         console.log(produtosBack);
         if (produtosBack.length >= 1) {
           setProducts(produtosBack);
@@ -40,9 +43,23 @@ export default function Produtos() {
     handleSearchProduct();
   }, []);
 
+  // Função para adicionar item ao carrinho e exibir toast
+  const handleAddToCart = (item: ProductsProps) => {
+    addItemCart(item);
+    toast.success(`${item.descricao} adicionado ao carrinho com sucesso!`, {
+      duration: 1500,
+      position: "top-center",
+      style: {
+        background: "#333",
+        color: "#fff",
+      },
+    });
+  };
+
   return (
     <>
       <Header />
+      <Toaster /> {/* Componente Toaster para exibir toasts */}
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-center mb-8">Produtos</h1>
         {loading ? (
@@ -50,7 +67,7 @@ export default function Produtos() {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <div className="w-full flex flex-wrap justify-center  max-w-7xl mx-auto px-4 mt-6 gap-6">
+          <div className="w-full flex flex-wrap justify-center max-w-7xl mx-auto px-4 mt-6 gap-6">
             {products.length >= 1 ? (
               products.map((item) => (
                 <div
@@ -75,10 +92,17 @@ export default function Produtos() {
                         }).format(Number(item.preco))}
                       </p>
                     </div>
-                    <div className="mt-2">
-                      <button className="btn btn-primary w-full">
+                    <div className="flex items-center mt-2">
+                      <button
+                        className="btn btn-primary w-full"
+                        onClick={() => handleAddToCart(item)}
+                      >
                         Comprar
                       </button>
+                      <span className="ml-2">
+                        {cart.find((cartItem) => cartItem.id === item.id)
+                          ?.amount || 0}
+                      </span>
                     </div>
                   </div>
                 </div>
