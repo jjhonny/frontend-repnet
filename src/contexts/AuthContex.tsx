@@ -70,7 +70,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           const response = await api.get("/me");
           const infoUser = await response.data;
           setUser(infoUser);
-          SetInfouser(infoUser);
           console.log(user);
         } catch (error) {
           console.log(error);

@@ -52,7 +52,7 @@ export default function NovoProduto() {
       try {
         const response = await api.get("/categorias");
         const categories = response.data.map((category: any) => ({
-          value: category.id,
+          value: category.razao_social,
           label: category.nome,
         }));
         setCategoryOptions(categories);
@@ -87,7 +87,7 @@ export default function NovoProduto() {
     let { peso, preco } = dataProduct;
     peso = Number(peso);
     preco = Number(preco);
-
+    console.log(categoria);
     const dataProductFormated = {
       categoria: categoria,
       marca: marca,
@@ -96,6 +96,8 @@ export default function NovoProduto() {
       preco: preco,
       validade: validade,
     };
+
+    console.log(dataProductFormated);
 
     try {
       setLoading(true);
