@@ -1,5 +1,14 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+// CartContext.tsx
+
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { ProductsProps } from "@/pages/produtos";
+import { AuthContext } from "@/contexts/AuthContex"; // Importar o contexto de autenticação
 
 interface CartContextData {
   cart: CartProps[];
@@ -21,16 +30,28 @@ interface CartProviderProps {
 export const CartContext = createContext({} as CartContextData);
 
 export function useCart() {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
+  return useContext(CartContext);
 }
 
 export function CartProvider({ children }: CartProviderProps) {
+  const { user } = useContext(AuthContext); // Obtém o usuário logado do contexto de autenticação
   const [cart, setCart] = useState<CartProps[]>([]);
   const [total, setTotal] = useState("");
+  const cartKey = `cart_${user?.cnpj}`; // Define uma chave única para o carrinho do usuário
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem(cartKey); // Tenta carregar o carrinho do localStorage
+
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    } else {
+      setCart([]); // Se não houver carrinho salvo, inicializa como vazio
+    }
+  }, [user]); // Atualiza o carrinho quando o usuário mudar
+
+  useEffect(() => {
+    localStorage.setItem(cartKey, JSON.stringify(cart)); // Salva o carrinho no localStorage ao ser alterado
+  }, [cart, cartKey]);
 
   function addItemCart(newItem: ProductsProps) {
     const indexItem = cart.findIndex((item) => item.id === newItem.id);
