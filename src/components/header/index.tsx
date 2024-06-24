@@ -101,7 +101,7 @@ export function Header() {
                     }
                   >
                     <span className="flex items-center">
-                      <IoPerson size={22} className="mr-4" />
+                      <IoPerson size={22} className="mr-2" />
                       Perfil
                     </span>
                   </Link>
@@ -181,7 +181,9 @@ export function Header() {
               </button>
             </li>
           </ul>
+
         </div>
+        <span className="ml-2 font-bold">{user.razao_social}</span>
       </div>
     </header>
   );

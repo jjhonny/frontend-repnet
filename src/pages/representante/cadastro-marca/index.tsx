@@ -111,7 +111,7 @@ export default function NovaMarca() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button className="btn btn-neutral w-full" type="submit">
+                <button className="btn btn-primary w-full" type="submit">
                   Registrar Marca
                 </button>
               )}

@@ -162,7 +162,7 @@ export default function NovoProduto() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button className="btn btn-neutral w-full" type="submit">
+                <button className="btn btn-primary w-full" type="submit">
                   Cadastrar Produto
                 </button>
               )}

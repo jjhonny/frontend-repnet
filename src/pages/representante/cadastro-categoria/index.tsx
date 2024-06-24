@@ -82,7 +82,7 @@ export default function NovaCategoria() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button className="btn btn-neutral w-full" type="submit">
+                <button className="btn btn-primary w-full" type="submit">
                   Registrar Categoria
                 </button>
               )}

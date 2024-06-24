@@ -1,10 +1,46 @@
 import { Header } from "@/components/header";
 import { AuthContext } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios"; // Importe o axios ou outra biblioteca de requisições HTTP que você esteja usando
+import { FaCheck, FaPen, FaTimes } from "react-icons/fa";
 
 export default function PerfilRepre() {
   const { Infouser } = useContext(AuthContext);
+  const [editing, setEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    razao_social: Infouser.razao_social,
+    email: Infouser.email,
+    password: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditClick = () => {
+    setEditing(true);
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      const response = await axios.patch("/api/perfil/atualizar", {
+        cnpj: Infouser.cnpj,
+        razao_social: formData.razao_social,
+        email: formData.email,
+        password: formData.password,
+      });
+      toast.success("Informações atualizadas com sucesso!");
+      setEditing(false);
+    } catch (error) {
+      console.error("Erro ao atualizar informações:", error);
+      toast.error("Erro ao atualizar informações. Tente novamente mais tarde.");
+    }
+  };
 
   return (
     <>
@@ -22,16 +58,18 @@ export default function PerfilRepre() {
               </label>
               <input
                 type="text"
-                className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                value={Infouser.razao_social}
-                readOnly
+                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"}`}
+                value={formData.razao_social}
+                onChange={handleInputChange}
+                readOnly={!editing}
+                name="razao_social"
               />
             </div>
             <div className="flex flex-col">
               <label className="mb-2 font-medium text-gray-700">CNPJ</label>
               <input
                 type="text"
-                className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
                 value={Infouser.cnpj}
                 readOnly
               />
@@ -40,9 +78,11 @@ export default function PerfilRepre() {
               <label className="mb-2 font-medium text-gray-700">Email</label>
               <input
                 type="email"
-                className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                value={Infouser.email}
-                readOnly
+                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"}`}
+                value={formData.email}
+                onChange={handleInputChange}
+                readOnly={!editing}
+                name="email"
               />
             </div>
             <div className="flex flex-col">
@@ -51,11 +91,47 @@ export default function PerfilRepre() {
               </label>
               <input
                 type="text"
-                className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
                 value={Infouser.categoria === "C" ? "Cliente" : "Representante"}
                 readOnly
               />
             </div>
+            <div className="flex flex-col">
+              <label className="mb-2 font-medium text-gray-700">Nova Senha</label>
+              <input
+                type="password"
+                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"}`}
+                value={formData.password}
+                onChange={handleInputChange}
+                readOnly={!editing}
+                name="password"
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            {!editing ? (
+              <button
+                className="btn btn-primary"
+                onClick={handleEditClick}
+              >
+                <FaPen /> Editar
+              </button>
+            ) : (
+              <div>
+                <button
+                  className="btn btn-primary mr-2"
+                  onClick={handleSaveClick}
+                >
+                  <FaCheck /> Salvar
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setEditing(false)}
+                >
+                  <FaTimes /> Cancelar
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
