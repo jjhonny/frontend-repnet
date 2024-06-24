@@ -75,7 +75,7 @@ export default function Produtos() {
                   className="bg-white rounded-lg shadow-md overflow-hidden w-60"
                 >
                   <img
-                    src="https://via.placeholder.com/150"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGRfpJKsBaksNVviozHltzSiDKBkrxutwk_oG0kI3GQ7sustMg4y8sWYQQeb_QFUmGAI&usqp=CAU"
                     alt="Produto"
                     className="w-full h-32 object-cover"
                   />
