@@ -7,11 +7,11 @@ import axios from "axios"; // Importe o axios ou outra biblioteca de requisiçõ
 import { FaCheck, FaPen, FaTimes } from "react-icons/fa";
 
 export default function PerfilRepre() {
-  const { Infouser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
-    razao_social: Infouser.razao_social,
-    email: Infouser.email,
+    razao_social: user.razao_social,
+    email: user.email,
     password: "",
   });
 
@@ -29,7 +29,7 @@ export default function PerfilRepre() {
   const handleSaveClick = async () => {
     try {
       const response = await axios.patch("/api/perfil/atualizar", {
-        cnpj: Infouser.cnpj,
+        cnpj: user.cnpj,
         razao_social: formData.razao_social,
         email: formData.email,
         password: formData.password,
@@ -47,7 +47,7 @@ export default function PerfilRepre() {
       <Header />
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
-          Perfil do {Infouser.categoria === "C" ? "Cliente" : "Representante"}
+          Perfil do {user.categoria === "C" ? "Cliente" : "Representante"}
         </h1>
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Informações do Usuário</h2>
@@ -58,7 +58,9 @@ export default function PerfilRepre() {
               </label>
               <input
                 type="text"
-                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"}`}
+                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
+                  editing ? "bg-white" : "bg-gray-100"
+                }`}
                 value={formData.razao_social}
                 onChange={handleInputChange}
                 readOnly={!editing}
@@ -70,7 +72,7 @@ export default function PerfilRepre() {
               <input
                 type="text"
                 className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
-                value={Infouser.cnpj}
+                value={user.cnpj}
                 readOnly
               />
             </div>
@@ -78,7 +80,9 @@ export default function PerfilRepre() {
               <label className="mb-2 font-medium text-gray-700">Email</label>
               <input
                 type="email"
-                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"}`}
+                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
+                  editing ? "bg-white" : "bg-gray-100"
+                }`}
                 value={formData.email}
                 onChange={handleInputChange}
                 readOnly={!editing}
@@ -92,15 +96,19 @@ export default function PerfilRepre() {
               <input
                 type="text"
                 className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
-                value={Infouser.categoria === "C" ? "Cliente" : "Representante"}
+                value={user.categoria === "C" ? "Cliente" : "Representante"}
                 readOnly
               />
             </div>
             <div className="flex flex-col">
-              <label className="mb-2 font-medium text-gray-700">Nova Senha</label>
+              <label className="mb-2 font-medium text-gray-700">
+                Nova Senha
+              </label>
               <input
                 type="password"
-                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"}`}
+                className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
+                  editing ? "bg-white" : "bg-gray-100"
+                }`}
                 value={formData.password}
                 onChange={handleInputChange}
                 readOnly={!editing}
@@ -110,10 +118,7 @@ export default function PerfilRepre() {
           </div>
           <div className="mt-4">
             {!editing ? (
-              <button
-                className="btn btn-primary"
-                onClick={handleEditClick}
-              >
+              <button className="btn btn-primary" onClick={handleEditClick}>
                 <FaPen /> Editar
               </button>
             ) : (

@@ -3,12 +3,13 @@ import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
+import { Select } from "@/components/select";
 
 type ProductsProps = {
   descricao: string;
@@ -39,6 +40,45 @@ export default function NovoProduto() {
   });
   const { signOut, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [categoryOptions, setCategoryOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [brandOptions, setBrandOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await api.get("/categorias");
+        const categories = response.data.map((category: any) => ({
+          value: category.id,
+          label: category.nome,
+        }));
+        setCategoryOptions(categories);
+      } catch (error) {
+        console.error("Erro ao buscar categorias", error);
+        toast.error("Erro ao buscar categorias.");
+      }
+    }
+
+    async function fetchBrands() {
+      try {
+        const response = await api.get("/marcas");
+        const brands = response.data.map((brand: any) => ({
+          value: brand.id,
+          label: brand.razao_social,
+        }));
+        setBrandOptions(brands);
+      } catch (error) {
+        console.error("Erro ao buscar marcas", error);
+        toast.error("Erro ao buscar marcas.");
+      }
+    }
+
+    fetchCategories();
+    fetchBrands();
+  }, []);
 
   async function handleRegisterProduct(dataProduct: ProductsProps) {
     console.log(dataProduct);
@@ -131,23 +171,25 @@ export default function NovoProduto() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="font-bold">Categoria do produto</span>
-                <InputText
-                  type="text"
+                <Select
                   name="categoria"
-                  className="grow"
-                  placeholder="Digite a categoria do produto"
+                  className="select select-bordered w-full mt-2"
                   register={register}
+                  options={categoryOptions}
+                  placeholder="Selecione uma categoria"
+                  rules={{ required: "Por favor, selecione uma categoria" }}
                   error={errors.categoria?.message}
                 />
               </div>
               <div className="mb-4">
                 <span className="font-bold">Marca do produto</span>
-                <InputText
-                  type="text"
+                <Select
                   name="marca"
-                  className="grow"
-                  placeholder="Digite a marca do produto"
+                  className="select select-bordered w-full mt-2"
                   register={register}
+                  options={brandOptions}
+                  placeholder="Selecione uma marca"
+                  rules={{ required: "Por favor, selecione uma marca" }}
                   error={errors.marca?.message}
                 />
               </div>
