@@ -29,7 +29,8 @@ export default function Produtos() {
       api
         .get("/produtos")
         .then((response) => {
-          const produtosBack = response.data.produtos;
+          const produtosBack = response.data;
+          console.log(produtosBack);
           if (produtosBack.length >= 1) {
             SetProducts(produtosBack);
           }
