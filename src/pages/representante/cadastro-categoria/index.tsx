@@ -39,8 +39,16 @@ export default function NovaCategoria() {
 
     try {
       setLoading(true);
-      const response = await api.post("/cadastro-categoria", dataCategoryFormated);
-      toast.success("Categoria cadastrada com sucesso!");
+      const response = await api.post(
+        "/cadastro-categoria",
+        dataCategoryFormated
+      );
+      toast.success("Categoria cadastrada com sucesso!", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
       reset();
     } catch (error) {
       console.log(error);

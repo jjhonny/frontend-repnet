@@ -102,7 +102,12 @@ export default function NovoProduto() {
     try {
       setLoading(true);
       const response = await api.post("/cadastro-produto", dataProductFormated);
-      toast.success("Produto cadastrado com sucesso!");
+      toast.success("Produto cadastrado com sucesso!", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
       reset();
     } catch (error) {
       console.log(error);

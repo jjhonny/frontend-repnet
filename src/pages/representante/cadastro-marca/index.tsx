@@ -40,7 +40,12 @@ export default function NovaMarca() {
     try {
       setLoading(true);
       const response = await api.post("/cadastro-marca", data);
-      toast.success("Marca cadastrada com sucesso!");
+      toast.success("Marca cadastrada com sucesso!", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
       reset(); // Reseta todos os campos do formulário
     } catch (error) {
       console.log(error);

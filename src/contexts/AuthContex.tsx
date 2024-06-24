@@ -49,6 +49,10 @@ export function signOut() {
     Router.push("/login");
     toast.success("Deslogado com sucesso!", {
       position: "top-right",
+      style: {
+        background: "#333",
+        color: "#fff",
+      },
     });
   } catch {
     toast.error("Erro ao deslogar");
@@ -122,10 +126,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // Redirecionar para a página inicial após o login
       if (response.data.categoria === "C") {
         Router.push("/cliente");
-        toast.success("Logado com sucesso!");
+        toast.success("Logado com sucesso!", {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
       } else {
         Router.push("/representante");
-        toast.success("Logado com sucesso!");
+        toast.success("Logado com sucesso!", {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
       }
     } catch (error) {
       toast.error("Erro ao acessar");
@@ -152,7 +166,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       Router.push("/login");
-      toast.success("Cadastrado com sucesso!");
+      toast.success("Cadastrado com sucesso!", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } catch (error) {
       toast.error("Erro ao cadastrar");
       console.log(error);

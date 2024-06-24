@@ -1,5 +1,3 @@
-// CartContext.tsx
-
 import {
   createContext,
   ReactNode,
@@ -15,6 +13,7 @@ interface CartContextData {
   cartAmount: number;
   addItemCart: (newItem: ProductsProps) => void;
   removeItemCart: (productId: number) => void;
+  clearCart: () => void; // Adicionei a função clearCart
   total: string;
 }
 
@@ -51,6 +50,7 @@ export function CartProvider({ children }: CartProviderProps) {
 
   useEffect(() => {
     localStorage.setItem(cartKey, JSON.stringify(cart)); // Salva o carrinho no localStorage ao ser alterado
+    calculateTotal(cart); // Calcula o total ao alterar o carrinho
   }, [cart, cartKey]);
 
   function addItemCart(newItem: ProductsProps) {
@@ -64,7 +64,6 @@ export function CartProvider({ children }: CartProviderProps) {
         cartList[indexItem].amount * cartList[indexItem].preco;
 
       setCart(cartList);
-      calculateTotal(cartList);
       return;
     }
 
@@ -75,7 +74,6 @@ export function CartProvider({ children }: CartProviderProps) {
     };
 
     setCart([...cart, data]);
-    calculateTotal([...cart, data]);
   }
 
   function removeItemCart(productId: number) {
@@ -93,17 +91,22 @@ export function CartProvider({ children }: CartProviderProps) {
       .filter((item) => item.amount > 0);
 
     setCart(updatedCart);
-    calculateTotal(updatedCart);
+  }
+
+  function clearCart() {
+    setCart([]);
   }
 
   function calculateTotal(items: CartProps[]) {
     let result = items.reduce((acc, obj) => {
       return acc + obj.total;
     }, 0);
+
     const resultFormatted = result.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
+
     setTotal(resultFormatted);
   }
 
@@ -114,6 +117,7 @@ export function CartProvider({ children }: CartProviderProps) {
         cartAmount: cart.reduce((acc, item) => acc + item.amount, 0),
         addItemCart,
         removeItemCart,
+        clearCart,
         total,
       }}
     >
