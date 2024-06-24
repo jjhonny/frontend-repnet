@@ -1,5 +1,5 @@
 import { Header } from "@/components/header";
-import { FaShoppingCart, FaTrash } from "react-icons/fa"; // Importe o ícone FaTrash para remover itens
+import { FaShoppingCart, FaTrash } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
 import toast from "react-hot-toast";
 

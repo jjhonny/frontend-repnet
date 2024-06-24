@@ -6,14 +6,14 @@ import {
   useEffect,
 } from "react";
 import { ProductsProps } from "@/pages/produtos";
-import { AuthContext } from "@/contexts/AuthContex"; // Importar o contexto de autenticação
+import { AuthContext } from "@/contexts/AuthContex";
 
 interface CartContextData {
   cart: CartProps[];
   cartAmount: number;
   addItemCart: (newItem: ProductsProps) => void;
   removeItemCart: (productId: number) => void;
-  clearCart: () => void; // Adicionei a função clearCart
+  clearCart: () => void;
   total: string;
 }
 

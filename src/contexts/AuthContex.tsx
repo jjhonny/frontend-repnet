@@ -3,7 +3,6 @@ import { api } from "@/services/apiCliente";
 import { destroyCookie, setCookie, parseCookies } from "nookies";
 import Router, { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import router from "next/router";
 
 type AuthContextData = {
   user: UserProps;
