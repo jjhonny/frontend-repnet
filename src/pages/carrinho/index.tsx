@@ -2,9 +2,14 @@ import { Header } from "@/components/header";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
 import toast from "react-hot-toast";
+import { api } from "@/services/apiCliente";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/contexts/AuthContex";
 
 export default function Carrinho() {
-  const { cart, total, removeItemCart } = useCart();
+  const { user } = useContext(AuthContext)
+  const { cart, total, removeItemCart, clearCart } = useCart();
+  const [pedidoId, setPedidoId] = useState(null); // Estado para armazenar o ID do pedido
 
   const handleRemoveItem = (productId) => {
     removeItemCart(productId);
@@ -17,6 +22,93 @@ export default function Carrinho() {
       },
     });
   };
+
+
+  const handleFinalizePurchase = async (id_pedido) => {
+    try {
+      const response = await api.post('/enviar-pedido', {
+        id_pedido: id_pedido,
+      });
+
+      if (response.status === 200) {
+        toast.success('Pedido Finalizado com Sucesso! E-mail enviado.', {
+          duration: 2000,
+          position: 'top-center',
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        });
+        clearCart();
+      } else {
+        toast.error('Erro ao finalizar a compra.', {
+          duration: 1500,
+          position: 'top-center',
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        });
+      }
+    } catch (error) {
+      toast.error('Erro ao finalizar a compra.', {
+        duration: 1500,
+        position: 'top-center',
+        style: {
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    }
+  };
+
+  const handleRegisterOrder = async () => {
+    try {
+      const itens = cart.map((item) => ({
+        id_prod: item.id,
+        quantidade: item.amount,
+      }));
+
+      const response = await api.post('/cadastro-pedido', {
+        cnpj_cli: user.cnpj, // CNPJ do cliente (substitua pelo seu sistema de autenticação)
+        cnpj_rep: '00.000.000/0000-01', // CNPJ do representante (substitua pelo seu sistema de autenticação)
+        itens,
+      });
+
+      const id_pedido = response.data.id
+      if (response.status === 200) {
+        toast.success('Pedido registrado. Aguarde alguns segundos para ser enviado para o seu E-mail.', {
+          duration: 1500,
+          position: 'top-center',
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        });
+
+        handleFinalizePurchase(id_pedido)
+      } else {
+        toast.error('Erro ao finalizar a compra.', {
+          duration: 1500,
+          position: 'top-center',
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        });
+      }
+    } catch (error) {
+      toast.error('Erro ao finalizar a compra.', {
+        duration: 1500,
+        position: 'top-center',
+        style: {
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    }
+  };
+
 
   return (
     <div>
@@ -61,14 +153,13 @@ export default function Carrinho() {
             <div className="mt-3 text-2xl">Carrinho vazio</div>
           )}
         </div>
-
         <div className="mt-4 text-right">
           <p className="text-lg font-semibold">Total: {total}</p>
         </div>
         <div className="mt-8 flex justify-end">
-          <button className="btn btn-primary flex items-center">
+          <button className="btn btn-primary flex items-center" onClick={handleRegisterOrder}>
             <FaShoppingCart className="mr-2" />
-            Finalizar Compra ({cart.reduce(
+            Finalizar Pedido ({cart.reduce(
               (acc, item) => acc + item.amount,
               0
             )}{" "}
