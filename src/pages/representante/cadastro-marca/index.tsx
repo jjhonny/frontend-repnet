@@ -63,11 +63,13 @@ export default function NovaMarca() {
         <h1 className="text-2xl font-bold mb-4 text-center">
           Cadastrar nova Marca
         </h1>
-        <div className="bg-white rounded-lg shadow-lg px-8 py-6 space-y-4">
+        <div className="bg-white rounded-2xl shadow-2xl px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterBrand)}>
             <div className="mb-4">
               <div>
-                <span className="font-bold">CNPJ Representante<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  CNPJ Representante<span className="text-red-500">*</span>
+                </span>
                 <InputText
                   mask="99.999.999/9999-99"
                   type="text"
@@ -81,7 +83,9 @@ export default function NovaMarca() {
             </div>
             <div className="mb-4">
               <div>
-                <span className="font-bold">CNPJ Marca<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  CNPJ Marca<span className="text-red-500">*</span>
+                </span>
                 <InputText
                   mask="99.999.999/9999-99"
                   type="text"
@@ -95,7 +99,9 @@ export default function NovaMarca() {
             </div>
             <div className="mb-4">
               <div>
-                <span className="font-bold">Razão Social<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  Razão Social<span className="text-red-500">*</span>
+                </span>
                 <InputText
                   type="text"
                   name="razao_social"
@@ -116,7 +122,10 @@ export default function NovaMarca() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button className="btn btn-primary w-full" type="submit">
+                <button
+                  className="btn btn-primary w-full rounded-2xl"
+                  type="submit"
+                >
                   Registrar Marca
                 </button>
               )}

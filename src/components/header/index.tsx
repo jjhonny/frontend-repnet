@@ -7,6 +7,7 @@ import { IoPerson } from "react-icons/io5";
 import { MdAddCircleOutline, MdHome, MdLogout } from "react-icons/md";
 import { FaBoxes } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
+import { BsBagCheckFill } from "react-icons/bs";
 
 export function Header() {
   const { signOut, user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ export function Header() {
   };
 
   return (
-    <header className="w-full h-20 bg-white/80 flex justify-between items-center px-3 shadow-md">
+    <header className="w-full h-20 bg-white/80 flex justify-between items-center px-3 shadow-lg">
       <div>
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -26,7 +27,7 @@ export function Header() {
             {/* Conteúdo da página aqui */}
             <label
               htmlFor="my-drawer"
-              className="btn btn-primary drawer-button"
+              className="btn btn-primary drawer-button rounded-xl"
             >
               Menu
             </label>
@@ -59,6 +60,16 @@ export function Header() {
                     </span>
                   </Link>
                 </li>
+                {user.categoria === "C" && (
+                  <li>
+                    <Link href="/cliente/pedidos">
+                      <span className="flex items-center">
+                        <BsBagCheckFill size={22} className="mr-2" />
+                        Meus Pedidos
+                      </span>
+                    </Link>
+                  </li>
+                )}
                 {user.categoria === "R" && (
                   <li>
                     <Link href="/representante/cadastro-produto">
@@ -152,7 +163,10 @@ export function Header() {
               <span className="font-bold text-lg">{getTotalItems()} Itens</span>
               <span className="mb-1">Total: {total}</span>
               <div className="card-actions">
-                <Link href="/carrinho" className="btn btn-primary btn-block">
+                <Link
+                  href="/carrinho"
+                  className="btn btn-primary btn-block rounded-2xl"
+                >
                   Ver carrinho
                 </Link>
               </div>

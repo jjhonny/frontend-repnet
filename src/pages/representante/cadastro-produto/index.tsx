@@ -125,11 +125,13 @@ export default function NovoProduto() {
         <h1 className="text-2xl font-bold mb-4 text-center">
           Cadastrar novo produto
         </h1>
-        <div className="bg-white rounded-lg shadow-lg px-8 py-6 space-y-4">
+        <div className="bg-white rounded-2xl shadow-2xl px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterProduct)}>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="font-bold">Nome do produto<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  Nome do produto<span className="text-red-500">*</span>
+                </span>
                 <InputText
                   type="text"
                   name="descricao"
@@ -164,7 +166,9 @@ export default function NovoProduto() {
                 />
               </div>
               <div className="mb-4">
-                <span className="font-bold">Preço do produto<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  Preço do produto<span className="text-red-500">*</span>
+                </span>
                 <InputText
                   type="number"
                   name="preco"
@@ -177,7 +181,9 @@ export default function NovoProduto() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="font-bold">Categoria do produto<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  Categoria do produto<span className="text-red-500">*</span>
+                </span>
                 <Select
                   name="categoria"
                   className="select select-bordered w-full mt-2"
@@ -189,7 +195,9 @@ export default function NovoProduto() {
                 />
               </div>
               <div className="mb-4">
-                <span className="font-bold">Marca do produto<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  Marca do produto<span className="text-red-500">*</span>
+                </span>
                 <Select
                   name="marca"
                   className="select select-bordered w-full mt-2"
@@ -211,7 +219,10 @@ export default function NovoProduto() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button className="btn btn-primary w-full" type="submit">
+                <button
+                  className="btn btn-primary w-full rounded-2xl"
+                  type="submit"
+                >
                   Cadastrar Produto
                 </button>
               )}

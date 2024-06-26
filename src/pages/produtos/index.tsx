@@ -61,10 +61,10 @@ export default function Produtos() {
     if (!dateString) return "Sem data";
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return "Data inválida";
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
   };
 
@@ -84,10 +84,10 @@ export default function Produtos() {
               products.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden w-60"
+                  className="bg-white rounded-2xl shadow-2xl overflow-hidden w-64 hover:scale-105 transition-all pb-1"
                 >
                   <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGRfpJKsBaksNVviozHltzSiDKBkrxutwk_oG0kI3GQ7sustMg4y8sWYQQeb_QFUmGAI&usqp=CAU"
+                    src="https://cdn.sanity.io/images/tlr8oxjg/production/7b7f05720074a848850e0705779306c27da5a6cf-1065x597.png?w=3840&q=80&fit=clip&auto=format"
                     alt="Produto"
                     className="w-full h-40 object-cover shadow-lg"
                   />
@@ -106,12 +106,11 @@ export default function Produtos() {
                     </div>
                     <div className="flex items-center mt-2">
                       <button
-                        className="btn btn-primary w-full"
+                        className="btn btn-primary w-full rounded-2xl"
                         onClick={() => handleAddToCart(item)}
                       >
                         Comprar
                       </button>
-
                     </div>
                   </div>
                 </div>

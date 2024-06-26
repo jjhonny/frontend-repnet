@@ -65,11 +65,13 @@ export default function NovaCategoria() {
         <h1 className="text-2xl font-bold mb-4 text-center text-black">
           Cadastrar nova Categoria
         </h1>
-        <div className="bg-white rounded-lg shadow-lg px-8 py-6 space-y-4">
+        <div className="bg-white rounded-2xl shadow-lg px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterCategory)}>
             <div className="mb-4">
               <div>
-                <span className="font-bold">Categoria<span className="text-red-500">*</span></span>
+                <span className="font-bold">
+                  Categoria<span className="text-red-500">*</span>
+                </span>
                 <InputText
                   type="text"
                   name="descricao"
@@ -90,7 +92,10 @@ export default function NovaCategoria() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button className="btn btn-primary w-full" type="submit">
+                <button
+                  className="btn btn-primary w-full rounded-2xl"
+                  type="submit"
+                >
                   Registrar Categoria
                 </button>
               )}
