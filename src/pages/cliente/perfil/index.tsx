@@ -31,7 +31,12 @@ export default function PerfilRepre() {
         email: data.email,
         password: data.password,
       });
-      toast.success("Informações atualizadas com sucesso!");
+      toast.success("Informações atualizadas com sucesso!", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
       setEditing(false);
     } catch (error) {
       console.error("Erro ao atualizar informações:", error);
@@ -60,9 +65,8 @@ export default function PerfilRepre() {
                 </label>
                 <input
                   type="text"
-                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
-                    editing ? "bg-white" : "bg-gray-100"
-                  }`}
+                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"
+                    }`}
                   {...register("razao_social", { required: true })}
                   readOnly={!editing}
                 />
@@ -85,9 +89,8 @@ export default function PerfilRepre() {
                 <label className="mb-2 font-medium text-gray-700">Email</label>
                 <input
                   type="email"
-                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
-                    editing ? "bg-white" : "bg-gray-100"
-                  }`}
+                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"
+                    }`}
                   {...register("email", { required: true })}
                   readOnly={!editing}
                 />
@@ -114,9 +117,8 @@ export default function PerfilRepre() {
                 </label>
                 <input
                   type="password"
-                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
-                    editing ? "bg-white" : "bg-gray-100"
-                  }`}
+                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${editing ? "bg-white" : "bg-gray-100"
+                    }`}
                   {...register("password")}
                   readOnly={!editing}
                 />

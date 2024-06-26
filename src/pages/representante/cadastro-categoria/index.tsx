@@ -62,7 +62,7 @@ export default function NovaCategoria() {
     <>
       <Header />
       <div className="max-w-6xl mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4 text-center">
+        <h1 className="text-2xl font-bold mb-4 text-center text-black">
           Cadastrar nova Categoria
         </h1>
         <div className="bg-white rounded-lg shadow-lg px-8 py-6 space-y-4">

@@ -18,7 +18,7 @@ export function Header() {
   };
 
   return (
-    <header className="w-full h-20 bg-white flex justify-between items-center px-3 shadow-md">
+    <header className="w-full h-20 bg-white/80 flex justify-between items-center px-3 shadow-md">
       <div>
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
