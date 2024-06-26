@@ -56,6 +56,18 @@ export default function Produtos() {
     });
   };
 
+  // Função para formatar a data
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "Sem data";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Data inválida";
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  };
+
   return (
     <>
       <Header />
@@ -77,13 +89,13 @@ export default function Produtos() {
                   <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGRfpJKsBaksNVviozHltzSiDKBkrxutwk_oG0kI3GQ7sustMg4y8sWYQQeb_QFUmGAI&usqp=CAU"
                     alt="Produto"
-                    className="w-full h-32 object-cover"
+                    className="w-full h-40 object-cover shadow-lg"
                   />
                   <div className="p-2">
                     <h2 className="text-lg font-semibold">{item.descricao}</h2>
-                    <p className="text-gray-500">{item.validade}</p>
-                    <div className="flex justify-between items-center mt-2">
-                      <p className="text-gray-700">{item.peso} KG</p>
+                    <p className="text-gray-500">{formatDate(item.validade)}</p>
+                    <div className="flex justify-end items-center mt-2">
+                      {/* <p className="text-gray-700">{item.peso} KG</p> */}
                       <p className="text-gray-700 font-bold">
                         R${" "}
                         {Intl.NumberFormat("pt-BR", {
@@ -99,10 +111,7 @@ export default function Produtos() {
                       >
                         Comprar
                       </button>
-                      <span className="ml-2">
-                        {cart.find((cartItem) => cartItem.id === item.id)
-                          ?.amount || 0}
-                      </span>
+
                     </div>
                   </div>
                 </div>

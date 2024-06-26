@@ -67,7 +67,7 @@ export default function NovaMarca() {
           <form onSubmit={handleSubmit(handleRegisterBrand)}>
             <div className="mb-4">
               <div>
-                <span className="font-bold">CNPJ Representante</span>
+                <span className="font-bold">CNPJ Representante<span className="text-red-500">*</span></span>
                 <InputText
                   mask="99.999.999/9999-99"
                   type="text"
@@ -81,7 +81,7 @@ export default function NovaMarca() {
             </div>
             <div className="mb-4">
               <div>
-                <span className="font-bold">CNPJ Marca</span>
+                <span className="font-bold">CNPJ Marca<span className="text-red-500">*</span></span>
                 <InputText
                   mask="99.999.999/9999-99"
                   type="text"
@@ -95,7 +95,7 @@ export default function NovaMarca() {
             </div>
             <div className="mb-4">
               <div>
-                <span className="font-bold">Razão Social</span>
+                <span className="font-bold">Razão Social<span className="text-red-500">*</span></span>
                 <InputText
                   type="text"
                   name="razao_social"

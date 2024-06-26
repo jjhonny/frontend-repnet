@@ -129,7 +129,7 @@ export default function NovoProduto() {
           <form onSubmit={handleSubmit(handleRegisterProduct)}>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="font-bold">Nome do produto</span>
+                <span className="font-bold">Nome do produto<span className="text-red-500">*</span></span>
                 <InputText
                   type="text"
                   name="descricao"
@@ -145,7 +145,7 @@ export default function NovoProduto() {
                   type="date"
                   name="validade"
                   className="grow"
-                  placeholder="Digite a data de validade"
+                  placeholder="Digite a data de validade(opcional)"
                   register={register}
                   error={errors.validade?.message}
                 />
@@ -164,7 +164,7 @@ export default function NovoProduto() {
                 />
               </div>
               <div className="mb-4">
-                <span className="font-bold">Preço do produto</span>
+                <span className="font-bold">Preço do produto<span className="text-red-500">*</span></span>
                 <InputText
                   type="number"
                   name="preco"
@@ -177,7 +177,7 @@ export default function NovoProduto() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="font-bold">Categoria do produto</span>
+                <span className="font-bold">Categoria do produto<span className="text-red-500">*</span></span>
                 <Select
                   name="categoria"
                   className="select select-bordered w-full mt-2"
@@ -189,7 +189,7 @@ export default function NovoProduto() {
                 />
               </div>
               <div className="mb-4">
-                <span className="font-bold">Marca do produto</span>
+                <span className="font-bold">Marca do produto<span className="text-red-500">*</span></span>
                 <Select
                   name="marca"
                   className="select select-bordered w-full mt-2"

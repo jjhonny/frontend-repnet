@@ -69,7 +69,7 @@ export default function NovaCategoria() {
           <form onSubmit={handleSubmit(handleRegisterCategory)}>
             <div className="mb-4">
               <div>
-                <span className="font-bold">Categoria</span>
+                <span className="font-bold">Categoria<span className="text-red-500">*</span></span>
                 <InputText
                   type="text"
                   name="descricao"
