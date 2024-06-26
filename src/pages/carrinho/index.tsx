@@ -28,7 +28,7 @@ export default function Carrinho() {
             cart.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-lg shadow-md p-4 flex items-center"
+                className="bg-white/90 rounded-lg shadow-lg p-4 flex items-center"
               >
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGRfpJKsBaksNVviozHltzSiDKBkrxutwk_oG0kI3GQ7sustMg4y8sWYQQeb_QFUmGAI&usqp=CAU"
@@ -61,6 +61,10 @@ export default function Carrinho() {
             <div className="mt-3 text-2xl">Carrinho vazio</div>
           )}
         </div>
+
+        <div className="mt-4 text-right">
+          <p className="text-lg font-semibold">Total: {total}</p>
+        </div>
         <div className="mt-8 flex justify-end">
           <button className="btn btn-primary flex items-center">
             <FaShoppingCart className="mr-2" />
@@ -70,9 +74,6 @@ export default function Carrinho() {
             )}{" "}
             itens)
           </button>
-        </div>
-        <div className="mt-4 text-right">
-          <p className="text-lg font-semibold">Total: {total}</p>
         </div>
       </div>
     </div>

@@ -22,8 +22,8 @@ type ProductsProps = {
 
 const schema = z.object({
   descricao: z.string().min(1, "O campo é obrigatório."),
-  validade: z.string().min(1, "O campo é obrigatório."),
-  peso: z.string().min(1, "O campo é obrigatório."),
+  validade: z.string(),
+  peso: z.string(),
   preco: z.string().min(1, "O campo é obrigatório."),
   categoria: z.string().min(1, "O campo é obrigatório."),
   marca: z.string().min(1, "O campo é obrigatório."),
