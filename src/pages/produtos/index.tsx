@@ -84,16 +84,20 @@ export default function Produtos() {
               products.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl shadow-2xl overflow-hidden w-64 hover:scale-105 transition-all pb-1"
+                  className="bg-white rounded-2xl shadow-2xl overflow-hidden w-64 hover:scale-105 transition-all"
                 >
                   <img
                     src="https://cdn.sanity.io/images/tlr8oxjg/production/7b7f05720074a848850e0705779306c27da5a6cf-1065x597.png?w=3840&q=80&fit=clip&auto=format"
                     alt="Produto"
                     className="w-full h-40 object-cover shadow-lg"
                   />
-                  <div className="p-2">
+                  <div className="p-4">
                     <h2 className="text-lg font-semibold">{item.descricao}</h2>
-                    <p className="text-gray-500">{formatDate(item.validade)}</p>
+                    <p className="text-gray-500">
+                      Validade: {formatDate(item.validade)}
+                    </p>
+                    <p className="text-gray-500">Categoria: {item.id_cat}</p>
+                    <p className="text-gray-500">Marca: {item.id_marca}</p>
                     <div className="flex justify-end items-center mt-2">
                       {/* <p className="text-gray-700">{item.peso} KG</p> */}
                       <p className="text-gray-700 font-bold">
