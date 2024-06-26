@@ -1,7 +1,7 @@
 import { AuthContext } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoPerson } from "react-icons/io5";
 import { MdAddCircleOutline, MdHome, MdLogout } from "react-icons/md";
@@ -12,10 +12,22 @@ import { BsBagCheckFill } from "react-icons/bs";
 export function Header() {
   const { signOut, user } = useContext(AuthContext);
   const { cart, total } = useCart();
+  const [fontSize, setFontSize] = useState(16);
 
   // Função para calcular o número total de itens no carrinho
   const getTotalItems = () => {
     return cart.reduce((total, item) => total + item.amount, 0);
+  };
+
+  // Funções para aumentar e diminuir o tamanho do texto
+  const increaseFontSize = () => {
+    setFontSize((prevSize) => (prevSize < 24 ? prevSize + 2 : prevSize));
+    document.documentElement.style.fontSize = `${fontSize + 2}px`;
+  };
+
+  const decreaseFontSize = () => {
+    setFontSize((prevSize) => (prevSize > 12 ? prevSize - 2 : prevSize));
+    document.documentElement.style.fontSize = `${fontSize - 2}px`;
   };
 
   return (
@@ -71,34 +83,32 @@ export function Header() {
                   </li>
                 )}
                 {user.categoria === "R" && (
-                  <li>
-                    <Link href="/representante/cadastro-produto">
-                      <span className="flex items-center">
-                        <MdAddCircleOutline size={22} className="mr-2" />
-                        Cadastrar Produto
-                      </span>
-                    </Link>
-                  </li>
-                )}
-                {user.categoria === "R" && (
-                  <li>
-                    <Link href="/representante/cadastro-categoria">
-                      <span className="flex items-center">
-                        <MdAddCircleOutline size={22} className="mr-2" />
-                        Cadastrar Categoria
-                      </span>
-                    </Link>
-                  </li>
-                )}
-                {user.categoria === "R" && (
-                  <li>
-                    <Link href="/representante/cadastro-marca">
-                      <span className="flex items-center">
-                        <MdAddCircleOutline size={22} className="mr-2" />
-                        Cadastrar Marca
-                      </span>
-                    </Link>
-                  </li>
+                  <>
+                    <li>
+                      <Link href="/representante/cadastro-produto">
+                        <span className="flex items-center">
+                          <MdAddCircleOutline size={22} className="mr-2" />
+                          Cadastrar Produto
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/representante/cadastro-categoria">
+                        <span className="flex items-center">
+                          <MdAddCircleOutline size={22} className="mr-2" />
+                          Cadastrar Categoria
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/representante/cadastro-marca">
+                        <span className="flex items-center">
+                          <MdAddCircleOutline size={22} className="mr-2" />
+                          Cadastrar Marca
+                        </span>
+                      </Link>
+                    </li>
+                  </>
                 )}
                 <li>
                   <Link href="/carrinho">
@@ -143,7 +153,30 @@ export function Header() {
           </div>
         </div>
       </div>
+
       <div className="flex gap-4 flex-none items-center">
+        <div className="d-inline-flex flex-lg align-items-center align-middle ml-4 font-sans font-bold">
+          <span className="nav-acessibilidade-text">
+            Acessibilidade
+            <button
+              className="btn btn-sm ml-1"
+              id="btnAcessibilidadeZoomMinus"
+              title="Diminuir tamanho do texto"
+              onClick={decreaseFontSize}
+            >
+              <strong className="text-cyan-600">A-</strong>
+            </button>
+            |
+            <button
+              className="btn btn-sm ml-1"
+              id="btnAcessibilidadeZoomPlus"
+              title="Aumentar tamanho do texto"
+              onClick={increaseFontSize}
+            >
+              <strong className="text-cyan-600">A+</strong>
+            </button>
+          </span>
+        </div>
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="indicator">
