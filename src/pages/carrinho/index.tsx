@@ -75,7 +75,7 @@ export default function Carrinho() {
         itens,
       });
 
-      const id_pedido = response.data.id
+      const id_pedido = response.data
       if (response.status === 200) {
         toast.success('Pedido registrado. Aguarde alguns segundos para ser enviado para o seu E-mail.', {
           duration: 1500,
