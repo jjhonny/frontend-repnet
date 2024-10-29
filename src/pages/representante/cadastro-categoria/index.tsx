@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
+import Footer from "@/components/Footer";
 
 type CategoryProps = {
   descricao: string;
@@ -59,28 +60,27 @@ export default function NovaCategoria() {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="max-w-6xl mx-auto py-8">
+
+      <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4 text-center text-black">
           Cadastrar nova Categoria
         </h1>
         <div className="bg-white rounded-2xl shadow-lg px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterCategory)}>
             <div className="mb-4">
-              <div>
-                <span className="font-bold">
-                  Categoria<span className="text-red-500">*</span>
-                </span>
-                <InputText
-                  type="text"
-                  name="descricao"
-                  className="grow"
-                  placeholder="Digite a categoria que você quer cadastrar"
-                  register={register}
-                  error={errors.descricao?.message}
-                />
-              </div>
+              <span className="font-bold">
+                Categoria<span className="text-red-500">*</span>
+              </span>
+              <InputText
+                type="text"
+                name="descricao"
+                className="grow"
+                placeholder="Digite a categoria que você quer cadastrar"
+                register={register}
+                error={errors.descricao?.message}
+              />
             </div>
             <div className="flex justify-end">
               {loading ? (
@@ -102,8 +102,10 @@ export default function NovaCategoria() {
             </div>
           </form>
         </div>
-      </div>
-    </>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 

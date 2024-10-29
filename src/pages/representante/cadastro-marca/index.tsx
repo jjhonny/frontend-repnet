@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
+import Footer from "@/components/Footer";
 
 type BrandProps = {
   cnpj_rep: string;
@@ -56,10 +57,10 @@ export default function NovaMarca() {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
 
-      <div className="max-w-6xl mx-auto py-8">
+      <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Cadastrar nova Marca
         </h1>
@@ -131,8 +132,10 @@ export default function NovaMarca() {
             </div>
           </form>
         </div>
-      </div>
-    </>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 

@@ -263,7 +263,7 @@ export function Header() {
             </li>
           </ul>
         </div>
-        <span className="ml-2 font-bold">{user?.razao_social}</span>
+        <span className="ml-2 font-bold">{localUser?.razao_social}</span>
       </div>
     </header>
   );

@@ -10,6 +10,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
 import { Select } from "@/components/select";
+import Footer from "@/components/Footer";
 
 type ProductsProps = {
   descricao: string;
@@ -118,10 +119,10 @@ export default function NovoProduto() {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
 
-      <div className="max-w-6xl mx-auto py-8">
+      <main className="flex-grow max-w-6xl mx-auto py-8">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Cadastrar novo produto
         </h1>
@@ -147,7 +148,7 @@ export default function NovoProduto() {
                   type="date"
                   name="validade"
                   className="grow"
-                  placeholder="Digite a data de validade(opcional)"
+                  placeholder="Digite a data de validade (opcional)"
                   register={register}
                   error={errors.validade?.message}
                 />
@@ -229,8 +230,10 @@ export default function NovoProduto() {
             </div>
           </form>
         </div>
-      </div>
-    </>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 

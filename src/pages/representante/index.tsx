@@ -6,6 +6,7 @@ import { AuthContext, UserProps } from "@/contexts/AuthContex";
 import { BsBagCheckFill } from "react-icons/bs";
 import { FaPen, FaShoppingCart } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
+import Footer from "@/components/Footer";
 
 export default function Representante() {
   const { user } = useContext(AuthContext);
@@ -20,9 +21,9 @@ export default function Representante() {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="flex flex-col items-center mt-20">
+      <main className="flex-grow flex flex-col items-center mt-20">
         <h1 className="text-5xl font-bold">Bem-vindo!!</h1>
         <div className="mt-10 w-full max-w-4xl">
           {/* Resumo do Cliente */}
@@ -45,8 +46,7 @@ export default function Representante() {
                 href="/representante/cadastro-produto"
                 className="btn btn-primary rounded-2xl"
               >
-                <MdAddCircleOutline />
-                Cadastrar Produto
+                <MdAddCircleOutline /> Cadastrar Produto
               </Link>
               <Link
                 href="/representante/cadastro-categoria"
@@ -58,8 +58,7 @@ export default function Representante() {
                 href="/representante/cadastro-marca"
                 className="btn btn-primary rounded-2xl"
               >
-                <MdAddCircleOutline />
-                Cadastrar Marca
+                <MdAddCircleOutline /> Cadastrar Marca
               </Link>
               <Link
                 href="/representante/perfil"
@@ -70,11 +69,11 @@ export default function Representante() {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 }
-
 export const getServerSideProps = canSSRAuth(async (context) => {
   return {
     props: {},

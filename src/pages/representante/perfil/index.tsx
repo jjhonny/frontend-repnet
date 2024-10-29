@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { FaCheck, FaPen, FaTimes } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { api } from "@/services/apiCliente";
+import Footer from "@/components/Footer";
 
 export default function PerfilRepre() {
   const { user } = useContext(AuthContext);
@@ -59,9 +60,9 @@ export default function PerfilRepre() {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="container mx-auto p-4">
+      <main className="flex-grow container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
           Perfil do {localUser?.categoria === "C" ? "Cliente" : "Representante"}
         </h1>
@@ -167,8 +168,9 @@ export default function PerfilRepre() {
             </div>
           </form>
         </div>
-      </div>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
