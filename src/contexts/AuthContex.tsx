@@ -54,8 +54,16 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function signOut() {
   try {
+    // Remove o item "user" do localStorage
+    localStorage.removeItem("user");
+
+    // Remove o cookie de autenticação
     destroyCookie(undefined, "@nextauth.token");
+
+    // Redireciona para a página de login
     Router.push("/login");
+
+    // Exibe a mensagem de sucesso
     toast.success("Deslogado com sucesso!", {
       position: "top-right",
       style: {
