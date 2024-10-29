@@ -11,15 +11,19 @@ type AuthContextData = {
   signOut: () => void;
   signUp: (credentials: SignUpProps) => Promise<void>;
   Infouser: UserProps;
+  userTemp: UserProps;
+  AuthUserLogin: (credentials: AuthUserLogin) => Promise<void>;
 };
 
-type UserProps = {
+export interface UserProps {
   id?: string;
-  cnpj: string;
+  cnpj?: string;
+  cnpjUser?: string;
   email: string;
-  razao_social: string;
+  razao_social?: string;
   categoria: string;
-};
+  token?: string;
+}
 
 export type SignInProps = {
   cnpj: string;
@@ -38,6 +42,12 @@ export type SignUpProps = {
 
 type AuthProviderProps = {
   children: ReactNode;
+};
+
+export type AuthUserLogin = {
+  cnpj: string;
+  categoria: string;
+  code: number;
 };
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -59,42 +69,11 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<UserProps>();
+  const [user, setUser] = useState<UserProps>(null);
+  const [userTemp, setUserTemp] = useState<UserProps>(null);
   const [Infouser, SetInfouser] = useState<UserProps>();
   const isAuthenticated = !!user;
   const router = useRouter();
-
-  useEffect(() => {
-    const { "@nextauth.token": token } = parseCookies();
-
-    async function fetchUser() {
-      if (token) {
-        try {
-          const response = await api.get("/me");
-          const infoUser = response.data;
-          setUser(infoUser);
-          console.log(user);
-        } catch (error) {
-          console.log(error);
-          signOut();
-        }
-      }
-    }
-
-    fetchUser();
-
-    // Listener para mudanças de rota
-    const handleRouteChange = () => {
-      fetchUser();
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    // Cleanup listener ao desmontar o componente
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
 
   async function signIn({ cnpj, password }: SignInProps) {
     try {
@@ -103,20 +82,67 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
+      const cnpjUser = response.data.cnpj;
+      const categoria = response.data.categoria;
+      const email = response.data.email;
+
+      setUserTemp({
+        cnpjUser,
+        categoria,
+        email,
+      });
+
+      console.log(userTemp);
+
+      Router.push("/autenticar");
+      toast.success("Código enviado para o email", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      toast.error("Erro ao acessar");
+      console.log(error);
+    }
+  }
+
+  async function AuthUserLogin({ cnpj, categoria, code }: AuthUserLogin) {
+    console.log(cnpj, categoria, code);
+
+    try {
+      const response = await api.post("/autenticar", {
+        cnpj,
+        categoria,
+        code,
+      });
+
       console.log(response.data);
 
-      const { email, token, categoria, razao_social } = response.data;
+      const { token, email } = response.data;
+
+      setUser({
+        cnpj,
+        categoria,
+        email,
+        token,
+      });
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          cnpj,
+          categoria,
+          email,
+          token,
+        })
+      );
+
+      console.log(user);
 
       setCookie(undefined, "@nextauth.token", token, {
         maxAge: 60 * 60 * 24 * 30, // Expira em 1 mês
         path: "/",
-      });
-
-      setUser({
-        cnpj,
-        email,
-        categoria,
-        razao_social,
       });
 
       // Passar para proximas requisições o nosso token
@@ -141,8 +167,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
       }
     } catch (error) {
-      toast.error("Erro ao acessar");
       console.log(error);
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     }
   }
 
@@ -186,6 +217,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signOut,
         signUp,
         Infouser,
+        userTemp,
+        AuthUserLogin,
       }}
     >
       {children}

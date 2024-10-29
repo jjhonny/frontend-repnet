@@ -70,7 +70,7 @@ export default function Carrinho() {
 
       const response = await api.post("/cadastro-pedido", {
         cnpj_cli: user.cnpj, // CNPJ do cliente (substitua pelo seu sistema de autenticação)
-        cnpj_rep: "00.000.000/0000-01", // CNPJ do representante (substitua pelo seu sistema de autenticação)
+        cnpj_rep: "12.345.678/0001-99", // CNPJ do representante (substitua pelo seu sistema de autenticação)
         itens,
       });
 
@@ -79,7 +79,7 @@ export default function Carrinho() {
         toast.success(
           "Pedido registrado. Aguarde alguns segundos para ser enviado para o seu E-mail.",
           {
-            duration: 1500,
+            duration: 2000,
             position: "top-center",
             style: {
               background: "#333",

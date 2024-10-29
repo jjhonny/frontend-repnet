@@ -1,14 +1,23 @@
 import { Header } from "@/components/header";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
-import { useContext } from "react";
-import { AuthContext } from "@/contexts/AuthContex";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext, UserProps } from "@/contexts/AuthContex";
 import { BsBagCheckFill } from "react-icons/bs";
 import { FaPen, FaShoppingCart } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
 
 export default function Representante() {
   const { user } = useContext(AuthContext);
+  const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
+
+  // UseEffect para carregar o usuário do localStorage após o carregamento do componente
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setLocalUser(JSON.parse(storedUser)); // Converte de volta para objeto e armazena no estado
+    }
+  }, []);
 
   return (
     <>
@@ -20,11 +29,11 @@ export default function Representante() {
           <div className="bg-white shadow-2xl rounded-2xl p-6 mb-6">
             <h2 className="text-2xl font-bold mb-4">Resumo do Representante</h2>
             <p>
-              <span className="font-bold">Nome:</span> {user?.razao_social}
+              <span className="font-bold">Nome:</span> {localUser?.razao_social}
             </p>
             <p>
               <span className="font-bold">Email: </span>
-              {user?.email}
+              {localUser?.email}
             </p>
           </div>
 

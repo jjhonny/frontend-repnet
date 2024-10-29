@@ -1,7 +1,7 @@
-import { AuthContext } from "@/contexts/AuthContex";
+import { AuthContext, UserProps } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoPerson } from "react-icons/io5";
 import { MdAddCircleOutline, MdHome, MdLogout } from "react-icons/md";
@@ -10,9 +10,18 @@ import { useCart } from "@/contexts/CartContext";
 import { BsBagCheckFill } from "react-icons/bs";
 
 export function Header() {
+  const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
   const { signOut, user } = useContext(AuthContext);
   const { cart, total } = useCart();
   const [fontSize, setFontSize] = useState(16);
+
+  // UseEffect para carregar o usuário do localStorage após o carregamento do componente
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setLocalUser(JSON.parse(storedUser)); // Converte de volta para objeto e armazena no estado
+    }
+  }, []);
 
   // Função para calcular o número total de itens no carrinho
   const getTotalItems = () => {
@@ -55,7 +64,9 @@ export function Header() {
                 <li>
                   <Link
                     href={
-                      user.categoria === "C" ? "/cliente" : "/representante"
+                      localUser?.categoria === "C"
+                        ? "/cliente"
+                        : "/representante"
                     }
                   >
                     <span className="flex items-center">
@@ -72,7 +83,7 @@ export function Header() {
                     </span>
                   </Link>
                 </li>
-                {user.categoria === "C" && (
+                {localUser?.categoria === "C" && (
                   <li>
                     <Link href="/cliente/pedidos">
                       <span className="flex items-center">
@@ -82,7 +93,7 @@ export function Header() {
                     </Link>
                   </li>
                 )}
-                {user.categoria === "R" && (
+                {localUser?.categoria === "R" && (
                   <>
                     <li>
                       <Link href="/representante/cadastro-produto">
@@ -110,25 +121,28 @@ export function Header() {
                     </li>
                   </>
                 )}
-                <li>
-                  <Link href="/carrinho">
-                    <span className="flex items-center">
-                      <FiShoppingCart size={22} className="mr-2" />
-                      Carrinho
-                      {cart.length > 0 && (
-                        <span className="badge badge-primary ml-2">
-                          {getTotalItems()}
-                        </span>
-                      )}
-                    </span>
-                  </Link>
-                </li>
+
+                {localUser?.categoria === "C" && (
+                  <li>
+                    <Link href="/carrinho">
+                      <span className="flex items-center">
+                        <FiShoppingCart size={22} className="mr-2" />
+                        Carrinho
+                        {cart.length > 0 && (
+                          <span className="badge badge-primary ml-2">
+                            {getTotalItems()}
+                          </span>
+                        )}
+                      </span>
+                    </Link>
+                  </li>
+                )}
               </div>
               <div>
                 <li>
                   <Link
                     href={
-                      user.categoria === "C"
+                      localUser?.categoria === "C"
                         ? "/cliente/perfil"
                         : "/representante/perfil"
                     }
@@ -178,16 +192,22 @@ export function Header() {
           </span>
         </div>
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <FiShoppingCart size={24} />
-              {cart.length > 0 && (
-                <span className="badge badge-primary badge-sm indicator-item">
-                  {getTotalItems()}
-                </span>
-              )}
+          {localUser?.categoria === "C" && (
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle"
+            >
+              <div className="indicator">
+                <FiShoppingCart size={24} />
+                {cart.length > 0 && (
+                  <span className="badge badge-primary badge-sm indicator-item">
+                    {getTotalItems()}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
+          )}
           <div
             tabIndex={0}
             className="mt-4 z-[1] card card-compact dropdown-content w-56 bg-base-100 shadow"
@@ -223,7 +243,7 @@ export function Header() {
             <li>
               <Link
                 href={
-                  user.categoria === "C"
+                  localUser?.categoria === "C"
                     ? "/cliente/perfil"
                     : "/representante/perfil"
                 }
@@ -243,7 +263,7 @@ export function Header() {
             </li>
           </ul>
         </div>
-        <span className="ml-2 font-bold">{user.razao_social}</span>
+        <span className="ml-2 font-bold">{user?.razao_social}</span>
       </div>
     </header>
   );

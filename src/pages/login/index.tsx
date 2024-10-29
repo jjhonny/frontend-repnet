@@ -1,4 +1,4 @@
-import { useState, FormEvent, useContext } from "react";
+import { useState, useContext } from "react";
 import { InputText } from "@/components/input-text";
 import { FaKey, FaUser } from "react-icons/fa";
 import { AuthContext } from "@/contexts/AuthContex";
@@ -61,9 +61,7 @@ export default function Login() {
                 error={errors.password?.message}
               />
               <div className="flex flex-row justify-between pt-3">
-                <a className="link link-hover opacity-90">
-                  Esqueceu sua senha?
-                </a>
+                <a className="link link-hover opacity-90"></a>
                 <Link className="link link-hover opacity-90" href="/cadastro">
                   Criar conta
                 </Link>

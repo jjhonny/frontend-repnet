@@ -7,9 +7,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
+  /* const router = useRouter(); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "F5" || (event.ctrlKey && event.key === "r")) {
         event.preventDefault();
@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [router]);
+  }, [router]); */
 
   return (
     <AuthProvider>

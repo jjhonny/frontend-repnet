@@ -1,13 +1,9 @@
-import router from "next/router";
+import router, { Router } from "next/router";
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    function Redireciona() {
-      router.push("/login");
-    }
-
-    Redireciona();
+    router.push("/login");
   }, []);
 
   return (

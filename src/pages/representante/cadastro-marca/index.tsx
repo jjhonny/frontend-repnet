@@ -84,14 +84,13 @@ export default function NovaMarca() {
             <div className="mb-4">
               <div>
                 <span className="font-bold">
-                  CNPJ Marca<span className="text-red-500">*</span>
+                  Razão Social<span className="text-red-500">*</span>
                 </span>
                 <InputText
-                  mask="99.999.999/9999-99"
                   type="text"
                   name="cnpj_marca"
                   className="grow"
-                  placeholder="Digite o CNPJ da marca"
+                  placeholder="Digite a razão social da marca"
                   register={register}
                   error={errors.cnpj_marca?.message}
                 />
@@ -100,13 +99,13 @@ export default function NovaMarca() {
             <div className="mb-4">
               <div>
                 <span className="font-bold">
-                  Razão Social<span className="text-red-500">*</span>
+                  Nome da Marca<span className="text-red-500">*</span>
                 </span>
                 <InputText
                   type="text"
                   name="razao_social"
                   className="grow"
-                  placeholder="Digite a razão social da marca"
+                  placeholder="Digite o nome da marca que quer cadastrar."
                   register={register}
                   error={errors.razao_social?.message}
                 />

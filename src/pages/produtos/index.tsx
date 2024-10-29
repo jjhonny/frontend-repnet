@@ -25,10 +25,11 @@ export default function Produtos() {
 
   useEffect(() => {
     async function handleSearchProduct() {
+      console.log("a");
       setLoading(true);
       try {
         const response = await api.get("/produtos");
-        const produtosBack: ProductsProps[] = response.data;
+        const produtosBack = response.data;
         console.log(produtosBack);
         if (produtosBack.length >= 1) {
           setProducts(produtosBack);
@@ -108,14 +109,16 @@ export default function Produtos() {
                         }).format(Number(item.preco))}
                       </p>
                     </div>
-                    <div className="flex items-center mt-2">
-                      <button
-                        className="btn btn-primary w-full rounded-2xl"
-                        onClick={() => handleAddToCart(item)}
-                      >
-                        Comprar
-                      </button>
-                    </div>
+                    {user.categoria === "C" && (
+                      <div className="flex items-center mt-2">
+                        <button
+                          className="btn btn-primary w-full rounded-2xl"
+                          onClick={() => handleAddToCart(item)}
+                        >
+                          Comprar
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))

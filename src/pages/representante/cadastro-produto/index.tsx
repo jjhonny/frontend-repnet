@@ -196,7 +196,7 @@ export default function NovoProduto() {
               </div>
               <div className="mb-4">
                 <span className="font-bold">
-                  Marca do produto<span className="text-red-500">*</span>
+                  Marca<span className="text-red-500">*</span>
                 </span>
                 <Select
                   name="marca"
