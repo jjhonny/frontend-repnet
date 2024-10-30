@@ -6,7 +6,6 @@ import {
   useEffect,
 } from "react";
 import { ProductsProps } from "@/pages/produtos";
-import { AuthContext } from "@/contexts/AuthContex";
 
 interface CartContextData {
   cart: CartProps[];
@@ -33,10 +32,18 @@ export function useCart() {
 }
 
 export function CartProvider({ children }: CartProviderProps) {
-  const { user } = useContext(AuthContext); // Obtém o usuário logado do contexto de autenticação
+  const [localUser, setLocalUser] = useState(null);
   const [cart, setCart] = useState<CartProps[]>([]);
   const [total, setTotal] = useState("");
-  const cartKey = `cart_${user?.cnpj}`; // Define uma chave única para o carrinho do usuário
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setLocalUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const cartKey = `cart_${localUser?.cnpj}`; // Define uma chave única para o carrinho do usuário
 
   useEffect(() => {
     const savedCart = localStorage.getItem(cartKey); // Tenta carregar o carrinho do localStorage
@@ -46,7 +53,7 @@ export function CartProvider({ children }: CartProviderProps) {
     } else {
       setCart([]); // Se não houver carrinho salvo, inicializa como vazio
     }
-  }, [user]); // Atualiza o carrinho quando o usuário mudar
+  }, [localUser]); // Atualiza o carrinho quando o usuário mudar
 
   useEffect(() => {
     localStorage.setItem(cartKey, JSON.stringify(cart)); // Salva o carrinho no localStorage ao ser alterado

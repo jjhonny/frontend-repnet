@@ -32,12 +32,10 @@ export default function Produtos() {
 
   useEffect(() => {
     async function handleSearchProduct() {
-      console.log("a");
       setLoading(true);
       try {
         const response = await api.get("/produtos");
         const produtosBack = response.data;
-        console.log(produtosBack);
         if (produtosBack.length >= 1) {
           setProducts(produtosBack);
         }
