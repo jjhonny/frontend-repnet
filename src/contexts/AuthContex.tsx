@@ -108,8 +108,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function AuthUserLogin({ cnpj, categoria, code }: AuthUserLogin) {
-    console.log(cnpj, categoria, code);
-
     try {
       const response = await api.post("/autenticar", {
         cnpj,
@@ -198,7 +196,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         },
       });
     } catch (error) {
-      toast.error("Erro ao cadastrar");
       toast.error(error.response.data.errormessage, {
         style: {
           background: "#333",
