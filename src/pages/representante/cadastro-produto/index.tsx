@@ -1,9 +1,7 @@
 import { InputText } from "@/components/input-text";
-import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import Link from "next/link";
-import { FormEvent, useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,7 +37,6 @@ export default function NovoProduto() {
   } = useForm<ProductsProps>({
     resolver: zodResolver(schema),
   });
-  const { signOut, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState<
     { value: string; label: string }[]
@@ -111,8 +108,13 @@ export default function NovoProduto() {
       });
       reset();
     } catch (error) {
-      console.log(error);
       toast.error("Erro ao cadastrar produto.");
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } finally {
       setLoading(false);
     }

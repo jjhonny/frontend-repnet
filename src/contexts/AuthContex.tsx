@@ -10,7 +10,6 @@ type AuthContextData = {
   signIn: (credentials: SignInProps) => Promise<void>;
   signOut: () => void;
   signUp: (credentials: SignUpProps) => Promise<void>;
-  Infouser: UserProps;
   userTemp: UserProps;
   AuthUserLogin: (credentials: AuthUserLogin) => Promise<void>;
 };
@@ -54,16 +53,9 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function signOut() {
   try {
-    // Remove o item "user" do localStorage
     localStorage.removeItem("user");
-
-    // Remove o cookie de autenticação
     destroyCookie(undefined, "@nextauth.token");
-
-    // Redireciona para a página de login
     Router.push("/login");
-
-    // Exibe a mensagem de sucesso
     toast.success("Deslogado com sucesso!", {
       position: "top-right",
       style: {
@@ -79,9 +71,7 @@ export function signOut() {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>(null);
   const [userTemp, setUserTemp] = useState<UserProps>(null);
-  const [Infouser, SetInfouser] = useState<UserProps>();
   const isAuthenticated = !!user;
-  const router = useRouter();
 
   async function signIn({ cnpj, password }: SignInProps) {
     try {
@@ -100,8 +90,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
       });
 
-      console.log(userTemp);
-
       Router.push("/autenticar");
       toast.success("Código enviado para o email", {
         style: {
@@ -110,8 +98,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         },
       });
     } catch (error) {
-      toast.error("Erro ao acessar");
-      console.log(error);
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     }
   }
 
@@ -124,8 +116,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         categoria,
         code,
       });
-
-      console.log(response.data);
 
       const { token, email } = response.data;
 
@@ -145,8 +135,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           token,
         })
       );
-
-      console.log(user);
 
       setCookie(undefined, "@nextauth.token", token, {
         maxAge: 60 * 60 * 24 * 30, // Expira em 1 mês
@@ -175,7 +163,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.errormessage, {
         style: {
           background: "#333",
@@ -212,7 +199,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
     } catch (error) {
       toast.error("Erro ao cadastrar");
-      console.log(error);
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     }
   }
 
@@ -224,7 +216,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signIn,
         signOut,
         signUp,
-        Infouser,
+
         userTemp,
         AuthUserLogin,
       }}

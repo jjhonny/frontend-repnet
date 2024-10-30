@@ -9,14 +9,12 @@ import { api } from "@/services/apiCliente";
 import Footer from "@/components/Footer";
 
 export default function PerfilRepre() {
-  const { user } = useContext(AuthContext);
-  const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
+  const [localUser, setLocalUser] = useState<UserProps | null>(null);
 
-  // UseEffect para carregar o usuário do localStorage após o carregamento do componente
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setLocalUser(JSON.parse(storedUser)); // Converte de volta para objeto e armazena no estado
+      setLocalUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -37,7 +35,7 @@ export default function PerfilRepre() {
   const onSubmit = async (data: any) => {
     try {
       const response = await api.patch("/perfil/atualizar", {
-        cnpj: user.cnpj,
+        cnpj: localUser.cnpj,
         razao_social: data.razao_social,
         email: data.email,
         password: data.password,
@@ -80,6 +78,7 @@ export default function PerfilRepre() {
                     editing ? "bg-white" : "bg-gray-100"
                   }`}
                   {...register("razao_social", { required: true })}
+                  value={localUser?.razao_social}
                   readOnly={!editing}
                 />
                 {errors.razao_social && (

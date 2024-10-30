@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import { FaCode } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
-// Definindo o schema de validação com Zod
 const schema = zod.object({
   code: zod
     .string()
@@ -31,7 +31,6 @@ export default function Autenticar() {
     setLoading(true);
 
     try {
-      console.log(userTemp);
       const codeAsNumber = Number(data.code);
       await AuthUserLogin({
         cnpj: userTemp?.cnpjUser,
@@ -39,7 +38,12 @@ export default function Autenticar() {
         code: codeAsNumber,
       });
     } catch (error) {
-      console.error("Erro ao autenticar:", error);
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -52,7 +56,6 @@ export default function Autenticar() {
           Autenticação
         </h1>
         <form onSubmit={handleSubmit(handleAuthLogin)}>
-          {/* Campo para CNPJ */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               CNPJ
@@ -65,8 +68,6 @@ export default function Autenticar() {
               disabled
             />
           </div>
-
-          {/* Campo para Email */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email
@@ -79,8 +80,6 @@ export default function Autenticar() {
               disabled
             />
           </div>
-
-          {/* Campo para código de 6 dígitos */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Código de 6 dígitos
@@ -101,8 +100,6 @@ export default function Autenticar() {
               </span>
             )}
           </div>
-
-          {/* Botão de autenticar */}
           <button
             type="submit"
             className={`btn btn-primary w-full ${loading ? "loading" : ""}`}

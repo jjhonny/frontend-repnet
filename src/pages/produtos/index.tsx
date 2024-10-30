@@ -17,13 +17,12 @@ export interface ProductsProps {
 }
 
 export default function Produtos() {
-  const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
+  const [localUser, setLocalUser] = useState<UserProps | null>(null);
 
-  // UseEffect para carregar o usuário do localStorage após o carregamento do componente
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setLocalUser(JSON.parse(storedUser)); // Converte de volta para objeto e armazena no estado
+      setLocalUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -43,8 +42,12 @@ export default function Produtos() {
           setProducts(produtosBack);
         }
       } catch (error) {
-        console.log("Erro ao buscar produtos:", error);
-        console.log(error.response.data.errormessage);
+        toast.error(error.response.data.errormessage, {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
@@ -82,7 +85,7 @@ export default function Produtos() {
     <>
       <div className="min-h-screen flex flex-col">
         <Header />
-        <Toaster /> {/* Componente Toaster para exibir toasts */}
+        <Toaster />
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-center mb-8">Produtos</h1>
           {loading ? (

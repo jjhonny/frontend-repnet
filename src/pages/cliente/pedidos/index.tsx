@@ -3,8 +3,7 @@ import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useContext, useEffect, useState } from "react";
-import { useCart } from "@/contexts/CartContext";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export interface PedidoItem {
   id: number;
@@ -64,7 +63,7 @@ export default function PedidosFeitos() {
   return (
     <>
       <Header />
-      <Toaster /> {/* Componente Toaster para exibir toasts */}
+      <Toaster />
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-center mb-8">Pedidos Feitos</h1>
         {loading ? (

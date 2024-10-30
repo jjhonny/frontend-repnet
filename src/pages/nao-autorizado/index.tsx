@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { AuthContext, UserProps } from "@/contexts/AuthContex";
-import { useContext, useEffect, useState } from "react";
+import { UserProps } from "@/contexts/AuthContex";
+import { useEffect, useState } from "react";
 
 export default function NotAuthorized() {
-  const { user } = useContext(AuthContext);
-  const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
+  const [localUser, setLocalUser] = useState<UserProps | null>(null);
 
-  // UseEffect para carregar o usuário do localStorage após o carregamento do componente
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setLocalUser(JSON.parse(storedUser)); // Converte de volta para objeto e armazena no estado
+      setLocalUser(JSON.parse(storedUser));
     }
   }, []);
 

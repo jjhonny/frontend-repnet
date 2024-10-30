@@ -1,9 +1,7 @@
 import { InputText } from "@/components/input-text";
-import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -32,7 +30,6 @@ export default function NovaMarca() {
   } = useForm<BrandProps>({
     resolver: zodResolver(schema),
   });
-  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   async function handleRegisterBrand(data: BrandProps) {
@@ -51,6 +48,12 @@ export default function NovaMarca() {
     } catch (error) {
       console.log(error);
       toast.error("Erro ao cadastrar marca.");
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } finally {
       setLoading(false);
     }

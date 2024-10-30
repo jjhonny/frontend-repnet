@@ -1,9 +1,7 @@
 import { InputText } from "@/components/input-text";
-import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import Link from "next/link";
-import { FormEvent, useContext, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,12 +26,9 @@ export default function NovaCategoria() {
   } = useForm<CategoryProps>({
     resolver: zodResolver(schema),
   });
-  const { signOut, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   async function handleRegisterCategory(data: CategoryProps) {
-    console.log(data);
-
     const dataCategoryFormated = {
       descricao: data.descricao,
     };
@@ -52,8 +47,13 @@ export default function NovaCategoria() {
       });
       reset();
     } catch (error) {
-      console.log(error);
       toast.error("Erro ao cadastrar categoria.");
+      toast.error(error.response.data.errormessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } finally {
       setLoading(false);
     }

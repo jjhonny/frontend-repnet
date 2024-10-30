@@ -1,22 +1,19 @@
 import { Header } from "@/components/header";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext, UserProps } from "@/contexts/AuthContex";
-import { BsBagCheckFill } from "react-icons/bs";
-import { FaPen, FaShoppingCart } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { UserProps } from "@/contexts/AuthContex";
+import { FaPen } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
 import Footer from "@/components/Footer";
 
 export default function Representante() {
-  const { user } = useContext(AuthContext);
-  const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
+  const [localUser, setLocalUser] = useState<UserProps | null>(null);
 
-  // UseEffect para carregar o usuário do localStorage após o carregamento do componente
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setLocalUser(JSON.parse(storedUser)); // Converte de volta para objeto e armazena no estado
+      setLocalUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -26,7 +23,6 @@ export default function Representante() {
       <main className="flex-grow flex flex-col items-center mt-20">
         <h1 className="text-5xl font-bold">Bem-vindo!!</h1>
         <div className="mt-10 w-full max-w-4xl">
-          {/* Resumo do Cliente */}
           <div className="bg-white shadow-2xl rounded-2xl p-6 mb-6">
             <h2 className="text-2xl font-bold mb-4">Resumo do Representante</h2>
             <p>
@@ -37,8 +33,6 @@ export default function Representante() {
               {localUser?.email}
             </p>
           </div>
-
-          {/* Atalhos Rápidos */}
           <div className="bg-white shadow-2xl rounded-2xl p-6 mb-6">
             <h2 className="text-2xl font-bold mb-4">Atalhos Rápidos</h2>
             <div className="flex flex-wrap gap-4">
