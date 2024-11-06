@@ -40,230 +40,239 @@ export function Header() {
   };
 
   return (
-    <header className="w-full h-20 bg-white/80 flex justify-between items-center px-3 shadow-lg">
-      <div>
+    <header className="sticky top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm z-50">
+      <div className="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+        {/* Menu Drawer */}
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
-            {/* Conteúdo da página aqui */}
             <label
               htmlFor="my-drawer"
-              className="btn btn-primary drawer-button rounded-xl"
+              className="btn btn-ghost hover:bg-gray-100 rounded-lg text-gray-700"
             >
-              Menu
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <span className="ml-2">Menu</span>
             </label>
           </div>
+
           <div className="drawer-side">
-            <label
-              htmlFor="my-drawer"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content flex flex-col justify-between">
-              <div>
-                <li>
+            <label htmlFor="my-drawer" className="drawer-overlay"></label>
+            <div className="menu p-4 w-80 h-full bg-white shadow-lg">
+              <div className="flex flex-col h-full justify-between">
+                <div className="space-y-2">
+                  <div className="pb-4 mb-4 border-b border-gray-100">
+                    <span className="text-xl font-semibold text-gray-800">
+                      Menu Principal
+                    </span>
+                  </div>
+
                   <Link
                     href={
                       localUser?.categoria === "C"
                         ? "/cliente"
                         : "/representante"
                     }
+                    className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
                   >
-                    <span className="flex items-center">
-                      <MdHome size={22} className="mr-2" />
-                      Home
-                    </span>
+                    <MdHome className="w-5 h-5 mr-3" />
+                    Home
                   </Link>
-                </li>
-                <li>
-                  <Link href="/produtos">
-                    <span className="flex items-center">
-                      <FaBoxes size={22} className="mr-2" />
-                      Produtos
-                    </span>
-                  </Link>
-                </li>
-                {localUser?.categoria === "C" && (
-                  <li>
-                    <Link href="/cliente/pedidos">
-                      <span className="flex items-center">
-                        <BsBagCheckFill size={22} className="mr-2" />
-                        Meus Pedidos
-                      </span>
-                    </Link>
-                  </li>
-                )}
-                {localUser?.categoria === "R" && (
-                  <>
-                    <li>
-                      <Link href="/representante/cadastro-produto">
-                        <span className="flex items-center">
-                          <MdAddCircleOutline size={22} className="mr-2" />
-                          Cadastrar Produto
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/representante/cadastro-categoria">
-                        <span className="flex items-center">
-                          <MdAddCircleOutline size={22} className="mr-2" />
-                          Cadastrar Categoria
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/representante/cadastro-marca">
-                        <span className="flex items-center">
-                          <MdAddCircleOutline size={22} className="mr-2" />
-                          Cadastrar Marca
-                        </span>
-                      </Link>
-                    </li>
-                  </>
-                )}
 
-                {localUser?.categoria === "C" && (
-                  <li>
-                    <Link href="/carrinho">
-                      <span className="flex items-center">
-                        <FiShoppingCart size={22} className="mr-2" />
-                        Carrinho
-                        {cart.length > 0 && (
-                          <span className="badge badge-primary ml-2">
-                            {getTotalItems()}
-                          </span>
-                        )}
-                      </span>
+                  <Link
+                    href="/produtos"
+                    className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
+                  >
+                    <FaBoxes className="w-5 h-5 mr-3" />
+                    Produtos
+                  </Link>
+
+                  {localUser?.categoria === "C" && (
+                    <Link
+                      href="/cliente/pedidos"
+                      className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
+                    >
+                      <BsBagCheckFill className="w-5 h-5 mr-3" />
+                      Meus Pedidos
                     </Link>
-                  </li>
-                )}
-              </div>
-              <div>
-                <li>
+                  )}
+
+                  {localUser?.categoria === "R" && (
+                    <div className="space-y-2">
+                      <div className="pt-4 pb-2">
+                        <span className="text-sm font-medium text-gray-500">
+                          Gerenciamento
+                        </span>
+                      </div>
+                      <Link
+                        href="/representante/cadastro-produto"
+                        className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
+                      >
+                        <MdAddCircleOutline className="w-5 h-5 mr-3" />
+                        Cadastrar Produto
+                      </Link>
+                      <Link
+                        href="/representante/cadastro-categoria"
+                        className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
+                      >
+                        <MdAddCircleOutline className="w-5 h-5 mr-3" />
+                        Cadastrar Categoria
+                      </Link>
+                      <Link
+                        href="/representante/cadastro-marca"
+                        className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
+                      >
+                        <MdAddCircleOutline className="w-5 h-5 mr-3" />
+                        Cadastrar Marca
+                      </Link>
+                    </div>
+                  )}
+
+                  {localUser?.categoria === "C" && (
+                    <Link
+                      href="/carrinho"
+                      className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
+                    >
+                      <FiShoppingCart className="w-5 h-5 mr-3" />
+                      <span>Carrinho</span>
+                      {cart.length > 0 && (
+                        <span className="ml-2 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                          {getTotalItems()}
+                        </span>
+                      )}
+                    </Link>
+                  )}
+                </div>
+
+                <div className="space-y-2 pt-4 border-t border-gray-100">
                   <Link
                     href={
                       localUser?.categoria === "C"
                         ? "/cliente/perfil"
                         : "/representante/perfil"
                     }
+                    className="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
                   >
-                    <span className="flex items-center">
-                      <IoPerson size={22} className="mr-2" />
-                      Perfil
-                    </span>
+                    <IoPerson className="w-5 h-5 mr-3" />
+                    Perfil
                   </Link>
-                </li>
-                <li>
                   <button
-                    className="flex items-center w-full text-left"
                     onClick={signOut}
+                    className="flex items-center w-full px-3 py-2 rounded-lg hover:bg-red-50 text-red-600"
                   >
-                    <MdLogout size={22} className="mr-2" color="red" />
+                    <MdLogout className="w-5 h-5 mr-3" />
                     Sair
                   </button>
-                </li>
+                </div>
               </div>
-            </ul>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex gap-4 flex-none items-center">
-        <div className="d-inline-flex flex-lg align-items-center align-middle ml-4 font-sans font-bold">
-          <span className="nav-acessibilidade-text">
-            Acessibilidade
-            <button
-              className="btn btn-sm ml-1"
-              id="btnAcessibilidadeZoomMinus"
-              title="Diminuir tamanho do texto"
-              onClick={decreaseFontSize}
-            >
-              <strong className="text-cyan-600">A-</strong>
-            </button>
-            |
-            <button
-              className="btn btn-sm ml-1"
-              id="btnAcessibilidadeZoomPlus"
-              title="Aumentar tamanho do texto"
-              onClick={increaseFontSize}
-            >
-              <strong className="text-cyan-600">A+</strong>
-            </button>
-          </span>
-        </div>
-        <div className="dropdown dropdown-end">
+        {/* Right Section */}
+        <div className="flex items-center space-x-6">
+          {/* Accessibility Controls */}
+          <div className="hidden md:flex items-center space-x-2 text-sm">
+            <span className="text-gray-600">Acessibilidade</span>
+            <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={decreaseFontSize}
+                className="px-2 py-1 rounded hover:bg-white transition-colors"
+                title="Diminuir tamanho do texto"
+              >
+                <span className="text-blue-600 font-semibold">A-</span>
+              </button>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <button
+                onClick={increaseFontSize}
+                className="px-2 py-1 rounded hover:bg-white transition-colors"
+                title="Aumentar tamanho do texto"
+              >
+                <span className="text-blue-600 font-semibold">A+</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Cart Dropdown */}
           {localUser?.categoria === "C" && (
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
-              <div className="indicator">
-                <FiShoppingCart size={24} />
-                {cart.length > 0 && (
-                  <span className="badge badge-primary badge-sm indicator-item">
-                    {getTotalItems()}
-                  </span>
-                )}
+            <div className="dropdown dropdown-end">
+              <button className="btn btn-ghost btn-circle">
+                <div className="indicator">
+                  <FiShoppingCart className="w-6 h-6 text-gray-700" />
+                  {cart.length > 0 && (
+                    <span className="badge badge-primary badge-sm indicator-item">
+                      {getTotalItems()}
+                    </span>
+                  )}
+                </div>
+              </button>
+              <div className="dropdown-content mt-4 card card-compact w-72 bg-white shadow-xl border border-gray-100">
+                <div className="card-body">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-lg font-semibold">
+                      {getTotalItems()} Itens
+                    </span>
+                    <span className="text-gray-600">Total: {total}</span>
+                  </div>
+                  <Link
+                    href="/carrinho"
+                    className="btn btn-primary w-full rounded-lg"
+                  >
+                    Ver carrinho
+                  </Link>
+                </div>
               </div>
             </div>
           )}
-          <div
-            tabIndex={0}
-            className="mt-4 z-[1] card card-compact dropdown-content w-56 bg-base-100 shadow"
-          >
-            <div className="card-body">
-              <span className="font-bold text-lg">{getTotalItems()} Itens</span>
-              <span className="mb-1">Total: {total}</span>
-              <div className="card-actions">
-                <Link
-                  href="/carrinho"
-                  className="btn btn-primary btn-block rounded-2xl"
-                >
-                  Ver carrinho
-                </Link>
+
+          {/* User Dropdown */}
+          <div className="dropdown dropdown-end">
+            <button className="flex items-center space-x-3">
+              <div className="w-20 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                <IoPerson className="w-6 h-6 text-gray-600" />
               </div>
-            </div>
+              <span className="hidden md:flex flex-nowrap font-medium text-gray-700 whitespace-nowrap">
+                {localUser?.razao_social}
+              </span>
+            </button>
+            <ul className="dropdown-content mt-4 menu p-2 bg-white shadow-xl border border-gray-100 rounded-lg w-56">
+              <li>
+                <Link
+                  href={
+                    localUser?.categoria === "C"
+                      ? "/cliente/perfil"
+                      : "/representante/perfil"
+                  }
+                  className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50"
+                >
+                  <IoPerson className="w-5 h-5 mr-2" />
+                  Perfil
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={signOut}
+                  className="flex items-center px-4 py-2 text-red-600 hover:bg-red-50"
+                >
+                  <MdLogout className="w-5 h-5 mr-2" />
+                  Sair
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className=" rounded-full flex justify-center items-center">
-              <IoPerson size={26} />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-4 z-[1] p-2 shadow bg-base-100 rounded-box w-56"
-          >
-            <li>
-              <Link
-                href={
-                  localUser?.categoria === "C"
-                    ? "/cliente/perfil"
-                    : "/representante/perfil"
-                }
-                className="text-base flex justify-between"
-              >
-                Perfil
-              </Link>
-            </li>
-            <li>
-              <button
-                className="flex justify-between text-base"
-                onClick={signOut}
-              >
-                Sair
-                <MdLogout size={18} color="#FF0000" />
-              </button>
-            </li>
-          </ul>
-        </div>
-        <span className="ml-2 font-bold">{localUser?.razao_social}</span>
       </div>
     </header>
   );
