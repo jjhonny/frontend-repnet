@@ -3,13 +3,19 @@ import { FaShoppingCart, FaTrash } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
 import toast from "react-hot-toast";
 import { api } from "@/services/apiCliente";
-import { useContext, useState } from "react";
-import { AuthContext } from "@/contexts/AuthContex";
+import { useEffect, useState } from "react";
 
 export default function Carrinho() {
-  const { user } = useContext(AuthContext);
+  const [localUser, setLocalUser] = useState(null);
   const { cart, total, removeItemCart, clearCart } = useCart();
   const [pedidoId, setPedidoId] = useState(null); // Estado para armazenar o ID do pedido
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setLocalUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleRemoveItem = (productId) => {
     removeItemCart(productId);
@@ -69,8 +75,8 @@ export default function Carrinho() {
       }));
 
       const response = await api.post("/cadastro-pedido", {
-        cnpj_cli: user.cnpj, // CNPJ do cliente (substitua pelo seu sistema de autenticação)
-        cnpj_rep: "12.345.678/0001-99", // CNPJ do representante (substitua pelo seu sistema de autenticação)
+        cnpj_cli: localUser?.cnpj, // CNPJ do cliente (substitua pelo seu sistema de autenticação)
+        cnpj_rep: "00.000.000/0000-01", // CNPJ do representante (substitua pelo seu sistema de autenticação)
         itens,
       });
 
