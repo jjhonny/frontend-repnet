@@ -115,9 +115,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         code,
       });
 
-      const { token, email } = response.data;
+      const { token, email, razao_social } = response.data;
 
       setUser({
+        razao_social,
         cnpj,
         categoria,
         email,
@@ -127,6 +128,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       localStorage.setItem(
         "user",
         JSON.stringify({
+          razao_social,
           cnpj,
           categoria,
           email,
