@@ -184,7 +184,7 @@ export default function Produtos() {
                       </div>
 
                       <div className="card-actions pt-4 flex items-center justify-between border-t border-gray-200">
-                        <p className="text-2xl font-bold text-gray-700">
+                        <p className="text-xl font-bold text-gray-700">
                           R${" "}
                           {Intl.NumberFormat("pt-BR", {
                             currency: "BRL",

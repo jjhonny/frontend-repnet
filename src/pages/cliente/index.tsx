@@ -108,15 +108,15 @@ export default function Cliente() {
               </div>
 
               <div className="stat place-items-center">
-                <div className="stat-title">Pedidos Pendentes</div>
+                <div className="stat-title">Pedidos</div>
                 <div className="stat-value text-primary">4</div>
-                <div className="stat-desc">↗︎ 2 novos hoje</div>
+                <div className="stat-desc">↗︎ Este mês</div>
               </div>
 
               <div className="stat place-items-center">
                 <div className="stat-title">Total Gasto</div>
                 <div className="stat-value">R$ 1,200</div>
-                <div className="stat-desc">↗︎ Este mês</div>
+                <div className="stat-desc">↗︎ Desde o início</div>
               </div>
             </div>
           </div>
