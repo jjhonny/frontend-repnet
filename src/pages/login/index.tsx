@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <>
-      <main className="bg-purple-300 w-full min-h-screen flex justify-center items-center flex-col">
+      <main className="bg-base-200 w-full min-h-screen flex justify-center items-center flex-col">
         <div className="bg-white w-full max-w-lg p-8 flex flex-col rounded-lg shadow-xl m-5">
           <div className="w-full flex justify-center">
             <h1 className="font-bold text-4xl mb-4">Login</h1>
@@ -76,10 +76,7 @@ export default function Login() {
                     <span className="loading loading-spinner loading-md"></span>
                   </button>
                 ) : (
-                  <button
-                    className="btn btn-neutral text-white w-full"
-                    type="submit"
-                  >
+                  <button className="btn btn-primary w-full" type="submit">
                     Entrar
                   </button>
                 )}
