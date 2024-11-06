@@ -50,7 +50,7 @@ export default function Autenticar() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-purple-300">
+    <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h1 className="text-2xl font-semibold text-center mb-6">
           Autenticação
