@@ -21,7 +21,7 @@ export default function Cliente() {
       <Header />
 
       <main className="container mx-auto px-4 py-8">
-        <div className="hero bg-base-100 rounded-box mb-8">
+        <div className="hero bg-base-100 rounded-box mb-8 shadow-md">
           <div className="hero-content text-center py-12">
             <div>
               <h1 className="text-5xl font-bold text-primary">Bem-vindo!</h1>
@@ -34,7 +34,7 @@ export default function Cliente() {
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Client Info Card */}
-          <div className="bg-base-100 shadow-xl rounded-xl">
+          <div className="bg-base-100 shadow-md rounded-xl">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6 flex items-center gap-2">
                 <FaUser className="text-primary" />
@@ -66,7 +66,7 @@ export default function Cliente() {
           </div>
 
           {/* Quick Actions Card */}
-          <div className="bg-base-100 shadow-xl rounded-xl">
+          <div className="bg-base-100 shadow-md rounded-xl">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Ações Rápidas</h2>
 
@@ -99,7 +99,7 @@ export default function Cliente() {
           </div>
 
           {/* Stats Section */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 shadow-md ">
             <div className="stats shadow w-full">
               <div className="stat place-items-center">
                 <div className="stat-title">Pedidos</div>
