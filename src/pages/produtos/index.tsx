@@ -81,43 +81,110 @@ export default function Produtos() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-base-200">
         <Header />
         <Toaster />
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-center mb-8">Produtos</h1>
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md hero bg-base-100 rounded-box mb-12 shadow-md mx-auto">
+            <div className="hero-content text-center py-6">
+              <div>
+                <h1 className="text-4xl font-extrabold text-gray-900 text-center tracking-tight">
+                  Produtos
+                </h1>
+              </div>
+            </div>
+          </div>
+
           {loading ? (
             <div className="flex justify-center items-center h-screen">
               <span className="loading loading-spinner loading-lg"></span>
             </div>
           ) : (
-            <div className="w-full flex flex-wrap justify-center max-w-7xl mx-auto px-4 mt-6 gap-6">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
               {products.length >= 1 ? (
                 products.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl shadow-2xl overflow-hidden w-60 hover:scale-105 transition-all"
+                    className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
                   >
-                    <figure>
+                    <div className="relative">
                       <img
                         src="https://cdn.sanity.io/images/tlr8oxjg/production/7b7f05720074a848850e0705779306c27da5a6cf-1065x597.png?w=3840&q=80&fit=clip&auto=format"
                         alt="Produto"
-                        className="w-full h-32 object-cover"
+                        className="w-full h-48 object-cover"
                       />
-                    </figure>
-                    <div className="card-body p-4">
-                      <h2 className="card-title text-lg">{item.descricao}</h2>
-                      <p className="text-sm text-gray-500">
-                        Validade: {formatDate(item.validade)}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Categoria: {item.id_cat}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Marca: {item.id_marca}
-                      </p>
-                      <div className="card-actions justify-between mt-2">
-                        <p className="text-md font-bold text-gray-700">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    </div>
+
+                    <div className="p-6 space-y-4">
+                      <h2 className="text-xl font-bold text-gray-900 line-clamp-2">
+                        {item.descricao}
+                      </h2>
+
+                      <div className="space-y-2">
+                        <div className="flex items-center text-gray-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg>
+                          <span className="text-sm">
+                            Validade: {formatDate(item.validade)}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center text-gray-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                            />
+                          </svg>
+                          <span className="text-sm">
+                            Categoria: {item.id_cat}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center text-gray-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                            />
+                          </svg>
+                          <span className="text-sm">
+                            Marca: {item.id_marca}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="card-actions pt-4 flex items-center justify-between border-t border-gray-200">
+                        <p className="text-2xl font-bold text-gray-700">
                           R${" "}
                           {Intl.NumberFormat("pt-BR", {
                             currency: "BRL",
@@ -126,7 +193,7 @@ export default function Produtos() {
                         </p>
                         {localUser?.categoria === "C" && (
                           <button
-                            className="btn btn-primary btn-sm rounded-lg"
+                            className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                             onClick={() => handleAddToCart(item)}
                           >
                             Comprar
@@ -137,8 +204,10 @@ export default function Produtos() {
                   </div>
                 ))
               ) : (
-                <div className="text-center text-2xl">
-                  Sem produtos cadastrados
+                <div className="col-span-full text-center py-12">
+                  <p className="text-2xl font-medium text-gray-600">
+                    Sem produtos cadastrados
+                  </p>
                 </div>
               )}
             </div>
