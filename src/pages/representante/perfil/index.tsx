@@ -17,15 +17,8 @@ import {
 
 export default function PerfilRepre() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setLocalUser(JSON.parse(storedUser));
-    }
-  }, []);
-
   const [editing, setEditing] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -33,11 +26,23 @@ export default function PerfilRepre() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      razao_social: localUser?.razao_social,
-      email: localUser?.email,
+      razao_social: "",
+      email: "",
       password: "",
     },
   });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setLocalUser(user);
+
+      // Define os valores dos campos no formulário quando os dados do usuário são carregados
+      setValue("razao_social", user.razao_social);
+      setValue("email", user.email);
+    }
+  }, [setValue]);
 
   const onSubmit = async (data: any) => {
     try {
@@ -47,6 +52,12 @@ export default function PerfilRepre() {
         email: data.email,
         password: data.password,
       });
+
+      // Atualize o localStorage com os dados atualizados do usuário
+      const updatedUser = { ...localUser, ...data };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setLocalUser(updatedUser); // Atualize o estado imediatamente
+
       toast.success("Informações atualizadas com sucesso!", {
         style: {
           background: "#333",
@@ -63,6 +74,18 @@ export default function PerfilRepre() {
   const handleEditClick = () => {
     setEditing(true);
   };
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const updatedUser = localStorage.getItem("user");
+      if (updatedUser) {
+        setLocalUser(JSON.parse(updatedUser));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
@@ -96,7 +119,6 @@ export default function PerfilRepre() {
                       editing ? "bg-white" : "bg-gray-100"
                     }`}
                     {...register("razao_social", { required: true })}
-                    value={localUser?.razao_social}
                     readOnly={!editing}
                   />
                 </div>
@@ -131,7 +153,6 @@ export default function PerfilRepre() {
                     className={`input input-bordered w-full pl-10 p-3 border rounded focus:outline-none focus:ring focus:border-blue-500 ${
                       editing ? "bg-white" : "bg-gray-100"
                     }`}
-                    value={localUser?.email}
                     {...register("email", { required: true })}
                     readOnly={!editing}
                   />
