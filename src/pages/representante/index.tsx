@@ -66,7 +66,7 @@ export default function Representante() {
           </div>
 
           {/* Quick Actions Card */}
-          <div className="bg-base-100 shadow-xl rounded-md">
+          <div className="bg-base-100 shadow-md rounded-lg">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Ações Rápidas</h2>
 
