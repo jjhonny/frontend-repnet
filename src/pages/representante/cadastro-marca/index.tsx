@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
-import Footer from "@/components/Footer";
 
 type BrandProps = {
   cnpj_rep: string;
@@ -60,13 +59,20 @@ export default function NovaMarca() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4 text-center">
-          Cadastrar nova Marca
-        </h1>
+        <div className="max-w-md hero bg-base-100 rounded-box mb-6 shadow-md mx-auto">
+          <div className="hero-content text-center py-6">
+            <div>
+              <h1 className="text-3xl font-extrabold text-gray-900 text-center tracking-tight">
+                Cadastrar nova Marca
+              </h1>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white rounded-2xl shadow-2xl px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterBrand)}>
             <div className="mb-4">
@@ -125,10 +131,7 @@ export default function NovaMarca() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button
-                  className="btn btn-primary w-full rounded-2xl"
-                  type="submit"
-                >
+                <button className="btn btn-primary w-full gap-2" type="submit">
                   Registrar Marca
                 </button>
               )}
@@ -136,8 +139,6 @@ export default function NovaMarca() {
           </form>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

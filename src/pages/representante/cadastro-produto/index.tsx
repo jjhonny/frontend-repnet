@@ -8,7 +8,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
 import { Select } from "@/components/select";
-import Footer from "@/components/Footer";
 
 type ProductsProps = {
   descricao: string;
@@ -121,13 +120,20 @@ export default function NovoProduto() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
 
-      <main className="flex-grow max-w-6xl mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4 text-center">
-          Cadastrar novo produto
-        </h1>
+      <main className="w-11/12 flex-grow mx-auto px-8 py-8">
+        <div className="max-w-md hero bg-base-100 rounded-box mb-6 shadow-md mx-auto">
+          <div className="hero-content text-center py-6">
+            <div>
+              <h1 className="text-3xl font-extrabold text-gray-900 text-center tracking-tight">
+                Cadastrar novo produto
+              </h1>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white rounded-2xl shadow-2xl px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterProduct)}>
             <div className="grid grid-cols-2 gap-4">
@@ -222,10 +228,7 @@ export default function NovoProduto() {
                   <span className="loading loading-spinner loading-md"></span>
                 </button>
               ) : (
-                <button
-                  className="btn btn-primary w-full rounded-2xl"
-                  type="submit"
-                >
+                <button className="btn btn-primary w-full gap-2" type="submit">
                   Cadastrar Produto
                 </button>
               )}
@@ -233,8 +236,6 @@ export default function NovoProduto() {
           </form>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

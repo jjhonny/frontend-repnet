@@ -1,12 +1,19 @@
 import { Header } from "@/components/header";
-import { AuthContext, UserProps } from "@/contexts/AuthContex";
+import { UserProps } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaCheck, FaPen, FaTimes } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { api } from "@/services/apiCliente";
-import Footer from "@/components/Footer";
+import {
+  FaBuilding,
+  FaIdBadge,
+  FaEnvelope,
+  FaLock,
+  FaCheck,
+  FaPen,
+  FaTimes,
+} from "react-icons/fa";
 
 export default function PerfilRepre() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
@@ -58,92 +65,124 @@ export default function PerfilRepre() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
       <main className="flex-grow container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">
-          Perfil do {localUser?.categoria === "C" ? "Cliente" : "Representante"}
-        </h1>
-        <div className="bg-white shadow-2xl rounded-2xl p-6">
+        <div className="max-w-lg hero bg-base-100 rounded-box mb-4 shadow-md mx-auto">
+          <div className="hero-content text-center py-6">
+            <div>
+              <h1 className="text-3xl font-extrabold text-gray-900 text-center tracking-tight">
+                Perfil do{" "}
+                {localUser?.categoria === "C" ? "Cliente" : "Representante"}
+              </h1>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white shadow-2xl rounded-lg max-w-5xl mx-auto p-6 px-6">
           <h2 className="text-xl font-semibold mb-4">Informações do Usuário</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Razão Social */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Razão Social
                 </label>
-                <input
-                  type="text"
-                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
-                    editing ? "bg-white" : "bg-gray-100"
-                  }`}
-                  {...register("razao_social", { required: true })}
-                  value={localUser?.razao_social}
-                  readOnly={!editing}
-                />
+                <div className="relative w-full">
+                  <FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="text"
+                    className={`input input-bordered w-full pl-10 p-3 border rounded focus:outline-none focus:ring focus:border-blue-500 ${
+                      editing ? "bg-white" : "bg-gray-100"
+                    }`}
+                    {...register("razao_social", { required: true })}
+                    value={localUser?.razao_social}
+                    readOnly={!editing}
+                  />
+                </div>
                 {errors.razao_social && (
                   <span className="text-red-500 text-sm">
                     Este campo é obrigatório
                   </span>
                 )}
               </div>
+
+              {/* CNPJ */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">CNPJ</label>
-                <input
-                  type="text"
-                  className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
-                  value={localUser?.cnpj}
-                  readOnly
-                />
+                <div className="relative w-full">
+                  <FaIdBadge className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="text"
+                    className="input input-bordered w-full pl-10 p-3 border rounded focus:outline-none focus:ring focus:border-blue-500 bg-gray-100"
+                    value={localUser?.cnpj}
+                    readOnly
+                  />
+                </div>
               </div>
+
+              {/* Email */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">Email</label>
-                <input
-                  type="email"
-                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
-                    editing ? "bg-white" : "bg-gray-100"
-                  }`}
-                  value={localUser?.email}
-                  {...register("email", { required: true })}
-                  readOnly={!editing}
-                />
+                <div className="relative w-full">
+                  <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="email"
+                    className={`input input-bordered w-full pl-10 p-3 border rounded focus:outline-none focus:ring focus:border-blue-500 ${
+                      editing ? "bg-white" : "bg-gray-100"
+                    }`}
+                    value={localUser?.email}
+                    {...register("email", { required: true })}
+                    readOnly={!editing}
+                  />
+                </div>
                 {errors.email && (
                   <span className="text-red-500 text-sm">
                     Este campo é obrigatório
                   </span>
                 )}
               </div>
+
+              {/* Categoria */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Categoria
                 </label>
-                <input
-                  type="text"
-                  className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
-                  value={
-                    localUser?.categoria === "C" ? "Cliente" : "Representante"
-                  }
-                  readOnly
-                />
+                <div className="relative w-full">
+                  <FaIdBadge className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="text"
+                    className="input input-bordered w-full pl-10 p-3 border rounded focus:outline-none focus:ring focus:border-blue-500 bg-gray-100"
+                    value={
+                      localUser?.categoria === "C" ? "Cliente" : "Representante"
+                    }
+                    readOnly
+                  />
+                </div>
               </div>
+
+              {/* Nova Senha */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Nova Senha
                 </label>
-                <input
-                  type="password"
-                  className={`input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 ${
-                    editing ? "bg-white" : "bg-gray-100"
-                  }`}
-                  {...register("password")}
-                  readOnly={!editing}
-                />
+                <div className="relative w-full">
+                  <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="password"
+                    className={`input input-bordered w-full pl-10 p-3 border rounded focus:outline-none focus:ring focus:border-blue-500 ${
+                      editing ? "bg-white" : "bg-gray-100"
+                    }`}
+                    {...register("password")}
+                    readOnly={!editing}
+                  />
+                </div>
               </div>
             </div>
             <div className="mt-4">
               {!editing ? (
                 <button
-                  className="btn btn-primary rounded-2xl"
+                  className="btn btn-accent gap-2 hover:scale-105 transition-transform"
                   onClick={handleEditClick}
                 >
                   <FaPen /> Editar
@@ -151,13 +190,13 @@ export default function PerfilRepre() {
               ) : (
                 <div>
                   <button
-                    className="btn btn-primary mr-2 rounded-2xl"
+                    className="btn btn-success gap-2 mr-2 hover:scale-105 transition-transform"
                     type="submit"
                   >
                     <FaCheck /> Salvar
                   </button>
                   <button
-                    className="btn btn-secondary rounded-2xl"
+                    className="btn btn-error gap-2 hover:scale-105 transition-transform"
                     onClick={() => setEditing(false)}
                   >
                     <FaTimes /> Cancelar
@@ -168,7 +207,6 @@ export default function PerfilRepre() {
           </form>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
