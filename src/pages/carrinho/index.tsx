@@ -100,7 +100,7 @@ export default function Carrinho() {
         });
       }
     } catch (error) {
-      toast.error("Erro ao finalizar a compra.", {
+      toast.error(error.response.data.errormessage, {
         duration: 1500,
         position: "top-center",
         style: {

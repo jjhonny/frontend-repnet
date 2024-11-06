@@ -1,13 +1,22 @@
 import { Header } from "@/components/header";
-import { AuthContext } from "@/contexts/AuthContex";
+import { AuthContext, UserProps } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCheck, FaPen, FaTimes } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { api } from "@/services/apiCliente";
 
 export default function PerfilRepre() {
+  const [localUser, setLocalUser] = useState<UserProps | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setLocalUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const { user } = useContext(AuthContext);
   const [editing, setEditing] = useState(false);
   const {
@@ -17,8 +26,8 @@ export default function PerfilRepre() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      razao_social: user.razao_social,
-      email: user.email,
+      razao_social: localUser?.razao_social,
+      email: localUser?.email,
       password: "",
     },
   });
@@ -26,7 +35,7 @@ export default function PerfilRepre() {
   const onSubmit = async (data: any) => {
     try {
       const response = await api.patch("/perfil/atualizar", {
-        cnpj: user.cnpj,
+        cnpj: localUser.cnpj,
         razao_social: data.razao_social,
         email: data.email,
         password: data.password,
@@ -53,7 +62,7 @@ export default function PerfilRepre() {
       <Header />
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
-          Perfil do {user.categoria === "C" ? "Cliente" : "Representante"}
+          Perfil do {localUser?.categoria === "C" ? "Cliente" : "Representante"}
         </h1>
         <div className="bg-white shadow-lg rounded-2xl p-6">
           <h2 className="text-xl font-semibold mb-4">Informações do Usuário</h2>
@@ -70,6 +79,7 @@ export default function PerfilRepre() {
                   }`}
                   {...register("razao_social", { required: true })}
                   readOnly={!editing}
+                  value={localUser?.razao_social}
                 />
                 {errors.razao_social && (
                   <span className="text-red-500 text-sm">
@@ -82,7 +92,7 @@ export default function PerfilRepre() {
                 <input
                   type="text"
                   className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
-                  value={user.cnpj}
+                  value={localUser?.cnpj}
                   readOnly
                 />
               </div>
@@ -95,6 +105,7 @@ export default function PerfilRepre() {
                   }`}
                   {...register("email", { required: true })}
                   readOnly={!editing}
+                  value={localUser?.email}
                 />
                 {errors.email && (
                   <span className="text-red-500 text-sm">
@@ -109,7 +120,9 @@ export default function PerfilRepre() {
                 <input
                   type="text"
                   className="input input-bordered p-2 border rounded focus:outline-none focus:ring focus:border-blue-300 bg-gray-100"
-                  value={user.categoria === "C" ? "Cliente" : "Representante"}
+                  value={
+                    localUser?.categoria === "C" ? "Cliente" : "Representante"
+                  }
                   readOnly
                 />
               </div>
