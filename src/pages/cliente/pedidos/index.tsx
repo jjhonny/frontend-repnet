@@ -1,8 +1,7 @@
 import { Header } from "@/components/header";
-import { AuthContext } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 export interface PedidoItem {
@@ -21,15 +20,23 @@ export interface PedidoInfo {
 }
 
 export default function PedidosFeitos() {
-  const { user, signOut } = useContext(AuthContext);
+  const [localUser, setLocalUser] = useState(null);
   const [pedidos, setPedidos] = useState<PedidoInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    const storageUser = localStorage.getItem("user");
+    if (storageUser) {
+      setLocalUser(JSON.parse(storageUser));
+    }
+  }, []);
+
+  useEffect(() => {
     async function handleSearchOrders() {
+      if (!localUser.cnpj) return; // Verifique se `localUser` e `cnpj` estão definidos
       setLoading(true);
       try {
-        const response = await api.post("/pedidos", { cnpj: user.cnpj });
+        const response = await api.post("/pedidos", { cnpj: localUser.cnpj });
         const pedidosBack: PedidoInfo[] = response.data;
         console.log(pedidosBack);
         if (pedidosBack.length >= 1) {
@@ -42,12 +49,12 @@ export default function PedidosFeitos() {
       }
     }
 
-    if (user && user.cnpj) {
+    if (localUser.cnpj) {
       handleSearchOrders();
     } else {
       console.error("CNPJ do usuário está indefinido");
     }
-  }, [user]);
+  }, [localUser]);
 
   const formatDate = (dateString: string) => {
     if (!dateString) return "Sem data";
