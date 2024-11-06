@@ -3,7 +3,6 @@ import { InputText } from "@/components/input-text";
 import { AuthContext, SignUpProps } from "@/contexts/AuthContex";
 import { FaAddressCard, FaEnvelope, FaKey, FaUser } from "react-icons/fa";
 import Link from "next/link";
-import { cnpjMask } from "@/utils/cnpjMask";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,7 +54,7 @@ export default function Cadastro() {
 
   return (
     <>
-      <main className="bg-purple-300 w-full min-h-screen flex justify-center items-center p-4 md:p-10">
+      <main className="bg-base-200 w-full min-h-screen flex justify-center items-center p-4 md:p-10">
         <div className="bg-white w-full max-w-4xl p-6 md:p-8 py-5 flex flex-col rounded-lg shadow-lg">
           <div className="w-full flex justify-center">
             <h1 className="font-bold text-2xl md:text-4xl mb-4">Criar Conta</h1>
@@ -158,7 +157,7 @@ export default function Cadastro() {
                 </Link>
               </div>
               <div className="flex justify-center items-center mt-5">
-                <button className="btn btn-neutral w-full" type="submit">
+                <button className="btn btn-primary w-full" type="submit">
                   Criar Conta
                 </button>
               </div>
