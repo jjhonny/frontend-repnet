@@ -122,7 +122,6 @@ export default function NovoProduto() {
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
-
       <main className="w-11/12 flex-grow mx-auto px-8 py-8">
         <div className="max-w-md hero bg-base-100 rounded-box mb-6 shadow-md mx-auto">
           <div className="hero-content text-center py-6">

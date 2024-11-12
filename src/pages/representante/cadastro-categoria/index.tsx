@@ -61,7 +61,6 @@ export default function NovaCategoria() {
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
-
       <main className="max-w-6xl flex-grow container mx-auto px-4 py-8">
         <div className="max-w-md hero bg-base-100 rounded-box mb-6 shadow-md mx-auto">
           <div className="hero-content text-center py-6">
@@ -72,7 +71,6 @@ export default function NovaCategoria() {
             </div>
           </div>
         </div>
-
         <div className="bg-white rounded-2xl shadow-lg px-8 py-6 space-y-4">
           <form onSubmit={handleSubmit(handleRegisterCategory)}>
             <div className="mb-4">

@@ -101,12 +101,10 @@ export default function PerfilRepre() {
             </div>
           </div>
         </div>
-
         <div className="bg-white shadow-2xl rounded-lg max-w-5xl mx-auto p-6 px-6">
           <h2 className="text-xl font-semibold mb-4">Informações do Usuário</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Razão Social */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Razão Social
@@ -128,8 +126,6 @@ export default function PerfilRepre() {
                   </span>
                 )}
               </div>
-
-              {/* CNPJ */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">CNPJ</label>
                 <div className="relative w-full">
@@ -142,8 +138,6 @@ export default function PerfilRepre() {
                   />
                 </div>
               </div>
-
-              {/* Email */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">Email</label>
                 <div className="relative w-full">
@@ -163,8 +157,6 @@ export default function PerfilRepre() {
                   </span>
                 )}
               </div>
-
-              {/* Categoria */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Categoria
@@ -181,8 +173,6 @@ export default function PerfilRepre() {
                   />
                 </div>
               </div>
-
-              {/* Nova Senha */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Nova Senha

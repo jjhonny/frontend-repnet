@@ -14,7 +14,7 @@ export interface PedidoItem {
 
 export interface PedidoInfo {
   id: number;
-  status: string; // Assuming StatusPedido is a string, adjust if necessary
+  status: string;
   valor_total: number;
   cliente: string;
   representante: string;
@@ -35,7 +35,7 @@ export default function PedidosFeitos() {
 
   useEffect(() => {
     async function handleSearchOrders() {
-      if (!localUser.cnpj) return; // Verifique se `localUser` e `cnpj` estão definidos
+      if (!localUser.cnpj) return;
       setLoading(true);
       try {
         const response = await api.post("/pedidos", { cnpj: localUser.cnpj });

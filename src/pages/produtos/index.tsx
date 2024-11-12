@@ -54,7 +54,6 @@ export default function Produtos() {
     handleSearchProduct();
   }, []);
 
-  // Função para adicionar item ao carrinho e exibir toast
   const handleAddToCart = (item: ProductsProps) => {
     addItemCart(item);
     toast.success(`${item.descricao} adicionado ao carrinho com sucesso!`, {
@@ -67,7 +66,6 @@ export default function Produtos() {
     });
   };
 
-  // Função para formatar a data
   const formatDate = (dateString: string) => {
     if (!dateString) return "Sem data";
     const date = new Date(dateString);

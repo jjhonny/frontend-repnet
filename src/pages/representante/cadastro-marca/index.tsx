@@ -61,7 +61,6 @@ export default function NovaMarca() {
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
-
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="max-w-md hero bg-base-100 rounded-box mb-6 shadow-md mx-auto">
           <div className="hero-content text-center py-6">

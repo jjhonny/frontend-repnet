@@ -19,7 +19,6 @@ export default function Representante() {
   return (
     <div className="min-h-screen bg-base-200">
       <Header />
-
       <main className="container mx-auto px-4 py-8">
         <div className="hero bg-base-100 rounded-box mb-8 shadow-md">
           <div className="hero-content text-center py-12">
@@ -31,16 +30,13 @@ export default function Representante() {
             </div>
           </div>
         </div>
-
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Client Info Card */}
           <div className="bg-base-100 shadow-md rounded-xl">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6 flex items-center gap-2">
                 <FaUser className="text-primary" />
                 Informações do Representante
               </h2>
-
               <div className="space-y-4">
                 <div className="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
                   <FaUser className="text-primary text-xl" />
@@ -64,12 +60,9 @@ export default function Representante() {
               </div>
             </div>
           </div>
-
-          {/* Quick Actions Card */}
           <div className="bg-base-100 shadow-md rounded-lg">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Ações Rápidas</h2>
-
               <div className="grid sm:grid-cols-2 gap-4">
                 <Link
                   href="/representante/cadastro-produto"
@@ -101,55 +94,6 @@ export default function Representante() {
         </div>
       </main>
     </div>
-
-    /*  <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow flex flex-col items-center mt-20">
-        <h1 className="text-5xl font-bold">Bem-vindo!!</h1>
-        <div className="mt-10 w-full max-w-4xl">
-          <div className="bg-white shadow-2xl rounded-2xl p-6 mb-6">
-            <h2 className="text-2xl font-bold mb-4">Resumo do Representante</h2>
-            <p>
-              <span className="font-bold">Nome:</span> {localUser?.razao_social}
-            </p>
-            <p>
-              <span className="font-bold">Email: </span>
-              {localUser?.email}
-            </p>
-          </div>
-          <div className="bg-white shadow-2xl rounded-2xl p-6 mb-6">
-            <h2 className="text-2xl font-bold mb-4">Atalhos Rápidos</h2>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/representante/cadastro-produto"
-                className="btn btn-primary rounded-2xl"
-              >
-                <MdAddCircleOutline /> Cadastrar Produto
-              </Link>
-              <Link
-                href="/representante/cadastro-categoria"
-                className="btn btn-primary rounded-2xl"
-              >
-                <MdAddCircleOutline /> Cadastrar Categoria
-              </Link>
-              <Link
-                href="/representante/cadastro-marca"
-                className="btn btn-primary rounded-2xl"
-              >
-                <MdAddCircleOutline /> Cadastrar Marca
-              </Link>
-              <Link
-                href="/representante/perfil"
-                className="btn btn-primary rounded-2xl"
-              >
-                <FaPen /> Editar perfil
-              </Link>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div> */
   );
 }
 export const getServerSideProps = canSSRAuth(async (context) => {

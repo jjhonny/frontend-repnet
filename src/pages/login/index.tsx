@@ -88,10 +88,3 @@ export default function Login() {
     </>
   );
 }
-
-/* export const getServerSideProps = canSSRGuest(async (context) => {
-
-  return {
-    props: {}
-  }
-}) */
