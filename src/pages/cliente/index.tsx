@@ -19,7 +19,6 @@ export default function Cliente() {
   return (
     <div className="min-h-screen bg-base-200">
       <Header />
-
       <main className="container mx-auto px-4 py-8">
         <div className="hero bg-base-100 rounded-box mb-8 shadow-md">
           <div className="hero-content text-center py-12">
@@ -31,16 +30,13 @@ export default function Cliente() {
             </div>
           </div>
         </div>
-
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Client Info Card */}
           <div className="bg-base-100 shadow-md rounded-xl">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6 flex items-center gap-2">
                 <FaUser className="text-primary" />
                 Informações do Cliente
               </h2>
-
               <div className="space-y-4">
                 <div className="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
                   <FaUser className="text-primary text-xl" />
@@ -51,7 +47,6 @@ export default function Cliente() {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
                   <FaEnvelope className="text-primary text-xl" />
                   <div>
@@ -64,8 +59,6 @@ export default function Cliente() {
               </div>
             </div>
           </div>
-
-          {/* Quick Actions Card */}
           <div className="bg-base-100 shadow-md rounded-xl">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Ações Rápidas</h2>
@@ -97,8 +90,6 @@ export default function Cliente() {
               </div>
             </div>
           </div>
-
-          {/* Stats Section */}
           <div className="lg:col-span-2 shadow-md ">
             <div className="stats shadow w-full">
               <div className="stat place-items-center">
