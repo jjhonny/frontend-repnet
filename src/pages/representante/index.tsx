@@ -91,6 +91,27 @@ export default function Representante() {
               </div>
             </div>
           </div>
+          <div className="lg:col-span-2 shadow-md ">
+            <div className="stats shadow w-full">
+              <div className="stat place-items-center">
+                <div className="stat-title">Pedidos</div>
+                <div className="stat-value">31</div>
+                <div className="stat-desc">Desde o início</div>
+              </div>
+
+              <div className="stat place-items-center">
+                <div className="stat-title">Pedidos solicitados</div>
+                <div className="stat-value text-primary">4</div>
+                <div className="stat-desc">↗︎ Este mês</div>
+              </div>
+
+              <div className="stat place-items-center">
+                <div className="stat-title">Total Vendido</div>
+                <div className="stat-value">R$ 12.200.000</div>
+                <div className="stat-desc">↗︎ Desde o início</div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
