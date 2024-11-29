@@ -5,6 +5,7 @@ import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 export interface ProductsProps {
   id: number;
@@ -35,6 +36,7 @@ export default function Produtos() {
       setLoading(true); // Ativa o estado de carregamento
 
       try {
+        axios.defaults.withCredentials = true;
         const response = await api.get("/produtos");
         console.log(response);
         console.log("Status:", response.status);
