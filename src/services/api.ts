@@ -9,14 +9,12 @@ export function setupAPICliente(ctx = undefined): AxiosInstance {
 
   // Criando a instância do Axios
   const api = axios.create({
-    baseURL:
-      "https://0b96-2804-ebc-9001-c900-cd5c-9838-a291-40fa.ngrok-free.app",
+    baseURL: "http://localhost:3333",
     headers: {
       Authorization: `Bearer ${cookies["@nextauth.token"]}`,
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    withCredentials: true, // Importante para CORS com credenciais
   });
 
   // Adicione este interceptor para logar mais detalhes
