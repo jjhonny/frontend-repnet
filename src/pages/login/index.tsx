@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { InputText } from "@/components/input-text";
 import { FaKey, FaUser } from "react-icons/fa";
 import { AuthContext } from "@/contexts/AuthContex";
@@ -7,6 +7,7 @@ import { SignInProps } from "@/contexts/AuthContex";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import router from "next/router";
 
 const schema = z.object({
   cnpj: z.string().min(1, "O cnpj é obrigatório."),
@@ -14,6 +15,28 @@ const schema = z.object({
 });
 
 export default function Login() {
+  const [loadingAuth, setLoadingAuth] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { signIn } = useContext(AuthContext);
+
+  // Verifica se o usuário já está logado
+  // Verifica se o usuário já está logado
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const localUser = JSON.parse(storedUser);
+      if (localUser?.categoria === "C") {
+        router.replace("/cliente");
+      } else if (localUser?.categoria === "R") {
+        router.replace("/representante");
+      } else {
+        setLoadingAuth(false); // Nenhum redirecionamento necessário
+      }
+    } else {
+      setLoadingAuth(false); // Nenhum usuário armazenado
+    }
+  }, [router]);
+
   const {
     register,
     handleSubmit,
@@ -21,13 +44,20 @@ export default function Login() {
   } = useForm<SignInProps>({
     resolver: zodResolver(schema),
   });
-  const [loading, setLoading] = useState(false);
-  const { signIn } = useContext(AuthContext);
 
   async function handleLogin(data: SignInProps) {
     setLoading(true);
     await signIn(data);
     setLoading(false);
+  }
+
+  if (loadingAuth) {
+    // Exibe um estado de carregamento enquanto verifica o login
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
   }
 
   return (
