@@ -32,22 +32,41 @@ export default function Produtos() {
 
   useEffect(() => {
     async function handleSearchProduct() {
-      setLoading(true);
+      setLoading(true); // Ativa o estado de carregamento
+
       try {
         const response = await api.get("/produtos");
+        console.log(response);
+        console.log("Status:", response.status);
+        console.log("Headers:", response.headers);
+        console.log("Data:", response.data);
+
         const produtosBack = response.data;
-        if (produtosBack.length >= 1) {
+
+        // Verifica se há produtos e atualiza o estado
+        if (Array.isArray(produtosBack) && produtosBack.length > 0) {
           setProducts(produtosBack);
+        } else {
+          setProducts([]); // Nenhum produto encontrado
+          toast.error("Nenhum produto encontrado.", {
+            style: {
+              background: "#333",
+              color: "#fff",
+            },
+          });
         }
       } catch (error) {
-        toast.error(error.response.data.errormessage, {
+        // Verifica se a resposta do erro existe
+        const errorMessage =
+          error.response?.data?.errormessage || "Erro ao buscar os produtos.";
+        toast.error(errorMessage, {
           style: {
             background: "#333",
             color: "#fff",
           },
         });
       } finally {
-        setLoading(false);
+        setLoading(false); // Desativa o estado de carregamento
       }
     }
 
