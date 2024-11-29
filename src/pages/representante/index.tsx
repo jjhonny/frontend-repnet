@@ -107,7 +107,7 @@ export default function Representante() {
 
               <div className="stat place-items-center">
                 <div className="stat-title">Total Vendido</div>
-                <div className="stat-value">R$ 12.200.000</div>
+                <div className="stat-value text-green-600">R$ 12.200.000</div>
                 <div className="stat-desc">↗︎ Desde o início</div>
               </div>
             </div>
