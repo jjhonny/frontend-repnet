@@ -19,18 +19,20 @@ export default function Representante() {
   return (
     <div className="min-h-screen bg-base-200">
       <Header />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 sm:px-6 py-8">
         <div className="hero bg-base-100 rounded-box mb-8 shadow-md">
-          <div className="hero-content text-center py-12">
+          <div className="hero-content text-center py-8 sm:py-12">
             <div>
-              <h1 className="text-5xl font-bold text-primary">Bem-vindo!</h1>
+              <h1 className="text-4xl sm:text-5xl font-bold text-primary">
+                Bem-vindo!
+              </h1>
               <p className="py-4 text-base-content/70">
                 Gerencie seus produtos e informações pessoais
               </p>
             </div>
           </div>
         </div>
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid gap-6">
           <div className="bg-base-100 shadow-md rounded-xl">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6 flex items-center gap-2">
@@ -63,7 +65,7 @@ export default function Representante() {
           <div className="bg-base-100 shadow-md rounded-lg">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Ações Rápidas</h2>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
                   href="/representante/cadastro-produto"
                   className="btn btn-primary gap-2 hover:scale-105 transition-transform"
@@ -91,8 +93,8 @@ export default function Representante() {
               </div>
             </div>
           </div>
-          <div className="lg:col-span-2 shadow-md ">
-            <div className="stats shadow w-full">
+          <div className="shadow-md overflow-x-auto">
+            <div className="stats shadow w-full flex flex-col sm:flex-row">
               <div className="stat place-items-center">
                 <div className="stat-title">Pedidos</div>
                 <div className="stat-value">31</div>
@@ -117,6 +119,7 @@ export default function Representante() {
     </div>
   );
 }
+
 export const getServerSideProps = canSSRAuth(async (context) => {
   return {
     props: {},
