@@ -9,7 +9,7 @@ export function setupAPICliente(ctx = undefined): AxiosInstance {
 
   // Criando a instância do Axios
   const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: "https://teste-backend-eta.vercel.app/",
     headers: {
       Authorization: `Bearer ${cookies["@nextauth.token"]}`,
       "Content-Type": "application/json",
