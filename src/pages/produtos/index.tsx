@@ -5,8 +5,8 @@ import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { SearchInput } from "@/components/SearchInput";
 
 export interface ProductsProps {
   id: number;
@@ -19,7 +19,11 @@ export interface ProductsProps {
 }
 
 export default function Produtos() {
+  const { addItemCart, cart } = useCart();
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
+  const [products, setProducts] = useState<ProductsProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [searchItem, setSearchItem] = useState("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -27,10 +31,6 @@ export default function Produtos() {
       setLocalUser(JSON.parse(storedUser));
     }
   }, []);
-
-  const { addItemCart, cart } = useCart();
-  const [products, setProducts] = useState<ProductsProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function handleSearchProduct() {
@@ -88,6 +88,10 @@ export default function Produtos() {
     });
   };
 
+  const filteredProducts = products.filter((item) =>
+    item.descricao.toLowerCase().includes(searchItem.toLowerCase())
+  );
+
   return (
     <>
       <div className="min-h-screen flex flex-col bg-base-200">
@@ -103,15 +107,15 @@ export default function Produtos() {
               </div>
             </div>
           </div>
-
+          <SearchInput value={searchItem} onChange={setSearchItem} />
           {loading ? (
             <div className="flex justify-center items-center h-screen">
               <span className="loading loading-spinner loading-lg"></span>
             </div>
           ) : (
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
-              {products.length >= 1 ? (
-                products.map((item) => (
+              {filteredProducts.length >= 1 ? (
+                filteredProducts.map((item) => (
                   <div
                     key={item.id}
                     className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
