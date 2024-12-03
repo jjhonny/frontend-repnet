@@ -5,9 +5,22 @@ import { useEffect, useState } from "react";
 import { UserProps } from "@/contexts/AuthContex";
 import { BsBagCheckFill } from "react-icons/bs";
 import { FaPen, FaShoppingCart, FaUser, FaEnvelope } from "react-icons/fa";
+import { api } from "@/services/apiCliente";
+import { formatCurrency } from "@/utils/formatCurrency";
+
+interface DashboardProps {
+  totalPedidos: number;
+  totalPedidosMesAtual: number;
+  valorTotalPedidos: number;
+}
 
 export default function Cliente() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
+  const [dashboard, setDashboard] = useState<DashboardProps>({
+    totalPedidos: 0,
+    totalPedidosMesAtual: 0,
+    valorTotalPedidos: 0,
+  });
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -15,6 +28,26 @@ export default function Cliente() {
       setLocalUser(JSON.parse(storedUser));
     }
   }, []);
+
+  useEffect(() => {
+    if (!localUser) return;
+
+    async function handleGetDetailOrder() {
+      try {
+        const response = await api.post("/resumo-pedidos", {
+          cnpj: localUser.cnpj,
+          categoria: localUser.categoria,
+        });
+        const dashboardData = await response.data;
+        setDashboard(dashboardData);
+        console.log(dashboardData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    handleGetDetailOrder();
+  }, [localUser]);
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -93,17 +126,21 @@ export default function Cliente() {
             <div className="stats shadow w-full flex flex-col sm:flex-row">
               <div className="stat place-items-center">
                 <div className="stat-title">Pedidos</div>
-                <div className="stat-value">31</div>
+                <div className="stat-value">{dashboard.totalPedidos}</div>
                 <div className="stat-desc">Desde o início</div>
               </div>
               <div className="stat place-items-center">
                 <div className="stat-title">Pedidos</div>
-                <div className="stat-value text-primary">4</div>
+                <div className="stat-value text-primary">
+                  {dashboard.totalPedidosMesAtual}
+                </div>
                 <div className="stat-desc">↗︎ Este mês</div>
               </div>
               <div className="stat place-items-center">
                 <div className="stat-title">Total Gasto</div>
-                <div className="stat-value text-green-600">R$ 1,200</div>
+                <div className="stat-value text-green-600">
+                  R$ {formatCurrency(dashboard.valorTotalPedidos)}
+                </div>
                 <div className="stat-desc">↗︎ Desde o início</div>
               </div>
             </div>
