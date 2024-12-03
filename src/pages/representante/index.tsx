@@ -5,9 +5,22 @@ import { useEffect, useState } from "react";
 import { UserProps } from "@/contexts/AuthContex";
 import { FaEnvelope, FaPen, FaUser } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
+import { api } from "@/services/apiCliente";
+import toast from "react-hot-toast";
+
+interface DashboardProps {
+  totalPedidos: number;
+  totalPedidosMesAtual: number;
+  valorTotalPedidos: number;
+}
 
 export default function Representante() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
+  const [dashboard, setDashboard] = useState<DashboardProps>({
+    totalPedidos: 0,
+    totalPedidosMesAtual: 0,
+    valorTotalPedidos: 0,
+  });
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -15,6 +28,29 @@ export default function Representante() {
       setLocalUser(JSON.parse(storedUser));
     }
   }, []);
+
+  useEffect(() => {
+    if (!localUser) return;
+
+    async function handleGetDetailOrder() {
+      try {
+        const response = await api.post("/resumo-pedidos", {
+          cnpj: localUser.cnpj,
+          categoria: localUser.categoria,
+        });
+        const dashboardData = await response.data;
+        setDashboard(dashboardData);
+      } catch (error) {
+        toast.error(error.response?.data?.errormessage, {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
+      }
+    }
+    handleGetDetailOrder();
+  }, [localUser]);
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -97,19 +133,27 @@ export default function Representante() {
             <div className="stats shadow w-full flex flex-col sm:flex-row">
               <div className="stat place-items-center">
                 <div className="stat-title">Pedidos</div>
-                <div className="stat-value">31</div>
+                <div className="stat-value">{dashboard.totalPedidos}</div>
                 <div className="stat-desc">Desde o início</div>
               </div>
 
               <div className="stat place-items-center">
                 <div className="stat-title">Pedidos solicitados</div>
-                <div className="stat-value text-primary">4</div>
+                <div className="stat-value text-primary">
+                  {dashboard.totalPedidosMesAtual}
+                </div>
                 <div className="stat-desc">↗︎ Este mês</div>
               </div>
 
               <div className="stat place-items-center">
                 <div className="stat-title">Total Vendido</div>
-                <div className="stat-value text-green-600">R$ 12.200.000</div>
+                <div className="stat-value text-green-600">
+                  R$ {""}
+                  {Intl.NumberFormat("pt-BR", {
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                  }).format(Number(dashboard.valorTotalPedidos))}
+                </div>
                 <div className="stat-desc">↗︎ Desde o início</div>
               </div>
             </div>
