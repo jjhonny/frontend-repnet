@@ -9,6 +9,7 @@ export default function Carrinho() {
   const [localUser, setLocalUser] = useState(null);
   const { cart, total, removeItemCart, clearCart } = useCart();
   const [pedidoId, setPedidoId] = useState(null); // Estado para armazenar o ID do pedido
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -31,6 +32,7 @@ export default function Carrinho() {
 
   const handleFinalizePurchase = async (id_pedido) => {
     try {
+      setLoading(true);
       const response = await api.post("/enviar-pedido", {
         id_pedido: id_pedido,
       });
@@ -64,6 +66,8 @@ export default function Carrinho() {
           color: "#fff",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -164,17 +168,25 @@ export default function Carrinho() {
           <p className="text-lg font-semibold">Total: {total}</p>
         </div>
         <div className="mt-8 flex justify-end">
-          <button
-            className="btn btn-primary rounded-2xl flex items-center shadow-2xl"
-            onClick={handleRegisterOrder}
-          >
-            <FaShoppingCart className="mr-2" />
-            Finalizar Pedido ({cart.reduce(
-              (acc, item) => acc + item.amount,
-              0
-            )}{" "}
-            itens)
-          </button>
+          {loading ? (
+            <button
+              className="btn btn-primary rounded-2xl flex items-center shadow-2xl"
+              type="submit"
+              disabled
+            >
+              Finalizando...
+              <span className="loading loading-spinner loading-md"></span>
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary rounded-2xl flex items-center shadow-2xl"
+              onClick={handleRegisterOrder}
+            >
+              <FaShoppingCart className="mr-2" />
+              Finalizar Pedido (
+              {cart.reduce((acc, item) => acc + item.amount, 0)} itens)
+            </button>
+          )}
         </div>
       </div>
     </div>
