@@ -100,13 +100,18 @@ export default function Autenticar() {
               </span>
             )}
           </div>
-          <button
-            type="submit"
-            className={`btn btn-primary w-full ${loading ? "loading" : ""}`}
-            disabled={loading}
-          >
-            {loading ? "Autenticando..." : "Autenticar"}
-          </button>
+          <div className="flex justify-center items-center mt-5">
+            {loading ? (
+              <button className="btn btn-neutral w-full" type="submit" disabled>
+                Autenticando...
+                <span className="loading loading-spinner loading-md"></span>
+              </button>
+            ) : (
+              <button className="btn btn-primary w-full" type="submit">
+                Autenticar
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>
