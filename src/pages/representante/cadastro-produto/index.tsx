@@ -132,69 +132,92 @@ export default function NovoProduto() {
             </div>
           </div>
         </div>
-
-        <div className="bg-white rounded-2xl shadow-2xl px-8 py-6 space-y-4">
-          <form onSubmit={handleSubmit(handleRegisterProduct)}>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="font-bold">
+        <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 space-y-6">
+          <form
+            onSubmit={handleSubmit(handleRegisterProduct)}
+            className="space-y-6"
+          >
+            <div className="space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="descricao"
+                  className="block font-bold text-sm sm:text-base"
+                >
                   Nome do produto<span className="text-red-500">*</span>
-                </span>
+                </label>
                 <InputText
                   type="text"
                   name="descricao"
-                  className="grow"
+                  className="w-full"
                   placeholder="Digite o nome do produto"
                   register={register}
                   error={errors.descricao?.message}
                 />
               </div>
-              <div className="mb-4">
-                <span className="font-bold">Validade do produto</span>
+              <div className="space-y-2">
+                <label
+                  htmlFor="validade"
+                  className="block font-bold text-sm sm:text-base"
+                >
+                  Validade do produto
+                </label>
                 <InputText
                   type="date"
                   name="validade"
-                  className="grow"
+                  className="w-full"
                   placeholder="Digite a data de validade (opcional)"
                   register={register}
                   error={errors.validade?.message}
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="font-bold">Peso do Produto</span>
+
+            <div className="space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="peso"
+                  className="block font-bold text-sm sm:text-base"
+                >
+                  Peso do Produto
+                </label>
                 <InputText
                   type="number"
                   name="peso"
-                  className="grow"
+                  className="w-full"
                   placeholder="Digite o peso do produto"
                   register={register}
                   error={errors.peso?.message}
                 />
               </div>
-              <div className="mb-4">
-                <span className="font-bold">
+              <div className="space-y-2">
+                <label
+                  htmlFor="preco"
+                  className="block font-bold text-sm sm:text-base"
+                >
                   Preço do produto<span className="text-red-500">*</span>
-                </span>
+                </label>
                 <InputText
                   type="number"
                   name="preco"
-                  className="grow"
+                  className="w-full"
                   placeholder="Digite o preço do produto"
                   register={register}
                   error={errors.preco?.message}
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="font-bold">
+
+            <div className="space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="categoria"
+                  className="block font-bold text-sm sm:text-base"
+                >
                   Categoria do produto<span className="text-red-500">*</span>
-                </span>
+                </label>
                 <Select
                   name="categoria"
-                  className="select select-bordered w-full mt-2"
+                  className="select select-bordered w-full"
                   register={register}
                   options={categoryOptions}
                   placeholder="Selecione uma categoria"
@@ -202,13 +225,16 @@ export default function NovoProduto() {
                   error={errors.categoria?.message}
                 />
               </div>
-              <div className="mb-4">
-                <span className="font-bold">
+              <div className="space-y-2">
+                <label
+                  htmlFor="marca"
+                  className="block font-bold text-sm sm:text-base"
+                >
                   Marca<span className="text-red-500">*</span>
-                </span>
+                </label>
                 <Select
                   name="marca"
-                  className="select select-bordered w-full mt-2"
+                  className="select select-bordered w-full"
                   register={register}
                   options={brandOptions}
                   placeholder="Selecione uma marca"
@@ -217,7 +243,8 @@ export default function NovoProduto() {
                 />
               </div>
             </div>
-            <div className="flex justify-end">
+
+            <div className="pt-4">
               {loading ? (
                 <button
                   className="btn btn-neutral w-full"
