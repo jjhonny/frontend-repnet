@@ -7,6 +7,7 @@ import { FaEnvelope, FaPen, FaUser } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
 import { api } from "@/services/apiCliente";
 import toast from "react-hot-toast";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 interface DashboardProps {
   totalPedidos: number;
@@ -148,11 +149,7 @@ export default function Representante() {
               <div className="stat place-items-center">
                 <div className="stat-title">Total Vendido</div>
                 <div className="stat-value text-green-600">
-                  R$ {""}
-                  {Intl.NumberFormat("pt-BR", {
-                    currency: "BRL",
-                    minimumFractionDigits: 2,
-                  }).format(Number(dashboard.valorTotalPedidos))}
+                  R$ {formatCurrency(dashboard.valorTotalPedidos)}
                 </div>
                 <div className="stat-desc">↗︎ Desde o início</div>
               </div>

@@ -7,6 +7,7 @@ import { BsBagCheckFill } from "react-icons/bs";
 import { FaPen, FaShoppingCart, FaUser, FaEnvelope } from "react-icons/fa";
 import { api } from "@/services/apiCliente";
 import { formatCurrency } from "@/utils/formatCurrency";
+import toast from "react-hot-toast";
 
 interface DashboardProps {
   totalPedidos: number;
@@ -42,7 +43,12 @@ export default function Cliente() {
         setDashboard(dashboardData);
         console.log(dashboardData);
       } catch (error) {
-        console.log(error);
+        toast.error(error.response?.data?.errormessage, {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
       }
     }
 

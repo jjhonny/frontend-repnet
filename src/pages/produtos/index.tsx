@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export interface ProductsProps {
   id: number;
@@ -193,11 +194,7 @@ export default function Produtos() {
 
                       <div className="card-actions pt-4 flex items-center justify-between border-t border-gray-200">
                         <p className="text-xl font-bold text-gray-700">
-                          R${" "}
-                          {Intl.NumberFormat("pt-BR", {
-                            currency: "BRL",
-                            minimumFractionDigits: 2,
-                          }).format(Number(item.preco))}
+                          R$ {formatCurrency(item.preco)}
                         </p>
                         {localUser?.categoria === "C" && (
                           <button
