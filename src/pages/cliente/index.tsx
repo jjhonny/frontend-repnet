@@ -41,7 +41,6 @@ export default function Cliente() {
         });
         const dashboardData = await response.data;
         setDashboard(dashboardData);
-        console.log(dashboardData);
       } catch (error) {
         toast.error(error.response?.data?.errormessage, {
           style: {
