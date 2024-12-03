@@ -33,23 +33,14 @@ export default function Produtos() {
 
   useEffect(() => {
     async function handleSearchProduct() {
-      setLoading(true); // Ativa o estado de carregamento
-
+      setLoading(true);
       try {
-        axios.defaults.withCredentials = true;
         const response = await api.get("/produtos");
-        console.log(response);
-        console.log("Status:", response.status);
-        console.log("Headers:", response.headers);
-        console.log("Data:", response.data);
-
         const produtosBack = response.data;
-
-        // Verifica se há produtos e atualiza o estado
         if (Array.isArray(produtosBack) && produtosBack.length > 0) {
           setProducts(produtosBack);
         } else {
-          setProducts([]); // Nenhum produto encontrado
+          setProducts([]);
           toast.error("Nenhum produto encontrado.", {
             style: {
               background: "#333",
@@ -58,7 +49,6 @@ export default function Produtos() {
           });
         }
       } catch (error) {
-        // Verifica se a resposta do erro existe
         const errorMessage =
           error.response?.data?.errormessage || "Erro ao buscar os produtos.";
         toast.error(errorMessage, {
@@ -68,10 +58,9 @@ export default function Produtos() {
           },
         });
       } finally {
-        setLoading(false); // Desativa o estado de carregamento
+        setLoading(false);
       }
     }
-
     handleSearchProduct();
   }, []);
 
