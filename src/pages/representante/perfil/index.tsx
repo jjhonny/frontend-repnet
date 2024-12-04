@@ -14,10 +14,12 @@ import {
   FaPen,
   FaTimes,
 } from "react-icons/fa";
+import { FaPrint } from "react-icons/fa6";
 
 export default function PerfilRepre() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -86,6 +88,30 @@ export default function PerfilRepre() {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
+
+  async function handleGenerateReport() {
+    try {
+      setLoading(true);
+      const response = await api.post("/relatorio", {
+        cnpj: localUser.cnpj,
+        categoria: localUser.categoria,
+        opcao: "E",
+      });
+      const result = response.data.message;
+      toast.success(result, {
+        duration: 1500,
+        position: "top-center",
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      toast.error("Erro ao gerar relatório. Tente novamente mais tarde.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
@@ -190,13 +216,13 @@ export default function PerfilRepre() {
                 </div>
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex gap-2">
               {!editing ? (
                 <button
-                  className="btn btn-accent gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-primary gap-2 hover:scale-105 transition-transform"
                   onClick={handleEditClick}
                 >
-                  <FaPen /> Editar
+                  <FaPen /> Editar Perfil
                 </button>
               ) : (
                 <div>
@@ -214,6 +240,17 @@ export default function PerfilRepre() {
                   </button>
                 </div>
               )}
+              <button
+                className="btn btn-primary hover:scale-105 transition-transform"
+                type="button"
+                onClick={handleGenerateReport}
+                disabled={loading}
+              >
+                <FaPrint /> Gerar Relatório
+                {loading && (
+                  <span className="loading loading-spinner loading-sm"></span>
+                )}
+              </button>
             </div>
           </form>
         </div>
