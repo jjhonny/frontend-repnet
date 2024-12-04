@@ -14,10 +14,12 @@ import {
   FaPen,
   FaTimes,
 } from "react-icons/fa";
+import { FaPrint } from "react-icons/fa6";
 
 export default function PerfilCliente() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -66,7 +68,6 @@ export default function PerfilCliente() {
       });
       setEditing(false);
     } catch (error) {
-      console.error("Erro ao atualizar informações:", error);
       toast.error("Erro ao atualizar informações. Tente novamente mais tarde.");
     }
   };
@@ -87,6 +88,30 @@ export default function PerfilCliente() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+  async function handleGenerateReport() {
+    try {
+      setLoading(true);
+      const response = await api.post("/relatorio", {
+        cnpj: localUser.cnpj,
+        categoria: localUser.categoria,
+        opcao: "E",
+      });
+      const result = response.data.message;
+      toast.success(result, {
+        duration: 1500,
+        position: "top-center",
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      toast.error("Erro ao gerar relatório. Tente novamente mais tarde.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
@@ -106,7 +131,6 @@ export default function PerfilCliente() {
           <h2 className="text-xl font-semibold mb-4">Informações do Usuário</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Razão Social */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Razão Social
@@ -128,8 +152,6 @@ export default function PerfilCliente() {
                   </span>
                 )}
               </div>
-
-              {/* CNPJ */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">CNPJ</label>
                 <div className="relative w-full">
@@ -142,8 +164,6 @@ export default function PerfilCliente() {
                   />
                 </div>
               </div>
-
-              {/* Email */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">Email</label>
                 <div className="relative w-full">
@@ -163,8 +183,6 @@ export default function PerfilCliente() {
                   </span>
                 )}
               </div>
-
-              {/* Categoria */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Categoria
@@ -181,8 +199,6 @@ export default function PerfilCliente() {
                   />
                 </div>
               </div>
-
-              {/* Nova Senha */}
               <div className="flex flex-col">
                 <label className="mb-2 font-medium text-gray-700">
                   Nova Senha
@@ -200,30 +216,43 @@ export default function PerfilCliente() {
                 </div>
               </div>
             </div>
-            <div className="mt-4">
-              {!editing ? (
+            <div className="mt-4 flex">
+              <div className="flex gap-2">
+                {!editing ? (
+                  <button
+                    className="btn btn-primary gap-2 hover:scale-105 transition-transform"
+                    onClick={handleEditClick}
+                  >
+                    <FaPen /> Editar Perfil
+                  </button>
+                ) : (
+                  <div>
+                    <button
+                      className="btn btn-success gap-2 mr-2 hover:scale-105 transition-transform"
+                      type="submit"
+                    >
+                      <FaCheck /> Salvar
+                    </button>
+                    <button
+                      className="btn btn-error gap-2 hover:scale-105 transition-transform"
+                      onClick={() => setEditing(false)}
+                    >
+                      <FaTimes /> Cancelar
+                    </button>
+                  </div>
+                )}
                 <button
-                  className="btn btn-accent gap-2 hover:scale-105 transition-transform"
-                  onClick={handleEditClick}
+                  className="btn btn-primary hover:scale-105 transition-transform"
+                  type="button"
+                  onClick={handleGenerateReport}
+                  disabled={loading}
                 >
-                  <FaPen /> Editar
+                  <FaPrint /> Gerar Relatório
+                  {loading && (
+                    <span className="loading loading-spinner loading-sm"></span>
+                  )}
                 </button>
-              ) : (
-                <div>
-                  <button
-                    className="btn btn-success gap-2 mr-2 hover:scale-105 transition-transform"
-                    type="submit"
-                  >
-                    <FaCheck /> Salvar
-                  </button>
-                  <button
-                    className="btn btn-error gap-2 hover:scale-105 transition-transform"
-                    onClick={() => setEditing(false)}
-                  >
-                    <FaTimes /> Cancelar
-                  </button>
-                </div>
-              )}
+              </div>
             </div>
           </form>
         </div>
