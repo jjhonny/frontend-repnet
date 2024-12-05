@@ -94,7 +94,7 @@ export default function PerfilCliente() {
       const response = await api.post("/relatorio", {
         cnpj: localUser.cnpj,
         categoria: localUser.categoria,
-        opcao: "E",
+        opcao: "D",
       });
       const result = response.data.message;
       toast.success(result, {
