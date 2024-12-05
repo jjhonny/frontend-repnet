@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { InputText } from "@/components/inputText";
+import { InputText } from "@/components/input-text";
 import { FaKey, FaUser } from "react-icons/fa";
 import { AuthContext } from "@/contexts/AuthContex";
 import Link from "next/link";

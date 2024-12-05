@@ -1,4 +1,4 @@
-import { InputText } from "@/components/inputText";
+import { InputText } from "@/components/input-text";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useState, useEffect } from "react";
