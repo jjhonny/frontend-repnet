@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Link from "next/link";
 import { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
 import toast from "react-hot-toast";

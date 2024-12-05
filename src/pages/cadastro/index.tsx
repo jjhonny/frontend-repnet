@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { InputText } from "@/components/input-text";
+import { InputText } from "@/components/InputText";
 import { AuthContext, SignUpProps } from "@/contexts/AuthContex";
 import { FaAddressCard, FaEnvelope, FaKey, FaUser } from "react-icons/fa";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Select } from "@/components/select";
+import { Select } from "@/components/Select";
 import { MdAttachMoney } from "react-icons/md";
 
 const schema = z.object({

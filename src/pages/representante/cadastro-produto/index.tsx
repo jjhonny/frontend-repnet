@@ -1,4 +1,4 @@
-import { InputText } from "@/components/input-text";
+import { InputText } from "@/components/InputText";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useState, useEffect } from "react";
@@ -6,8 +6,8 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Header } from "@/components/header";
-import { Select } from "@/components/select";
+import { Header } from "@/components/Header";
+import { Select } from "@/components/Select";
 
 type ProductsProps = {
   descricao: string;
