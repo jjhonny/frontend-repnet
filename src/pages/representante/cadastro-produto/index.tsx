@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/Header";
-import { Select } from "@/components/Select";
+import { Select } from "@/components/select";
 
 type ProductsProps = {
   descricao: string;
