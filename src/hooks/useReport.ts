@@ -23,6 +23,11 @@ export function useReport() {
       );
       const blob = new Blob([response.data], { type: "application/pdf" });
       const blobURL = window.URL.createObjectURL(blob);
+      /*  const link = document.createElement("a");
+      link.href = blobURL;
+      link.download = "relatorio.pdf"; 
+      link.click();
+      window.URL.revokeObjectURL(blobURL); */
       window.open(blobURL);
       toast.success("Relatório baixado com sucesso!", {
         duration: 1500,
