@@ -2,6 +2,7 @@ import { Header } from "@/components/header";
 import { UserProps } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useEffect, useState } from "react";
+import { useReport } from "@/hooks/useReport";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { api } from "@/services/apiCliente";
@@ -17,10 +18,14 @@ import {
 import { FaDownload, FaPrint } from "react-icons/fa6";
 
 export default function PerfilCliente() {
+  const {
+    loadingDownload,
+    loadingEmail,
+    handleDownloadReport,
+    handleGenerateReport,
+  } = useReport();
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
   const [editing, setEditing] = useState(false);
-  const [loadingEmail, setLoadingEmail] = useState(false);
-  const [loadingDownload, setLoadingDownload] = useState(false);
 
   const {
     register,
@@ -88,73 +93,6 @@ export default function PerfilCliente() {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
-
-  async function handleDownloadReport() {
-    try {
-      setLoadingDownload(true);
-      const response = await api.post(
-        "/relatorio",
-        {
-          cnpj: localUser.cnpj,
-          categoria: localUser.categoria,
-          opcao: "D",
-        },
-        {
-          responseType: "arraybuffer",
-        }
-      );
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const blobURL = window.URL.createObjectURL(blob);
-      /*    const link = document.createElement("a");
-      link.href = blobURL;
-      link.download = "relatorio.pdf";
-      link.click(); */
-      /* window.URL.revokeObjectURL(blobURL); */
-      window.open(blobURL, "_blank");
-      toast.success("Relatório gerado com sucesso!", {
-        duration: 1500,
-        position: "top-center",
-        style: {
-          background: "#333",
-          color: "#fff",
-        },
-      });
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message ||
-        "Erro ao gerar relatório. Tente novamente mais tarde.";
-      toast.error(errorMessage, {
-        duration: 2000,
-        position: "top-center",
-      });
-    } finally {
-      setLoadingDownload(false);
-    }
-  }
-
-  async function handleGenerateReport() {
-    try {
-      setLoadingEmail(true);
-      const response = await api.post("/relatorio", {
-        cnpj: localUser.cnpj,
-        categoria: localUser.categoria,
-        opcao: "E",
-      });
-      const result = response.data.message;
-      toast.success(result, {
-        duration: 1500,
-        position: "top-center",
-        style: {
-          background: "#333",
-          color: "#fff",
-        },
-      });
-    } catch (error) {
-      toast.error("Erro ao gerar relatório. Tente novamente mais tarde.");
-    } finally {
-      setLoadingEmail(false);
-    }
-  }
 
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
@@ -260,54 +198,52 @@ export default function PerfilCliente() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 flex">
-              <div className="flex gap-2">
-                {!editing ? (
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+              {!editing ? (
+                <button
+                  className="btn btn-primary gap-2 hover:scale-105 transition-transform"
+                  onClick={handleEditClick}
+                >
+                  <FaPen /> Editar Perfil
+                </button>
+              ) : (
+                <div>
                   <button
-                    className="btn btn-primary gap-2 hover:scale-105 transition-transform"
-                    onClick={handleEditClick}
+                    className="btn btn-success gap-2 mr-2 hover:scale-105 transition-transform"
+                    type="submit"
                   >
-                    <FaPen /> Editar Perfil
+                    <FaCheck /> Salvar
                   </button>
-                ) : (
-                  <div>
-                    <button
-                      className="btn btn-success gap-2 mr-2 hover:scale-105 transition-transform"
-                      type="submit"
-                    >
-                      <FaCheck /> Salvar
-                    </button>
-                    <button
-                      className="btn btn-error gap-2 hover:scale-105 transition-transform"
-                      onClick={() => setEditing(false)}
-                    >
-                      <FaTimes /> Cancelar
-                    </button>
-                  </div>
+                  <button
+                    className="btn btn-error gap-2 hover:scale-105 transition-transform"
+                    onClick={() => setEditing(false)}
+                  >
+                    <FaTimes /> Cancelar
+                  </button>
+                </div>
+              )}
+              <button
+                className="btn btn-primary hover:scale-105 transition-transform"
+                type="button"
+                onClick={() => handleGenerateReport(localUser)}
+                disabled={loadingEmail}
+              >
+                <FaPrint /> Relatório Email
+                {loadingEmail && (
+                  <span className="loading loading-spinner loading-sm"></span>
                 )}
-                <button
-                  className="btn btn-primary hover:scale-105 transition-transform"
-                  type="button"
-                  onClick={handleGenerateReport}
-                  disabled={loadingEmail}
-                >
-                  <FaPrint /> Relatório Email
-                  {loadingEmail && (
-                    <span className="loading loading-spinner loading-sm"></span>
-                  )}
-                </button>
-                <button
-                  className="btn btn-primary hover:scale-105 transition-transform"
-                  type="button"
-                  onClick={handleDownloadReport}
-                  disabled={loadingDownload}
-                >
-                  <FaDownload /> Baixar Relatório
-                  {loadingDownload && (
-                    <span className="loading loading-spinner loading-sm"></span>
-                  )}
-                </button>
-              </div>
+              </button>
+              <button
+                className="btn btn-primary hover:scale-105 transition-transform"
+                type="button"
+                onClick={() => handleDownloadReport(localUser)}
+                disabled={loadingDownload}
+              >
+                <FaDownload /> Baixar Relatório
+                {loadingDownload && (
+                  <span className="loading loading-spinner loading-sm"></span>
+                )}
+              </button>
             </div>
           </form>
         </div>
