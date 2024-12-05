@@ -1,6 +1,6 @@
-import FeatureCard from "@/components/LandingPage/FeatureCardProps";
-import { Footer } from "@/components/LandingPage/Footer";
-import { Header } from "@/components/LandingPage/Header";
+import FeatureCard from "@/components/landing-page/FeatureCardProps";
+import { Footer } from "@/components/landing-page/Footer";
+import { Header } from "@/components/landing-page/Header";
 import Link from "next/link";
 
 export default function Home() {

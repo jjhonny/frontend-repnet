@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import toast, { Toaster } from "react-hot-toast";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { SearchInput } from "@/components/searchInput";
+import { SearchInput } from "@/components/search-input";
 
 export interface ProductsProps {
   id: number;
