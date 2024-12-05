@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { InputText } from "@/components/InputText";
+import { InputText } from "@/components/inputText";
 import { Select } from "@/components/select";
 import { AuthContext, SignUpProps } from "@/contexts/AuthContex";
 import { FaAddressCard, FaEnvelope, FaKey, FaUser } from "react-icons/fa";

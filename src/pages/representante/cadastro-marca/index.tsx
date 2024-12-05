@@ -1,4 +1,4 @@
-import { InputText } from "@/components/InputText";
+import { InputText } from "@/components/inputText";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 
 type BrandProps = {
   cnpj_rep: string;

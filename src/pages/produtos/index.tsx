@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { UserProps } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import toast, { Toaster } from "react-hot-toast";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { SearchInput } from "@/components/SearchInput";
+import { SearchInput } from "@/components/searchInput";
 
 export interface ProductsProps {
   id: number;

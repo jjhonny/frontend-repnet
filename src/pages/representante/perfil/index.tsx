@@ -1,6 +1,6 @@
 import { use, useEffect, useState } from "react";
 import { useReport } from "@/hooks/useReport";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { UserProps } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import toast from "react-hot-toast";
