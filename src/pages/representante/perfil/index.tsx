@@ -1,7 +1,8 @@
+import { use, useEffect, useState } from "react";
+import { useReport } from "@/hooks/useReport";
 import { Header } from "@/components/Header";
 import { UserProps } from "@/contexts/AuthContex";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { api } from "@/services/apiCliente";
@@ -14,12 +15,17 @@ import {
   FaPen,
   FaTimes,
 } from "react-icons/fa";
-import { FaPrint } from "react-icons/fa6";
+import { FaDownload, FaPrint } from "react-icons/fa6";
 
 export default function PerfilRepre() {
+  const {
+    loadingDownload,
+    loadingEmail,
+    handleDownloadReport,
+    handleGenerateReport,
+  } = useReport();
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
   const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -89,13 +95,13 @@ export default function PerfilRepre() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  async function handleGenerateReport() {
+  /*   async function handleGenerateReport() {
     try {
-      setLoading(true);
+      setLoadingEmail(true);
       const response = await api.post("/relatorio", {
         cnpj: localUser.cnpj,
         categoria: localUser.categoria,
-        opcao: "D",
+        opcao: "E",
       });
       const result = response.data.message;
       toast.success(result, {
@@ -109,9 +115,9 @@ export default function PerfilRepre() {
     } catch (error) {
       toast.error("Erro ao gerar relatório. Tente novamente mais tarde.");
     } finally {
-      setLoading(false);
+      setLoadingEmail(false);
     }
-  }
+  } */
 
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
@@ -243,11 +249,22 @@ export default function PerfilRepre() {
               <button
                 className="btn btn-primary hover:scale-105 transition-transform"
                 type="button"
-                onClick={handleGenerateReport}
-                disabled={loading}
+                onClick={() => handleGenerateReport(localUser)}
+                disabled={loadingEmail}
               >
-                <FaPrint /> Gerar Relatório
-                {loading && (
+                <FaPrint /> Relatório Email
+                {loadingEmail && (
+                  <span className="loading loading-spinner loading-sm"></span>
+                )}
+              </button>
+              <button
+                className="btn btn-primary hover:scale-105 transition-transform"
+                type="button"
+                onClick={() => handleDownloadReport(localUser)}
+                disabled={loadingDownload}
+              >
+                <FaDownload /> Baixar Relatório
+                {loadingDownload && (
                   <span className="loading loading-spinner loading-sm"></span>
                 )}
               </button>

@@ -14,12 +14,13 @@ import {
   FaPen,
   FaTimes,
 } from "react-icons/fa";
-import { FaPrint } from "react-icons/fa6";
+import { FaDownload, FaPrint } from "react-icons/fa6";
 
 export default function PerfilCliente() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
   const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loadingEmail, setLoadingEmail] = useState(false);
+  const [loadingDownload, setLoadingDownload] = useState(false);
 
   const {
     register,
@@ -88,13 +89,56 @@ export default function PerfilCliente() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+  async function handleDownloadReport() {
+    try {
+      setLoadingDownload(true);
+      const response = await api.post(
+        "/relatorio",
+        {
+          cnpj: localUser.cnpj,
+          categoria: localUser.categoria,
+          opcao: "D",
+        },
+        {
+          responseType: "arraybuffer",
+        }
+      );
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const blobURL = window.URL.createObjectURL(blob);
+      /*    const link = document.createElement("a");
+      link.href = blobURL;
+      link.download = "relatorio.pdf";
+      link.click(); */
+      /* window.URL.revokeObjectURL(blobURL); */
+      window.open(blobURL, "_blank");
+      toast.success("Relatório gerado com sucesso!", {
+        duration: 1500,
+        position: "top-center",
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Erro ao gerar relatório. Tente novamente mais tarde.";
+      toast.error(errorMessage, {
+        duration: 2000,
+        position: "top-center",
+      });
+    } finally {
+      setLoadingDownload(false);
+    }
+  }
+
   async function handleGenerateReport() {
     try {
-      setLoading(true);
+      setLoadingEmail(true);
       const response = await api.post("/relatorio", {
         cnpj: localUser.cnpj,
         categoria: localUser.categoria,
-        opcao: "D",
+        opcao: "E",
       });
       const result = response.data.message;
       toast.success(result, {
@@ -108,7 +152,7 @@ export default function PerfilCliente() {
     } catch (error) {
       toast.error("Erro ao gerar relatório. Tente novamente mais tarde.");
     } finally {
-      setLoading(false);
+      setLoadingEmail(false);
     }
   }
 
@@ -245,10 +289,21 @@ export default function PerfilCliente() {
                   className="btn btn-primary hover:scale-105 transition-transform"
                   type="button"
                   onClick={handleGenerateReport}
-                  disabled={loading}
+                  disabled={loadingEmail}
                 >
-                  <FaPrint /> Gerar Relatório
-                  {loading && (
+                  <FaPrint /> Relatório Email
+                  {loadingEmail && (
+                    <span className="loading loading-spinner loading-sm"></span>
+                  )}
+                </button>
+                <button
+                  className="btn btn-primary hover:scale-105 transition-transform"
+                  type="button"
+                  onClick={handleDownloadReport}
+                  disabled={loadingDownload}
+                >
+                  <FaDownload /> Baixar Relatório
+                  {loadingDownload && (
                     <span className="loading loading-spinner loading-sm"></span>
                   )}
                 </button>
