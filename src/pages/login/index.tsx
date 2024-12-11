@@ -20,7 +20,6 @@ export default function Login() {
   const { signIn } = useContext(AuthContext);
 
   // Verifica se o usuário já está logado
-  // Verifica se o usuário já está logado
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -35,7 +34,7 @@ export default function Login() {
     } else {
       setLoadingAuth(false); // Nenhum usuário armazenado
     }
-  }, [router]);
+  }, []);
 
   const {
     register,
@@ -52,7 +51,6 @@ export default function Login() {
   }
 
   if (loadingAuth) {
-    // Exibe um estado de carregamento enquanto verifica o login
     return (
       <div className="w-full h-screen flex items-center justify-center">
         <span className="loading loading-spinner loading-lg"></span>

@@ -4,7 +4,7 @@ import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { FaUser, FaDollarSign, FaClipboardList } from "react-icons/fa";
+import { FaUser, FaClipboardList } from "react-icons/fa";
 
 export interface PedidoItem {
   id: number;
@@ -57,17 +57,6 @@ export default function PedidosFeitos() {
       console.error("CNPJ do usuário está indefinido");
     }
   }, [localUser]);
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "Sem data";
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return "Data inválida";
-    return date.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  };
 
   return (
     <>
