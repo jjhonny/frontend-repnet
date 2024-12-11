@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useReport } from "@/hooks/useReport";
 import { Header } from "@/components/header";
 import { UserProps } from "@/contexts/AuthContex";
@@ -94,30 +94,6 @@ export default function PerfilRepre() {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
-
-  /*   async function handleGenerateReport() {
-    try {
-      setLoadingEmail(true);
-      const response = await api.post("/relatorio", {
-        cnpj: localUser.cnpj,
-        categoria: localUser.categoria,
-        opcao: "E",
-      });
-      const result = response.data.message;
-      toast.success(result, {
-        duration: 1500,
-        position: "top-center",
-        style: {
-          background: "#333",
-          color: "#fff",
-        },
-      });
-    } catch (error) {
-      toast.error("Erro ao gerar relatório. Tente novamente mais tarde.");
-    } finally {
-      setLoadingEmail(false);
-    }
-  } */
 
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
