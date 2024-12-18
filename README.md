@@ -1,16 +1,16 @@
 <h1 align="center" style="font-weight: bold;">RepNet 💻</h1>
 
 <p align="center">
- <a href="#technologies">Tecnologias</a> • 
+ <a href="#technologies">Technologies</a> • 
 </p>
 
 <p align="center">
-    <b>Sistema de Representação Comercial desenvolvido em grupo durante a graduação na disciplina de Projeto Integrador, que se estende desde o primeiro semestre até a conclusão do curso. O projeto é submetido à apresentação para uma banca avaliadora a cada semestre, com o objetivo de aprovação de cada etapa. Desde o início, são realizadas as etapas de prototipação, documentação e implementação completa do sistema, abrangendo tópicos essenciais que devem ser implementados conforme as exigências de cada semestre.</b>
+    <b>Commercial Representation System developed in a group during graduation in the Integrative Project discipline, which extends from the first semester until the conclusion of the course. The project is submitted for presentation to an evaluation panel every semester, with the aim of approving each stage. From the beginning, the prototyping, documentation and complete system implementation steps are carried out, covering essential topics that must be implemented according to the requirements of each semester.</b>
 </p>
 
 <p align="center">
      <a href="https://repnet.tec.br" target="_blank"
-              rel="noopener noreferrer">📱 Visite o Site</a>
+              rel="noopener noreferrer">📱 Visit the Website</a>
 </p>
 
 <h2 id="layout">🎨 Layout</h2>
@@ -20,7 +20,7 @@
     <img src="./public/cliente.png" alt="Imagem do site" width="400px">
 </p>
 
-<h2 id="technologies">💻 Tecnologias</h2>
+<h2 id="technologies">💻 Technologies</h2>
 
 - Next.js 14.2.3
 - React 18
