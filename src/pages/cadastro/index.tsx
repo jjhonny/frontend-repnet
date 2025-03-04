@@ -53,23 +53,32 @@ export default function Cadastro() {
   }
 
   return (
-    <>
-      <main className="bg-base-200 w-full min-h-screen flex justify-center items-center p-4 md:p-10">
-        <div className="bg-white w-full max-w-4xl p-6 md:p-8 py-5 flex flex-col rounded-lg shadow-lg">
-          <div className="w-full flex justify-center">
-            <h1 className="font-bold text-2xl md:text-4xl mb-4">Criar Conta</h1>
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center p-4 md:p-10">
+      <div className="w-full max-w-4xl">
+        <div className="bg-white/80 backdrop-blur-lg w-full p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20">
+          {/* Header Section with animation */}
+          <div className="text-center mb-8 animate-fadeIn">
+            <div className="w-16 h-16 bg-indigo-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <FaAddressCard className="w-8 h-8 text-white" />
+            </div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Criar sua conta</h1>
+            <p className="text-gray-600">Preencha os dados para começar</p>
           </div>
+
           <div className="w-full">
             <form
-              className="flex flex-col space-y-4"
+              className="flex flex-col space-y-6"
               onSubmit={handleSubmit(handleSignUp)}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex flex-col">
-                  <span className="font-bold">Você é um</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Category Selection */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    Você é um
+                  </label>
                   <Select
                     name="categoria"
-                    className="select select-bordered w-full mt-2"
+                    className="select select-bordered w-full bg-transparent border-gray-300 focus:border-indigo-500 transition-colors duration-200"
                     register={register}
                     options={categoryOptions}
                     placeholder="Selecione uma categoria"
@@ -77,94 +86,140 @@ export default function Cadastro() {
                     error={errors.categoria?.message}
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">CNPJ</span>
+
+                {/* CNPJ Input */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    CNPJ
+                  </label>
                   <InputText
                     mask="99.999.999/9999-99"
                     type="text"
-                    className="grow"
+                    className="grow bg-transparent"
                     name="cnpj"
                     placeholder="Digite seu CNPJ"
-                    icon={<FaUser />}
+                    icon={<FaUser className="text-gray-500" />}
                     register={register}
                     error={errors.cnpj?.message}
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">Razão Social</span>
+
+                {/* Company Name Input */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    Razão Social
+                  </label>
                   <InputText
                     type="text"
-                    className="grow"
+                    className="grow bg-transparent"
                     name="razao_social"
                     placeholder="Digite o nome da sua loja"
-                    icon={<FaAddressCard />}
+                    icon={<FaAddressCard className="text-gray-500" />}
                     register={register}
                     error={errors.razao_social?.message}
                   />
                 </div>
 
-                <div className="flex flex-col">
-                  <span className="font-bold">Receita bruta</span>
+                {/* Revenue Input */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    Receita bruta
+                  </label>
                   <InputText
                     type="text"
-                    className="grow"
+                    className="grow bg-transparent"
                     name="receita_bruta"
                     placeholder="Digite sua receita bruta caso seja cliente"
-                    icon={<MdAttachMoney size={18} />}
+                    icon={<MdAttachMoney size={18} className="text-gray-500" />}
                     register={register}
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">Email</span>
+
+                {/* Email Input */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    Email
+                  </label>
                   <InputText
                     type="email"
-                    className="grow"
+                    className="grow bg-transparent"
                     name="email"
                     placeholder="Digite o seu email"
-                    icon={<FaEnvelope />}
+                    icon={<FaEnvelope className="text-gray-500" />}
                     register={register}
                     error={errors.email?.message}
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">Senha</span>
+
+                {/* Password Input */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    Senha
+                  </label>
                   <InputText
                     type="password"
-                    className="grow"
+                    className="grow bg-transparent"
                     name="password"
                     placeholder="Digite sua senha"
-                    icon={<FaKey />}
+                    icon={<FaKey className="text-gray-500" />}
                     register={register}
                     error={errors.password?.message}
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">Confirmar senha</span>
+
+                {/* Confirm Password Input */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">
+                    Confirmar senha
+                  </label>
                   <InputText
                     type="password"
-                    className="grow"
+                    className="grow bg-transparent"
                     name="passwordC"
                     placeholder="Confirme a sua senha"
-                    icon={<FaKey />}
+                    icon={<FaKey className="text-gray-500" />}
                     register={register}
                     error={errors.passwordC?.message}
                   />
                 </div>
               </div>
-              <div className="flex justify-between items-center pt-3">
-                <Link className="link link-hover opacity-90" href="/login">
-                  Já possui uma conta?
-                </Link>
-              </div>
-              <div className="flex justify-center items-center mt-5">
-                <button className="btn btn-primary w-full" type="submit">
+
+              {/* Login Link & Submit Button */}
+              <div className="space-y-6 pt-4">
+                <div className="flex justify-between items-center">
+                  <Link 
+                    href="/login" 
+                    className="text-indigo-600 hover:text-indigo-500 transition-colors duration-200 text-sm"
+                  >
+                    Já possui uma conta? Faça login
+                  </Link>
+                </div>
+
+                <button 
+                  className="w-full py-3 px-4 bg-indigo-600 text-white font-medium rounded-xl transition-colors duration-200 hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5"
+                  type="submit"
+                >
                   Criar Conta
                 </button>
               </div>
             </form>
           </div>
         </div>
-      </main>
-    </>
+
+        {/* Footer */}
+        <div className="mt-8 text-center text-sm text-gray-600">
+          <p className="space-x-1">
+            <span>Ao criar uma conta, você concorda com nossos</span>
+            <a href="#" className="text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
+              Termos de Uso
+            </a>
+            <span>e</span>
+            <a href="#" className="text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
+              Política de Privacidade
+            </a>
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }
