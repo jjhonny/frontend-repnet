@@ -20,11 +20,12 @@ export interface ProductsProps {
 }
 
 export default function Produtos() {
-  const { addItemCart, cart } = useCart();
+  const { addItemCart, cart, updateItemQuantity } = useCart();
   const [localUser, setLocalUser] = useState<UserProps | null>(null);
   const [products, setProducts] = useState<ProductsProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchItem, setSearchItem] = useState("");
+  const [quantities, setQuantities] = useState<{ [productId: number]: string }>({});
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -66,9 +67,19 @@ export default function Produtos() {
     handleSearchProduct();
   }, []);
 
+  const handleQuantityChange = (productId: number, value: string) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [productId]: value,
+    }));
+  };
+
   const handleAddToCart = (item: ProductsProps) => {
-    addItemCart(item);
-    toast.success(`${item.descricao} adicionado ao carrinho com sucesso!`, {
+    let rawValue = quantities[item.id];
+    let quantity = parseInt(rawValue, 10);
+    if (isNaN(quantity) || quantity < 1) quantity = 1;
+    addItemCart(item, quantity);
+    toast.success(`${quantity}x ${item.descricao} adicionados ao carrinho com sucesso!`, {
       duration: 1500,
       position: "top-center",
       style: {
@@ -76,6 +87,7 @@ export default function Produtos() {
         color: "#fff",
       },
     });
+    setQuantities((prev) => ({ ...prev, [item.id]: "1" }));
   };
 
   const filteredProducts = products.filter((item) =>
@@ -186,17 +198,26 @@ export default function Produtos() {
                         </div>
                       </div>
 
-                      <div className="card-actions pt-4 flex items-center justify-between border-t border-gray-200">
+                      <div className="card-actions pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-gray-200">
                         <p className="text-xl font-bold text-gray-700">
                           R$ {formatCurrency(item.preco)}
                         </p>
                         {localUser?.categoria === "C" && (
-                          <button
-                            className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                            onClick={() => handleAddToCart(item)}
-                          >
-                            Comprar
-                          </button>
+                          <div className="flex items-center gap-2 w-full sm:w-auto">
+                            <input
+                              type="text"
+                              className="input input-bordered input-sm w-16 text-center"
+                              value={quantities[item.id] || "1"}
+                              onChange={(e) => setQuantities((prev) => ({ ...prev, [item.id]: e.target.value }))}
+                              aria-label="Quantidade"
+                            />
+                            <button
+                              className="btn btn-primary btn-sm px-4"
+                              onClick={() => handleAddToCart(item)}
+                            >
+                              Adicionar
+                            </button>
+                          </div>
                         )}
                       </div>
                     </div>

@@ -10,10 +10,11 @@ import { ProductsProps } from "@/pages/produtos";
 interface CartContextData {
   cart: CartProps[];
   cartAmount: number;
-  addItemCart: (newItem: ProductsProps) => void;
+  addItemCart: (newItem: ProductsProps, amount?: number) => void;
   removeItemCart: (productId: number) => void;
   clearCart: () => void;
   total: string;
+  updateItemQuantity: (productId: number, quantity: number) => void;
 }
 
 interface CartProps extends ProductsProps {
@@ -60,24 +61,21 @@ export function CartProvider({ children }: CartProviderProps) {
     calculateTotal(cart); // Calcula o total ao alterar o carrinho
   }, [cart, cartKey]);
 
-  function addItemCart(newItem: ProductsProps) {
+  function addItemCart(newItem: ProductsProps, amount: number = 1) {
     const indexItem = cart.findIndex((item) => item.id === newItem.id);
 
     if (indexItem !== -1) {
       let cartList = [...cart];
-
-      cartList[indexItem].amount++;
-      cartList[indexItem].total =
-        cartList[indexItem].amount * cartList[indexItem].preco;
-
+      cartList[indexItem].amount += amount;
+      cartList[indexItem].total = cartList[indexItem].amount * cartList[indexItem].preco;
       setCart(cartList);
       return;
     }
 
     let data: CartProps = {
       ...newItem,
-      amount: 1,
-      total: newItem.preco,
+      amount: amount,
+      total: newItem.preco * amount,
     };
 
     setCart([...cart, data]);
@@ -117,6 +115,20 @@ export function CartProvider({ children }: CartProviderProps) {
     setTotal(resultFormatted);
   }
 
+  function updateItemQuantity(productId: number, quantity: number) {
+    if (quantity <= 0) {
+      setCart(cart.filter((item) => item.id !== productId));
+      return;
+    }
+    setCart(
+      cart.map((item) =>
+        item.id === productId
+          ? { ...item, amount: quantity, total: quantity * item.preco }
+          : item
+      )
+    );
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -126,6 +138,7 @@ export function CartProvider({ children }: CartProviderProps) {
         removeItemCart,
         clearCart,
         total,
+        updateItemQuantity,
       }}
     >
       {children}
