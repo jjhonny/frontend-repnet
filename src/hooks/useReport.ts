@@ -31,7 +31,7 @@ export function useReport() {
       window.open(blobURL);
       toast.success("Relatório baixado com sucesso!", {
         duration: 1500,
-        position: "top-center",
+        position: "top-right",
         style: {
           background: "#333",
           color: "#fff",
@@ -42,7 +42,7 @@ export function useReport() {
         error.response?.data?.message || "Erro ao baixar relatório";
       toast.error(errorMessage, {
         duration: 2000,
-        position: "top-center",
+        position: "top-right",
       });
     } finally {
       setLoadingDownload(false);
@@ -60,7 +60,7 @@ export function useReport() {
       const result = response.data.message;
       toast.success(result, {
         duration: 1500,
-        position: "top-center",
+        position: "top-right",
         style: {
           background: "#333",
           color: "#fff",

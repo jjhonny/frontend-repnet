@@ -42,16 +42,20 @@ export default function NovaMarca() {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
       reset(); // Reseta todos os campos do formulário
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao cadastrar marca.");
+      toast.error("Erro ao cadastrar marca.", {
+        position: "top-right",
+      });
       toast.error(error.response.data.errormessage, {
         style: {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     } finally {
       setLoading(false);

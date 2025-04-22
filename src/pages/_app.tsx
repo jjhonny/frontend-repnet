@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       <CartProvider>
-        <Toaster position="top-center" reverseOrder={false} />
+        <Toaster position="top-right" reverseOrder={false} />
         <Component {...pageProps} />
       </CartProvider>
     </AuthProvider>

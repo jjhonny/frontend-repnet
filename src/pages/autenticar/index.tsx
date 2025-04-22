@@ -43,6 +43,7 @@ export default function Autenticar() {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     } finally {
       setLoading(false);

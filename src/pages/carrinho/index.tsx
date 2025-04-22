@@ -31,7 +31,7 @@ export default function Carrinho() {
       if (response.status === 200) {
         toast.success("Pedido finalizado com sucesso! E-mail enviado.", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             background: "#333",
             color: "#fff",
@@ -41,7 +41,7 @@ export default function Carrinho() {
       } else {
         toast.error("Erro ao finalizar a compra.", {
           duration: 1500,
-          position: "top-center",
+          position: "top-right",
           style: {
             background: "#333",
             color: "#fff",
@@ -51,7 +51,7 @@ export default function Carrinho() {
     } catch (error) {
       toast.error("Erro ao finalizar a compra.", {
         duration: 1500,
-        position: "top-center",
+        position: "top-right",
         style: {
           background: "#333",
           color: "#fff",
@@ -81,7 +81,7 @@ export default function Carrinho() {
           "Pedido registrado. Aguarde alguns segundos para ser enviado para o seu E-mail.",
           {
             duration: 2000,
-            position: "top-center",
+            position: "top-right",
             style: {
               background: "#333",
               color: "#fff",
@@ -93,7 +93,7 @@ export default function Carrinho() {
       } else {
         toast.error("Erro ao finalizar a compra.", {
           duration: 1500,
-          position: "top-center",
+          position: "top-right",
           style: {
             background: "#333",
             color: "#fff",
@@ -103,7 +103,7 @@ export default function Carrinho() {
     } catch (error) {
       toast.error(error.response?.data?.errormessage || "Erro ao processar o pedido", {
         duration: 1500,
-        position: "top-center",
+        position: "top-right",
         style: {
           background: "#333",
           color: "#fff",
@@ -200,7 +200,7 @@ export default function Carrinho() {
                                       updateItemQuantity(item.id, 0);
                                       toast.success("Produto removido do carrinho com sucesso!", {
                                         duration: 1500,
-                                        position: "top-center",
+                                        position: "top-right",
                                         style: {
                                           background: "#333",
                                           color: "#fff",
@@ -232,7 +232,7 @@ export default function Carrinho() {
                                   updateItemQuantity(item.id, 0);
                                   toast.success('Produto removido do carrinho com sucesso!', {
                                     duration: 1500,
-                                    position: 'top-center',
+                                    position: 'top-right',
                                     style: {
                                       background: '#333',
                                       color: '#fff',
@@ -304,7 +304,7 @@ export default function Carrinho() {
                       clearCart();
                       toast.success('Carrinho limpo com sucesso!', {
                         duration: 1500,
-                        position: 'top-center',
+                        position: 'top-right',
                         style: {
                           background: '#333',
                           color: '#fff',

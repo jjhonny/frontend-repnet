@@ -96,6 +96,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     } catch (error) {
       toast.error(error.response.data.errormessage, {
@@ -103,6 +104,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     }
   }
@@ -152,6 +154,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             background: "#333",
             color: "#fff",
           },
+          position: "top-right",
         });
       } else {
         Router.push("/representante");
@@ -160,6 +163,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             background: "#333",
             color: "#fff",
           },
+          position: "top-right",
         });
       }
     } catch (error) {
@@ -168,6 +172,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     }
   }
@@ -196,6 +201,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     } catch (error) {
       toast.error(error.response.data.errormessage, {
@@ -203,6 +209,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     }
   }

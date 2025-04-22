@@ -43,15 +43,19 @@ export default function NovaCategoria() {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
       reset();
     } catch (error) {
-      toast.error("Erro ao cadastrar categoria.");
+      toast.error("Erro ao cadastrar categoria.", {
+        position: "top-right",
+      });
       toast.error(error.response.data.errormessage, {
         style: {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     } finally {
       setLoading(false);

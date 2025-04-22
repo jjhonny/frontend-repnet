@@ -55,7 +55,9 @@ export default function NovoProduto() {
         setCategoryOptions(categories);
       } catch (error) {
         console.error("Erro ao buscar categorias", error);
-        toast.error("Erro ao buscar categorias.");
+        toast.error("Erro ao buscar categorias.", {
+          position: "top-right",
+        });
       }
     }
 
@@ -69,7 +71,9 @@ export default function NovoProduto() {
         setBrandOptions(brands);
       } catch (error) {
         console.error("Erro ao buscar marcas", error);
-        toast.error("Erro ao buscar marcas.");
+        toast.error("Erro ao buscar marcas.", {
+          position: "top-right",
+        });
       }
     }
 
@@ -104,15 +108,19 @@ export default function NovoProduto() {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
       reset();
     } catch (error) {
-      toast.error("Erro ao cadastrar produto.");
+      toast.error("Erro ao cadastrar produto.", {
+        position: "top-right",
+      });
       toast.error(error.response.data.errormessage, {
         style: {
           background: "#333",
           color: "#fff",
         },
+        position: "top-right",
       });
     } finally {
       setLoading(false);

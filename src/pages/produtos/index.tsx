@@ -81,7 +81,7 @@ export default function Produtos() {
     addItemCart(item, quantity);
     toast.success(`${quantity}x ${item.descricao} adicionados ao carrinho com sucesso!`, {
       duration: 1500,
-      position: "top-center",
+      position: "top-right",
       style: {
         background: "#333",
         color: "#fff",
