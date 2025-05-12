@@ -105,21 +105,21 @@ export default function Cliente() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
                   href="/cliente/pedidos"
-                  className="btn btn-primary gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-primary gap-2"
                 >
                   <BsBagCheckFill className="text-xl" />
                   Meus Pedidos
                 </Link>
                 <Link
                   href="/cliente/perfil"
-                  className="btn btn-secondary gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-secondary gap-2"
                 >
                   <FaPen className="text-xl" />
                   Editar Perfil
                 </Link>
                 <Link
                   href="/carrinho"
-                  className="btn btn-accent gap-2 hover:scale-105 transition-transform col-span-full"
+                  className="btn btn-accent gap-2 col-span-full"
                 >
                   <FaShoppingCart className="text-xl" />
                   Carrinho de Compras

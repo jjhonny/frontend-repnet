@@ -8,12 +8,17 @@ import { MdAddCircleOutline, MdHome, MdLogout } from "react-icons/md";
 import { FaBoxes } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
 import { BsBagCheckFill } from "react-icons/bs";
+import { FaDownload, FaPrint } from "react-icons/fa6";
+import { useReport } from "@/hooks/useReport";
+import { useRouter } from "next/router";
 
 export function Header() {
   const [localUser, setLocalUser] = useState<UserProps | null>(null); // Estado para armazenar dados do localStorage
   const { signOut, user } = useContext(AuthContext);
   const { cart, total } = useCart();
   const [fontSize, setFontSize] = useState(16);
+  const { handleDownloadReport, handleGenerateReport } = useReport();
+  const router = useRouter();
 
   // UseEffect para carregar o usuário do localStorage após o carregamento do componente
   useEffect(() => {
@@ -37,6 +42,30 @@ export function Header() {
   const decreaseFontSize = () => {
     setFontSize((prevSize) => (prevSize > 12 ? prevSize - 2 : prevSize));
     document.documentElement.style.fontSize = `${fontSize - 2}px`;
+  };
+
+  // Função para gerar relatório por email
+  const generateEmailReport = () => {
+    if (localUser) {
+      handleGenerateReport(localUser);
+      // Fecha o drawer se estiver aberto
+      const drawerCheckbox = document.getElementById("my-drawer") as HTMLInputElement;
+      if (drawerCheckbox) {
+        drawerCheckbox.checked = false;
+      }
+    }
+  };
+
+  // Função para baixar relatório
+  const downloadReport = () => {
+    if (localUser) {
+      handleDownloadReport(localUser);
+      // Fecha o drawer se estiver aberto
+      const drawerCheckbox = document.getElementById("my-drawer") as HTMLInputElement;
+      if (drawerCheckbox) {
+        drawerCheckbox.checked = false;
+      }
+    }
   };
 
   return (
@@ -168,6 +197,28 @@ export function Header() {
                     <IoPerson className="w-5 h-5 mr-3" />
                     Perfil
                   </Link>
+                  
+                  <div className="dropdown dropdown-right">
+                    <label tabIndex={0} className="flex items-center w-full px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 cursor-pointer">
+                      <FaPrint className="w-5 h-5 mr-3" />
+                      <span>Relatórios</span>
+                    </label>
+                    <ul tabIndex={0} className="dropdown-content z-[100] menu shadow bg-white rounded-box w-52 ml-2">
+                      <li>
+                        <button onClick={generateEmailReport}>
+                          <FaPrint className="text-blue-600" />
+                          Relatório por Email
+                        </button>
+                      </li>
+                      <li>
+                        <button onClick={downloadReport}>
+                          <FaDownload className="text-blue-600" />
+                          Baixar Relatório
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                  
                   <button
                     onClick={signOut}
                     className="flex items-center w-full px-3 py-2 rounded-lg hover:bg-red-50 text-red-600"

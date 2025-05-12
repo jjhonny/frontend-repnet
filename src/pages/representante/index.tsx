@@ -105,25 +105,25 @@ export default function Representante() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
                   href="/representante/cadastro-produto"
-                  className="btn btn-primary gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-primary gap-2"
                 >
                   <MdAddCircleOutline /> Cadastrar Produto
                 </Link>
                 <Link
                   href="/representante/cadastro-categoria"
-                  className="btn btn-primary gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-primary gap-2"
                 >
                   <MdAddCircleOutline /> Cadastrar Categoria
                 </Link>
                 <Link
                   href="/representante/cadastro-marca"
-                  className="btn btn-primary gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-primary gap-2"
                 >
                   <MdAddCircleOutline /> Cadastrar Marca
                 </Link>
                 <Link
                   href="/representante/perfil"
-                  className="btn btn-secondary gap-2 hover:scale-105 transition-transform"
+                  className="btn btn-secondary gap-2"
                 >
                   <FaPen /> Editar perfil
                 </Link>
