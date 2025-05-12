@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { SearchInput } from "@/components/search-input";
 import { formatDate } from "@/utils/formatDate";
+import { FaShoppingBasket } from 'react-icons/fa';
 
 export interface ProductsProps {
   id: number;
@@ -99,28 +100,41 @@ export default function Produtos() {
       <div className="min-h-screen flex flex-col bg-base-200">
         <Header />
         <Toaster />
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md hero bg-base-100 rounded-box mb-12 shadow-md mx-auto">
-            <div className="hero-content text-center py-6">
+        
+        <main className="flex-1 max-w-7xl w-full mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <div className="bg-base-100 shadow-md rounded-xl mb-8 p-6 border border-gray-200">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                    Produtos
+                  </h1>
+                  <p className="text-gray-600 mt-1">
+                    Explore nossa variedade de produtos disponíveis
+                  </p>
+                </div>
+                <div className="hidden sm:block">
+                  <FaShoppingBasket className="w-14 h-14 text-blue-500/30" />
+                </div>
+              </div>
               <div>
-                <h1 className="text-4xl font-extrabold text-gray-900 text-center tracking-tight">
-                  Produtos
-                </h1>
+                <SearchInput value={searchItem} onChange={setSearchItem} />
               </div>
             </div>
           </div>
-          <SearchInput value={searchItem} onChange={setSearchItem} />
+
           {loading ? (
-            <div className="flex justify-center items-center h-screen">
-              <span className="loading loading-spinner loading-lg"></span>
+            <div className="flex flex-col justify-center items-center py-20 bg-base-100 rounded-xl shadow-sm border border-gray-200">
+              <span className="loading loading-spinner loading-lg text-primary"></span>
+              <p className="mt-4 text-gray-600">Carregando produtos...</p>
             </div>
           ) : (
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.length >= 1 ? (
                 filteredProducts.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+                    className="bg-white rounded-xl shadow-md overflow-hidden h-full flex flex-col border border-gray-200"
                   >
                     <div className="relative">
                       <img
@@ -129,10 +143,15 @@ export default function Produtos() {
                         className="w-full h-48 object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      {item.peso > 0 && (
+                        <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-full text-xs font-medium">
+                          {item.peso}kg
+                        </div>
+                      )}
                     </div>
 
-                    <div className="p-6 space-y-4">
-                      <h2 className="text-xl font-bold text-gray-900 line-clamp-2">
+                    <div className="p-6 space-y-4 flex-grow">
+                      <h2 className="text-xl font-bold text-gray-900 line-clamp-2 h-14">
                         {item.descricao}
                       </h2>
 
@@ -140,7 +159,7 @@ export default function Produtos() {
                         <div className="flex items-center text-gray-600">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
+                            className="h-5 w-5 mr-2 text-primary"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -152,15 +171,15 @@ export default function Produtos() {
                               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                             />
                           </svg>
-                          <span className="text-sm">
-                            Validade: {formatDate(item.validade)}
+                          <span className="text-sm font-medium">
+                            Validade: <span className="font-normal">{formatDate(item.validade)}</span>
                           </span>
                         </div>
 
                         <div className="flex items-center text-gray-600">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
+                            className="h-5 w-5 mr-2 text-primary"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -172,15 +191,15 @@ export default function Produtos() {
                               d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
                             />
                           </svg>
-                          <span className="text-sm">
-                            Categoria: {item.id_cat}
+                          <span className="text-sm font-medium">
+                            Categoria: <span className="font-normal">{item.id_cat}</span>
                           </span>
                         </div>
 
                         <div className="flex items-center text-gray-600">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
+                            className="h-5 w-5 mr-2 text-primary"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -192,47 +211,66 @@ export default function Produtos() {
                               d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
                             />
                           </svg>
-                          <span className="text-sm">
-                            Marca: {item.id_marca}
+                          <span className="text-sm font-medium">
+                            Marca: <span className="font-normal">{item.id_marca}</span>
                           </span>
                         </div>
                       </div>
+                    </div>
 
-                      <div className="card-actions pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-gray-200">
-                        <p className="text-xl font-bold text-gray-700">
-                          R$ {formatCurrency(item.preco)}
-                        </p>
-                        {localUser?.categoria === "C" && (
-                          <div className="flex items-center gap-2 w-full sm:w-auto">
-                            <input
-                              type="text"
-                              className="input input-bordered input-sm w-16 text-center"
-                              value={quantities[item.id] || "1"}
-                              onChange={(e) => setQuantities((prev) => ({ ...prev, [item.id]: e.target.value }))}
-                              aria-label="Quantidade"
-                            />
-                            <button
-                              className="btn btn-primary btn-sm px-4"
-                              onClick={() => handleAddToCart(item)}
-                            >
-                              Adicionar
-                            </button>
-                          </div>
-                        )}
-                      </div>
+                    <div className="card-actions p-6 pt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-gray-200 mt-auto">
+                      <p className="text-xl font-bold text-gray-900">
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL"
+                        }).format(Number(item.preco))}
+                      </p>
+                      {localUser?.categoria === "C" && (
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
+                          <input
+                            type="number"
+                            className="input input-bordered input-sm w-16 text-center"
+                            value={quantities[item.id] || "1"}
+                            onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                            min="1"
+                            aria-label="Quantidade"
+                          />
+                          <button
+                            className="btn btn-primary btn-sm px-4"
+                            onClick={() => handleAddToCart(item)}
+                          >
+                            Adicionar
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="col-span-full text-center py-12">
-                  <p className="text-2xl font-medium text-gray-600">
-                    Sem produtos cadastrados
+                <div className="col-span-full flex flex-col items-center justify-center py-16 text-center bg-base-100 rounded-xl shadow-sm">
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-16 w-16 text-gray-300 mb-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <h2 className="text-2xl font-semibold text-gray-700 mb-2">Nenhum produto encontrado</h2>
+                  <p className="text-gray-500 max-w-md">
+                    Não encontramos produtos correspondentes à sua busca. Tente outros termos ou entre em contato com o suporte.
                   </p>
                 </div>
               )}
             </div>
           )}
-        </div>
+        </main>
       </div>
     </>
   );
@@ -243,3 +281,4 @@ export const getServerSideProps = canSSRAuth(async (context) => {
     props: {},
   };
 });
+

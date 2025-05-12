@@ -259,7 +259,7 @@ export function Header() {
           {/* Cart Dropdown */}
           {localUser?.categoria === "C" && (
             <div className="dropdown dropdown-end">
-              <button className="btn btn-ghost btn-circle">
+              <button className="btn btn-ghost btn-circle relative">
                 <div className="indicator">
                   <FiShoppingCart className="w-6 h-6 text-gray-700" />
                   {cart.length > 0 && (
@@ -291,8 +291,8 @@ export function Header() {
           {/* User Dropdown */}
           <div className="dropdown dropdown-end">
             <button className="flex items-center space-x-3">
-              <div className="w-20 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                <IoPerson className="w-6 h-6 text-gray-600" />
+              <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center ">
+                <IoPerson className="w-6 h-6 text-gray-600 rounded-full" />
               </div>
               <span className="hidden md:flex flex-nowrap font-medium text-gray-700 whitespace-nowrap">
                 {localUser?.razao_social}
