@@ -57,73 +57,51 @@ export default function Representante() {
     <div className="min-h-screen bg-base-200">
       <Header />
       <main className="container mx-auto px-4 sm:px-6 py-8">
-        <div className="hero bg-base-100 rounded-box mb-8 shadow-md">
-          <div className="hero-content text-center py-8 sm:py-12">
-            <div>
-              <h1 className="text-4xl sm:text-5xl font-bold text-primary">
-                Bem-vindo!
+        <div className="hero bg-base-100 rounded-box mb-6 shadow-md">
+          <div className="hero-content py-6 w-full">
+            <div className="text-center flex-1">
+              <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
+                Bem-vindo, {localUser?.razao_social || "Carregando..."}!
               </h1>
-              <p className="py-4 text-base-content/70">
+              <p className="text-base-content/70 mb-6">
                 Gerencie seus produtos e informações pessoais
               </p>
-            </div>
-          </div>
-        </div>
-        <div className="grid gap-6">
-          <div className="bg-base-100 shadow-md rounded-xl">
-            <div className="card-body">
-              <h2 className="card-title text-2xl mb-6 flex items-center gap-2">
-                <FaUser className="text-primary" />
-                Informações do Representante
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
-                  <FaUser className="text-primary text-xl" />
-                  <div>
-                    <p className="text-sm text-base-content/70">Nome</p>
-                    <p className="font-semibold">
-                      {localUser?.razao_social || "Carregando..."}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 p-4 bg-base-200 rounded-lg">
-                  <FaEnvelope className="text-primary text-xl" />
-                  <div>
-                    <p className="text-sm text-base-content/70">Email</p>
-                    <p className="font-semibold">
-                      {localUser?.email || "Carregando..."}
-                    </p>
-                  </div>
+              <div className="flex flex-wrap justify-center gap-2 text-sm">
+                <div className="flex items-center gap-2 bg-base-200 px-4 py-2 rounded-full">
+                  <FaEnvelope className="text-primary" />
+                  <span className="text-base-content/70">Email:</span>
+                  <span className="font-medium">{localUser?.email || "Carregando..."}</span>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="grid gap-6">
           <div className="bg-base-100 shadow-md rounded-lg">
-            <div className="card-body">
-              <h2 className="card-title text-2xl mb-6">Ações Rápidas</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="card-body py-6">
+              <h2 className="card-title text-2xl mb-5">Ações Rápidas</h2>
+              <div className="flex flex-wrap gap-3">
                 <Link
                   href="/representante/cadastro-produto"
-                  className="btn btn-primary gap-2"
+                  className="btn btn-primary btn-sm"
                 >
                   <MdAddCircleOutline /> Cadastrar Produto
                 </Link>
                 <Link
                   href="/representante/cadastro-categoria"
-                  className="btn btn-primary gap-2"
+                  className="btn btn-primary btn-sm"
                 >
                   <MdAddCircleOutline /> Cadastrar Categoria
                 </Link>
                 <Link
                   href="/representante/cadastro-marca"
-                  className="btn btn-primary gap-2"
+                  className="btn btn-primary btn-sm"
                 >
                   <MdAddCircleOutline /> Cadastrar Marca
                 </Link>
                 <Link
                   href="/representante/perfil"
-                  className="btn btn-secondary gap-2"
+                  className="btn btn-secondary btn-sm"
                 >
                   <FaPen /> Editar perfil
                 </Link>
