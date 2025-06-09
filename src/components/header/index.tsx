@@ -33,6 +33,11 @@ export function Header() {
     return cart.reduce((total, item) => total + item.amount, 0);
   };
 
+  // Função para obter o número de produtos diferentes no carrinho
+  const getUniqueProducts = () => {
+    return cart.length;
+  };
+
   // Funções para aumentar e diminuir o tamanho do texto
   const increaseFontSize = () => {
     setFontSize((prevSize) => (prevSize < 24 ? prevSize + 2 : prevSize));
@@ -178,7 +183,7 @@ export function Header() {
                       <span>Carrinho</span>
                       {cart.length > 0 && (
                         <span className="ml-2 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                          {getTotalItems()}
+                          {getUniqueProducts()}
                         </span>
                       )}
                     </Link>
@@ -264,7 +269,7 @@ export function Header() {
                   <FiShoppingCart className="w-6 h-6 text-gray-700" />
                   {cart.length > 0 && (
                     <span className="badge badge-primary badge-sm indicator-item">
-                      {getTotalItems()}
+                      {getUniqueProducts()}
                     </span>
                   )}
                 </div>
@@ -273,7 +278,7 @@ export function Header() {
                 <div className="card-body">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-lg font-semibold">
-                      {getTotalItems()} Itens
+                      {getUniqueProducts()} Produtos
                     </span>
                     <span className="text-gray-600">Total: {total}</span>
                   </div>
