@@ -73,6 +73,13 @@ export default function Cliente() {
                   <span className="text-base-content/70">Email:</span>
                   <span className="font-medium">{localUser?.email || "Carregando..."}</span>
                 </div>
+                <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full">
+                  <FaUser className="text-primary" />
+                  <span className="text-base-content/70">Tipo:</span>
+                  <span className="font-medium text-primary">
+                    {localUser?.categoria === "C" ? "Cliente" : localUser?.categoria === "R" ? "Representante" : "Carregando..."}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
