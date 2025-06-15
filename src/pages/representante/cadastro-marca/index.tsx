@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/components/header";
+import { FaBuilding, FaIdCard, FaSignature } from "react-icons/fa";
 
 type BrandProps = {
   cnpj_rep: string;
@@ -32,8 +33,6 @@ export default function NovaMarca() {
   const [loading, setLoading] = useState(false);
 
   async function handleRegisterBrand(data: BrandProps) {
-    console.log(data);
-
     try {
       setLoading(true);
       const response = await api.post("/cadastro-marca", data);
@@ -44,13 +43,10 @@ export default function NovaMarca() {
         },
         position: "top-right",
       });
-      reset(); // Reseta todos os campos do formulário
+      reset();
     } catch (error) {
-      console.log(error);
-      toast.error("Erro ao cadastrar marca.", {
-        position: "top-right",
-      });
-      toast.error(error.response.data.errormessage, {
+      const errorMessage = error.response?.data?.errormessage || "Erro ao cadastrar marca.";
+      toast.error(errorMessage, {
         style: {
           background: "#333",
           color: "#fff",
@@ -63,83 +59,104 @@ export default function NovaMarca() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-base-200">
+    <div className="min-h-screen bg-base-200">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="max-w-md hero bg-base-100 rounded-box mb-6 shadow-md mx-auto">
-          <div className="hero-content text-center py-6">
-            <div>
-              <h1 className="text-3xl font-extrabold text-gray-900 text-center tracking-tight">
-                Cadastrar nova Marca
-              </h1>
-            </div>
+      <main className="container mx-auto px-4 py-4">
+        {/* Header Section */}
+        <div className="text-center mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-2">
+            <FaBuilding className="w-6 h-6 text-primary" />
           </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            Cadastrar Nova Marca
+          </h1>
+          <p className="text-gray-600 text-sm">
+            Adicione uma nova marca ao seu sistema
+          </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl px-8 py-6 space-y-4">
-          <form onSubmit={handleSubmit(handleRegisterBrand)}>
-            <div className="mb-4">
-              <div>
-                <span className="font-bold">
-                  CNPJ Representante<span className="text-red-500">*</span>
-                </span>
-                <InputText
-                  mask="99.999.999/9999-99"
-                  type="text"
-                  name="cnpj_rep"
-                  className="grow"
-                  placeholder="Digite o CNPJ do representante"
-                  register={register}
-                  error={errors.cnpj_rep?.message}
-                />
+        {/* Form Card */}
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-primary to-primary-focus p-4">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <FaBuilding className="w-5 h-5" />
+                Informações da Marca
+              </h2>
+            </div>
+
+            <form onSubmit={handleSubmit(handleRegisterBrand)} className="p-6">
+              <div className="grid grid-cols-1 gap-6">
+                {/* CNPJ Representante */}
+                <div>
+                  <label className="flex items-center gap-2 text-base font-semibold text-gray-900 mb-2">
+                    <FaIdCard className="w-4 h-4 text-primary" />
+                    CNPJ do Representante<span className="text-error">*</span>
+                  </label>
+                  <InputText
+                    mask="99.999.999/9999-99"
+                    type="text"
+                    name="cnpj_rep"
+                    className="w-full"
+                    placeholder="Digite o CNPJ do representante"
+                    register={register}
+                    error={errors.cnpj_rep?.message}
+                  />
+                </div>
+
+                {/* Razão Social */}
+                <div>
+                  <label className="flex items-center gap-2 text-base font-semibold text-gray-900 mb-2">
+                    <FaBuilding className="w-4 h-4 text-primary" />
+                    Razão Social<span className="text-error">*</span>
+                  </label>
+                  <InputText
+                    type="text"
+                    name="cnpj_marca"
+                    className="w-full"
+                    placeholder="Digite a razão social da marca"
+                    register={register}
+                    error={errors.cnpj_marca?.message}
+                  />
+                </div>
+
+                {/* Nome da Marca */}
+                <div>
+                  <label className="flex items-center gap-2 text-base font-semibold text-gray-900 mb-2">
+                    <FaSignature className="w-4 h-4 text-primary" />
+                    Nome da Marca<span className="text-error">*</span>
+                  </label>
+                  <InputText
+                    type="text"
+                    name="razao_social"
+                    className="w-full"
+                    placeholder="Digite o nome da marca"
+                    register={register}
+                    error={errors.razao_social?.message}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <div>
-                <span className="font-bold">
-                  Razão Social<span className="text-red-500">*</span>
-                </span>
-                <InputText
-                  type="text"
-                  name="cnpj_marca"
-                  className="grow"
-                  placeholder="Digite a razão social da marca"
-                  register={register}
-                  error={errors.cnpj_marca?.message}
-                />
+
+              {/* Submit Button */}
+              <div className="flex justify-center pt-4 mt-6 border-t border-gray-200">
+                {loading ? (
+                  <button
+                    className="btn btn-primary px-8"
+                    type="submit"
+                    disabled
+                  >
+                    <span className="loading loading-spinner loading-sm"></span>
+                    Cadastrando...
+                  </button>
+                ) : (
+                  <button className="btn btn-primary px-8 gap-2" type="submit">
+                    <FaBuilding className="w-4 h-4" />
+                    Cadastrar Marca
+                  </button>
+                )}
               </div>
-            </div>
-            <div className="mb-4">
-              <div>
-                <span className="font-bold">
-                  Nome da Marca<span className="text-red-500">*</span>
-                </span>
-                <InputText
-                  type="text"
-                  name="razao_social"
-                  className="grow"
-                  placeholder="Digite o nome da marca que quer cadastrar."
-                  register={register}
-                  error={errors.razao_social?.message}
-                />
-              </div>
-            </div>
-            <div className="flex justify-end">
-              {loading ? (
-                <button
-                  className="btn btn-neutral w-full"
-                  type="submit"
-                  disabled
-                >
-                  <span className="loading loading-spinner loading-md"></span>
-                </button>
-              ) : (
-                <button className="btn btn-primary w-full gap-2" type="submit">
-                  Registrar Marca
-                </button>
-              )}
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </main>
     </div>

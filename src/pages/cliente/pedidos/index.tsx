@@ -3,7 +3,7 @@ import { UserProps } from "@/contexts/AuthContex";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaUser, FaClipboardList, FaTag, FaShoppingCart, FaBox, FaDollarSign, FaClock } from "react-icons/fa";
 
 export interface PedidoItem {
@@ -81,7 +81,6 @@ export default function PedidosFeitos() {
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Header />
-      <Toaster />
       
       <main className="flex-1 max-w-7xl w-full mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="bg-base-100 shadow-md rounded-xl mb-8 p-6 border border-gray-200">

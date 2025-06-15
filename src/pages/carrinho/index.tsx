@@ -1,7 +1,7 @@
 import { Header } from "@/components/header";
 import { FaShoppingCart, FaTrash, FaPlus, FaMinus, FaArrowLeft } from "react-icons/fa";
 import { useCart } from "@/contexts/CartContext";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { api } from "@/services/apiCliente";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -113,9 +113,8 @@ export default function Carrinho() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200">
-      <Header />
-      <Toaster />
+          <div className="min-h-screen bg-base-200">
+        <Header />
       
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Meu Carrinho</h1>
