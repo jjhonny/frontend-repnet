@@ -18,6 +18,7 @@ export interface ProductsProps {
   preco: number;
   id_cat: number;
   id_marca: number;
+  imagem?: string;
 }
 
 export default function Produtos() {
@@ -183,11 +184,36 @@ export default function Produtos() {
                     className="bg-white rounded-xl shadow-md overflow-hidden h-full flex flex-col border border-gray-200"
                   >
                     <div className="relative">
-                      <img
-                        src="https://cdn.sanity.io/images/tlr8oxjg/production/7b7f05720074a848850e0705779306c27da5a6cf-1065x597.png?w=3840&q=80&fit=clip&auto=format"
-                        alt="Produto"
-                        className="w-full h-48 object-cover"
-                      />
+                      {item.imagem ? (
+                        <img
+                          src={`data:image/jpeg;base64,${item.imagem}`}
+                          alt={item.descricao}
+                          className="w-full h-48 object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://via.placeholder.com/400x300/e5e7eb/6b7280?text=Sem+Imagem";
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                          <div className="text-center text-gray-500">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-12 w-12 mx-auto mb-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                            <p className="text-sm">Sem imagem</p>
+                          </div>
+                        </div>
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                       {item.peso > 0 && (
                         <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-full text-xs font-medium">
