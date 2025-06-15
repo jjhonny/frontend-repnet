@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { SearchInput } from "@/components/search-input";
 import { formatDate } from "@/utils/formatDate";
-import { FaShoppingBasket } from 'react-icons/fa';
+import { FaShoppingBasket, FaTrash } from 'react-icons/fa';
 
 export interface ProductsProps {
   id: number;
@@ -27,6 +27,8 @@ export default function Produtos() {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchItem, setSearchItem] = useState("");
   const [quantities, setQuantities] = useState<{ [productId: number]: string }>({});
+  const [deletingProduct, setDeletingProduct] = useState<number | null>(null);
+  const [productToDelete, setProductToDelete] = useState<ProductsProps | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -91,6 +93,50 @@ export default function Produtos() {
     setQuantities((prev) => ({ ...prev, [item.id]: "1" }));
   };
 
+  const openDeleteModal = (product: ProductsProps) => {
+    setProductToDelete(product);
+  };
+
+  const closeDeleteModal = () => {
+    setProductToDelete(null);
+  };
+
+  const confirmDeleteProduct = async () => {
+    if (!productToDelete) return;
+
+    try {
+      setDeletingProduct(productToDelete.id);
+      const response = await api.put(`/deletar-produto?id=${productToDelete.id}`);
+
+      if (response.status === 204) {
+        toast.success("Produto deletado com sucesso!", {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
+        
+        // Remove o produto da lista local
+        setProducts(prevProducts => 
+          prevProducts.filter(product => product.id !== productToDelete.id)
+        );
+        
+        closeDeleteModal();
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.error || error.response?.data?.errormessage || "Erro ao deletar o produto.";
+      toast.error(errorMessage, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } finally {
+      setDeletingProduct(null);
+    }
+  };
+
   const filteredProducts = products.filter((item) =>
     item.descricao.toLowerCase().includes(searchItem.toLowerCase())
   );
@@ -148,6 +194,23 @@ export default function Produtos() {
                           {item.peso}kg
                         </div>
                       )}
+                      {localUser?.categoria === "R" && (
+                        <div className="absolute top-2 left-2">
+                          <button
+                            className="btn btn-circle btn-sm btn-error text-white hover:btn-error"
+                            onClick={() => openDeleteModal(item)}
+                            disabled={deletingProduct === item.id}
+                            title="Deletar produto"
+                            aria-label="Deletar produto"
+                          >
+                            {deletingProduct === item.id ? (
+                              <span className="loading loading-spinner loading-xs"></span>
+                            ) : (
+                              <FaTrash size={12} />
+                            )}
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="p-6 space-y-4 flex-grow">
@@ -168,7 +231,7 @@ export default function Produtos() {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth={2}
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2v12a2 2 0 002 2z"
                             />
                           </svg>
                           <span className="text-sm font-medium">
@@ -272,6 +335,61 @@ export default function Produtos() {
           )}
         </main>
       </div>
+
+      {/* Modal de Confirmação de Deleção */}
+      {productToDelete && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-error mb-4">
+              Confirmar Exclusão
+            </h3>
+            <div className="py-4">
+              <p className="text-base-content mb-4">
+                Tem certeza que deseja deletar o produto:
+              </p>
+              <div className="bg-base-200 p-4 rounded-lg mb-4">
+                <p className="font-semibold text-lg">{productToDelete.descricao}</p>
+                <p className="text-sm text-base-content/70">
+                  Preço: {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                  }).format(Number(productToDelete.preco))}
+                </p>
+              </div>
+              <div className="alert alert-warning">
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+                <span className="text-sm">Esta ação não pode ser desfeita. O produto será deletado.</span>
+              </div>
+            </div>
+            <div className="modal-action">
+              <button 
+                className="btn btn-ghost" 
+                onClick={closeDeleteModal}
+                disabled={deletingProduct === productToDelete.id}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="btn btn-error" 
+                onClick={confirmDeleteProduct}
+                disabled={deletingProduct === productToDelete.id}
+              >
+                {deletingProduct === productToDelete.id ? (
+                  <>
+                    <span className="loading loading-spinner loading-sm"></span>
+                    Deletando...
+                  </>
+                ) : (
+                  'Confirmar Exclusão'
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="modal-backdrop" onClick={closeDeleteModal}></div>
+        </div>
+      )}
     </>
   );
 }
