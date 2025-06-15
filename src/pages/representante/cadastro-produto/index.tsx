@@ -1,7 +1,7 @@
 import { InputText } from "@/components/input-text";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -48,6 +48,8 @@ export default function NovoProduto() {
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [inputKey, setInputKey] = useState<number>(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -134,6 +136,8 @@ export default function NovoProduto() {
   const removeImage = () => {
     setSelectedImage(null);
     setImagePreview(null);
+    // Forçar re-render do input com nova key
+    setInputKey(prev => prev + 1);
   };
 
   async function handleRegisterProduct(dataProduct: ProductsProps) {
@@ -179,6 +183,8 @@ export default function NovoProduto() {
       
       reset();
       removeImage();
+      // Resetar também a key do input
+      setInputKey(prev => prev + 1);
     } catch (error) {
       const errorMessage = error.response?.data?.errormessage || "Erro ao cadastrar produto.";
       toast.error(errorMessage, {
@@ -232,11 +238,13 @@ export default function NovoProduto() {
                     {/* Upload Area */}
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors">
                       <input
+                        key={inputKey}
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
                         className="hidden"
                         id="image-upload"
+                        ref={fileInputRef}
                       />
                       <label
                         htmlFor="image-upload"
