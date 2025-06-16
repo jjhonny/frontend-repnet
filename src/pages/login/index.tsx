@@ -106,7 +106,7 @@ export default function Login() {
 
             {/* Additional Options */}
             <div className="flex items-center justify-between pt-2">
-              <div className="flex items-center">
+             {/*  <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="remember"
@@ -118,7 +118,7 @@ export default function Login() {
               </div>
               <a href="#" className="text-sm text-indigo-600 hover:text-indigo-500">
                 Esqueceu a senha?
-              </a>
+              </a> */}
             </div>
 
             {/* Login Button */}

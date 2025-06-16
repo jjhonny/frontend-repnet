@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { SearchInput } from "@/components/search-input";
 import { formatDate } from "@/utils/formatDate";
-import { FaShoppingBasket, FaTrash } from 'react-icons/fa';
+import { FaShoppingBasket, FaTrash, FaEdit } from 'react-icons/fa';
+import Link from 'next/link';
 
 export interface ProductsProps {
   id: number;
@@ -18,7 +19,7 @@ export interface ProductsProps {
   preco: number;
   id_cat: number;
   id_marca: number;
-  imagem?: string;
+  imagem?: string | number[] | { type: string; data: number[] } | any;
 }
 
 export default function Produtos() {
@@ -44,6 +45,7 @@ export default function Produtos() {
       try {
         const response = await api.get("/produtos");
         const produtosBack = response.data;
+        
         if (Array.isArray(produtosBack) && produtosBack.length > 0) {
           setProducts(produtosBack);
         } else {
@@ -142,6 +144,50 @@ export default function Produtos() {
     item.descricao.toLowerCase().includes(searchItem.toLowerCase())
   );
 
+  // Função para obter a URL da imagem
+  const getImageUrl = (imagem: string | number[] | undefined | any): string | null => {
+    if (!imagem) return null;
+    
+    try {
+      // Se já é uma string base64 válida
+      if (typeof imagem === 'string') {
+        // Se já contém o data:image prefix, retorna como está
+        if (imagem.startsWith('data:image/')) {
+          return imagem;
+        }
+        // Se é apenas a string base64, adiciona o prefixo
+        return `data:image/jpeg;base64,${imagem}`;
+      }
+      
+      // Se é um objeto Buffer (vindo do Prisma/PostgreSQL)
+      if (imagem && typeof imagem === 'object' && imagem.data && Array.isArray(imagem.data)) {
+        const bytes = new Uint8Array(imagem.data);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64 = btoa(binary);
+        return `data:image/jpeg;base64,${base64}`;
+      }
+      
+      // Se é um array de bytes
+      if (Array.isArray(imagem)) {
+        const bytes = new Uint8Array(imagem);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64 = btoa(binary);
+        return `data:image/jpeg;base64,${base64}`;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Erro ao processar imagem:', error);
+      return null;
+    }
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col bg-base-200">
@@ -183,9 +229,9 @@ export default function Produtos() {
                     className="bg-white rounded-xl shadow-md overflow-hidden h-full flex flex-col border border-gray-200"
                   >
                     <div className="relative">
-                      {item.imagem ? (
+                      {getImageUrl(item.imagem) ? (
                         <img
-                          src={`data:image/jpeg;base64,${item.imagem}`}
+                          src={getImageUrl(item.imagem)!}
                           alt={item.descricao}
                           className="w-full h-48 object-cover"
                           onError={(e) => {
@@ -220,7 +266,16 @@ export default function Produtos() {
                         </div>
                       )}
                       {localUser?.categoria === "R" && (
-                        <div className="absolute top-2 left-2">
+                        <div className="absolute top-2 left-2 flex gap-2">
+                          <Link href={`/representante/editar-produto/${item.id}`}>
+                            <button
+                              className="btn btn-circle btn-sm btn-success text-white hover:btn-success"
+                              title="Editar produto"
+                              aria-label="Editar produto"
+                            >
+                              <FaEdit size={12} />
+                            </button>
+                          </Link>
                           <button
                             className="btn btn-circle btn-sm btn-error text-white hover:btn-error"
                             onClick={() => openDeleteModal(item)}

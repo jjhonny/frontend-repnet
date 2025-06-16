@@ -137,14 +137,14 @@ export default function Autenticar() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center text-sm text-gray-600">
+       {/*  <div className="mt-8 text-center text-sm text-gray-600">
           <p>
             Não recebeu o código?{" "}
             <button className="text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
               Reenviar código
             </button>
           </p>
-        </div>
+        </div> */}
       </div>
     </main>
   );
