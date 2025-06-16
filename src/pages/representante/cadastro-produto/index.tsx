@@ -1,4 +1,5 @@
 import { InputText } from "@/components/input-text";
+import { CurrencyInput } from "@/components/currency-input";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useState, useEffect, useRef } from "react";
@@ -33,6 +34,7 @@ export default function NovoProduto() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ProductsProps>({
     resolver: zodResolver(schema),
@@ -155,7 +157,7 @@ export default function NovoProduto() {
         marca: marca,
         descricao: descricao,
         peso: peso ? Number(peso) : null,
-        preco: Number(preco),
+        preco: Number(preco.replace(',', '.')), // Converte vírgula para ponto
         validade: validade || null,
       };
 
@@ -311,12 +313,12 @@ export default function NovoProduto() {
                       <FaDollarSign className="w-4 h-4 text-primary" />
                       Preço<span className="text-error">*</span>
                     </label>
-                    <InputText
-                      type="number"
+                    <CurrencyInput
                       name="preco"
                       className="w-full"
-                      placeholder="0,00"
+                      placeholder="25,99"
                       register={register}
+                      setValue={setValue}
                       error={errors.preco?.message}
                     />
                   </div>

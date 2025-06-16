@@ -1,4 +1,5 @@
 import { InputText } from "@/components/input-text";
+import { CurrencyInput } from "@/components/currency-input";
 import { api } from "@/services/apiCliente";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { useState, useEffect, useRef } from "react";
@@ -79,6 +80,8 @@ export default function EditarProduto() {
         setLoadingProduct(true);
         const response = await api.get(`/produtos/id?id=${id}`);
         const product = response.data;
+        
+
         
         setProductData(product);
         
@@ -166,31 +169,33 @@ export default function EditarProduto() {
   // Definir categoria e marca após carregar os dados do produto e as opções
   useEffect(() => {
     if (productData && categoryOptions.length > 0 && brandOptions.length > 0) {
-      // Para categoria - buscar o nome pela id_cat
-      const setProductCategory = async () => {
-        try {
-          const categoriesResponse = await api.get("/categorias");
-          const foundCategory = categoriesResponse.data.find((cat: any) => cat.id === productData.id_cat);
-          if (foundCategory) {
-            setValue("categoria", foundCategory.nome);
-          }
-        } catch (error) {
-          console.error("Erro ao buscar categoria do produto", error);
-        }
-      };
+             // Para categoria - buscar o nome pela id_cat
+       const setProductCategory = async () => {
+         try {
+           const categoriesResponse = await api.get("/categorias");
+           const foundCategory = categoriesResponse.data.find((cat: any) => cat.id === productData.id_cat);
+           if (foundCategory) {
+             setValue("categoria", foundCategory.nome);
+           }
+         } catch (error) {
+           console.error("Erro ao buscar categoria do produto", error);
+         }
+       };
 
-      // Para marca - buscar o razao_social pela id_marca (EXATAMENTE IGUAL À CATEGORIA)
-      const setProductBrand = async () => {
-        try {
-          const brandsResponse = await api.get("/marcas");
-          const foundBrand = brandsResponse.data.find((brand: any) => brand.id === productData.id_marca);
-          if (foundBrand) {
-            setValue("marca", foundBrand.razao_social);
-          }
-        } catch (error) {
-          console.error("Erro ao buscar marca do produto", error);
-        }
-      };
+                    // Para marca - buscar pela razao_social
+       const setProductBrand = async () => {
+         try {
+                      // Como id_marca vem como "TESTE1", procurar diretamente nas opções
+           const marcaValue = String(productData.id_marca);
+           const brandExists = brandOptions.find(option => option.value === marcaValue);
+           
+           if (brandExists) {
+             setValue("marca", marcaValue);
+           }
+         } catch (error) {
+           console.error("Erro ao definir marca do produto", error);
+         }
+       };
 
       setProductCategory();
       setProductBrand();
@@ -306,7 +311,7 @@ export default function EditarProduto() {
         marca: marca,
         descricao: descricao,
         peso: peso ? Number(peso) : null,
-        preco: Number(preco),
+        preco: Number(preco.replace(',', '.')), // Converte vírgula para ponto
         validade: validade || null,
       };
 
@@ -501,13 +506,14 @@ export default function EditarProduto() {
                       <FaDollarSign className="w-4 h-4 text-primary" />
                       Preço<span className="text-error">*</span>
                     </label>
-                    <InputText
-                      type="number"
+                    <CurrencyInput
                       name="preco"
                       className="w-full"
-                      placeholder="0,00"
+                      placeholder="25,99"
                       register={register}
+                      setValue={setValue}
                       error={errors.preco?.message}
+                      initialValue={productData?.preco?.toString() || ''}
                     />
                   </div>
 
