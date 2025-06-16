@@ -15,6 +15,7 @@ interface CartContextData {
   clearCart: () => void;
   total: string;
   updateItemQuantity: (productId: number, quantity: number) => void;
+  clearOldCarts: () => void;
 }
 
 interface CartProps extends ProductsProps {
@@ -57,8 +58,46 @@ export function CartProvider({ children }: CartProviderProps) {
   }, [localUser]); // Atualiza o carrinho quando o usuário mudar
 
   useEffect(() => {
-    localStorage.setItem(cartKey, JSON.stringify(cart)); // Salva o carrinho no localStorage ao ser alterado
-    calculateTotal(cart); // Calcula o total ao alterar o carrinho
+    try {
+      // Remove as imagens do carrinho antes de salvar no localStorage para economizar espaço
+      const cartWithoutImages = cart.map(item => {
+        const { imagem, ...itemWithoutImage } = item;
+        return itemWithoutImage;
+      });
+      
+      localStorage.setItem(cartKey, JSON.stringify(cartWithoutImages));
+      calculateTotal(cart);
+    } catch (error) {
+      console.warn('Erro ao salvar carrinho no localStorage:', error);
+      
+      // Se o localStorage estiver cheio, tenta limpar carrinhos antigos
+      if (error.name === 'QuotaExceededError') {
+        try {
+          // Remove carrinhos de outros usuários para liberar espaço
+          const keysToRemove = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('cart_') && key !== cartKey) {
+              keysToRemove.push(key);
+            }
+          }
+          
+          // Remove carrinhos antigos
+          keysToRemove.forEach(key => localStorage.removeItem(key));
+          
+          // Tenta salvar novamente
+          const cartWithoutImages = cart.map(item => {
+            const { imagem, ...itemWithoutImage } = item;
+            return itemWithoutImage;
+          });
+          localStorage.setItem(cartKey, JSON.stringify(cartWithoutImages));
+        } catch (secondError) {
+          console.error('Não foi possível salvar o carrinho:', secondError);
+          // Como último recurso, limpa o carrinho atual se não conseguir salvar
+          localStorage.removeItem(cartKey);
+        }
+      }
+    }
   }, [cart, cartKey]);
 
   function addItemCart(newItem: ProductsProps, amount: number = 1) {
@@ -68,6 +107,10 @@ export function CartProvider({ children }: CartProviderProps) {
       let cartList = [...cart];
       cartList[indexItem].amount += amount;
       cartList[indexItem].total = cartList[indexItem].amount * cartList[indexItem].preco;
+      // Preserva a imagem se ela existir no item original
+      if (newItem.imagem && !cartList[indexItem].imagem) {
+        cartList[indexItem].imagem = newItem.imagem;
+      }
       setCart(cartList);
       return;
     }
@@ -100,6 +143,23 @@ export function CartProvider({ children }: CartProviderProps) {
 
   function clearCart() {
     setCart([]);
+  }
+
+  // Função para limpar dados antigos do localStorage
+  function clearOldCarts() {
+    try {
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('cart_') && key !== cartKey) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+      console.log(`Removidos ${keysToRemove.length} carrinhos antigos do localStorage`);
+    } catch (error) {
+      console.warn('Erro ao limpar carrinhos antigos:', error);
+    }
   }
 
   function calculateTotal(items: CartProps[]) {
@@ -139,6 +199,7 @@ export function CartProvider({ children }: CartProviderProps) {
         clearCart,
         total,
         updateItemQuantity,
+        clearOldCarts,
       }}
     >
       {children}

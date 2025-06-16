@@ -86,11 +86,17 @@ export default function Produtos() {
     if (isNaN(quantity) || quantity < 1) quantity = 1;
     addItemCart(item, quantity);
     toast.success(`${quantity}x ${item.descricao} adicionados ao carrinho com sucesso!`, {
-      duration: 1500,
-      position: "top-right",
+      duration: 2000,
+      position: "top-center",
       style: {
-        background: "#333",
+        background: "#10b981",
         color: "#fff",
+        fontSize: "16px",
+        fontWeight: "600",
+        padding: "16px 24px",
+        borderRadius: "12px",
+        boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
+        zIndex: 9999,
       },
     });
     setQuantities((prev) => ({ ...prev, [item.id]: "1" }));

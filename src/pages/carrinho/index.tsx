@@ -62,6 +62,50 @@ export default function Carrinho() {
     }
   };
 
+  // Função para obter a URL da imagem (igual à tela de produtos)
+  const getImageUrl = (imagem: string | number[] | undefined | any): string | null => {
+    if (!imagem) return null;
+    
+    try {
+      // Se já é uma string base64 válida
+      if (typeof imagem === 'string') {
+        // Se já contém o data:image prefix, retorna como está
+        if (imagem.startsWith('data:image/')) {
+          return imagem;
+        }
+        // Se é apenas a string base64, adiciona o prefixo
+        return `data:image/jpeg;base64,${imagem}`;
+      }
+      
+      // Se é um objeto Buffer (vindo do Prisma/PostgreSQL)
+      if (imagem && typeof imagem === 'object' && imagem.data && Array.isArray(imagem.data)) {
+        const bytes = new Uint8Array(imagem.data);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64 = btoa(binary);
+        return `data:image/jpeg;base64,${base64}`;
+      }
+      
+      // Se é um array de bytes
+      if (Array.isArray(imagem)) {
+        const bytes = new Uint8Array(imagem);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64 = btoa(binary);
+        return `data:image/jpeg;base64,${base64}`;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Erro ao processar imagem:', error);
+      return null;
+    }
+  };
+
   const handleRegisterOrder = async () => {
     try {
       const itens = cart.map((item) => ({
@@ -160,10 +204,30 @@ export default function Carrinho() {
                               <div className="flex items-center gap-4">
                                 <div className="avatar">
                                   <div className="mask mask-squircle w-16 h-16">
-                                    <img
-                                      src="https://cdn.sanity.io/images/tlr8oxjg/production/7b7f05720074a848850e0705779306c27da5a6cf-1065x597.png?w=3840&q=80&fit=clip&auto=format"
-                                      alt={item.descricao}
-                                    />
+                                    {getImageUrl(item.imagem) ? (
+                                      <img
+                                        src={getImageUrl(item.imagem)!}
+                                        alt={item.descricao}
+                                        className="object-cover"
+                                        onError={(e) => {
+                                          e.currentTarget.src = '';
+                                          e.currentTarget.style.display = 'none';
+                                          const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+                                          if (placeholder) placeholder.style.display = 'flex';
+                                        }}
+                                      />
+                                    ) : null}
+                                    <div 
+                                      className={`w-full h-full flex items-center justify-center bg-gray-100 ${getImageUrl(item.imagem) ? 'hidden' : 'flex'}`}
+                                      style={{ display: getImageUrl(item.imagem) ? 'none' : 'flex' }}
+                                    >
+                                      <div className="text-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mb-1 text-gray-400">
+                                          <path d="M21 19V5C21 3.9 20.1 3 19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19ZM8.5 13.5L11 16.51L14.5 12L19 18H5L8.5 13.5Z" fill="currentColor"/>
+                                        </svg>
+                                        <span className="text-xs text-gray-500">Sem imagem</span>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                                 <div>
